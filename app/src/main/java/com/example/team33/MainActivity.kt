@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.team33.ui.screens.HomeApp
+import com.example.team33.ui.screens.PrognoseScreen
 import com.example.team33.ui.theme.Team33Theme
 
 class MainActivity : ComponentActivity() {
@@ -20,9 +21,10 @@ class MainActivity : ComponentActivity() {
             Team33Theme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
-                    HomeApp()
+                   // HomeApp()
+                    PrognoseScreen()
                 }
             }
         }
