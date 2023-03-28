@@ -3,6 +3,7 @@ package com.example.team33.ui.screens
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.team33.network.LocationForecastApi
 import com.example.team33.network.StroemprisApi
 import com.example.team33.network.StroemprisApiRegion
 import io.ktor.client.plugins.*
@@ -21,6 +22,7 @@ class MainViewModel : ViewModel() {
     init {
         // TODO: implement a check for internet connection before trying to do api call
         getPrice()
+        getLocationForcast()
     }
 
     // TODO: Extracting the electricity price from the data
@@ -45,5 +47,25 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun getLocationForcast() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val data = LocationForecastApi.getLocationForecast()
+                println(data)
+            } catch (e: RedirectResponseException) {
+                val errorMsg = "${e.response.status}: ${e.response.call.request.url}"
+                Log.d(TAG, errorMsg)
+            } catch (e: ClientRequestException) {
+                val errorMsg = "${e.response.status}: ${e.response.call.request.url}"
+                Log.e(TAG, errorMsg)
+            } catch (e: ServerResponseException) {
+                val errorMsg = "${e.response.status}: ${e.response.call.request.url}"
+                Log.e(TAG, errorMsg)
+            } catch (e: Exception) {
+                val errorMsg = "Something terrible went wrong because:"
+                Log.e(TAG, "$errorMsg $e")
+            }
+        }
+    }
 
 }
