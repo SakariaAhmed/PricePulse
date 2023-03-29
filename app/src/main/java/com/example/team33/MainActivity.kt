@@ -24,9 +24,24 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                    // HomeApp()
-                    PrognoseScreen()
+                    //PrognoseScreen()
+                    MultipleScreenNavigator()
                 }
             }
         }
     }
+}
+
+@Composable
+fun MultipleScreenNavigator() {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            HomeApp(modifier = Modifier.fillMaxSize(), onNavigateToNext = {
+                navController.navigate("prognose")}) }
+        composable("prognose") {
+            PrognoseScreen(modifier = Modifier.fillMaxSize(), onNavigateToNext = {
+                navController.navigate("home")}) }
+
 }
