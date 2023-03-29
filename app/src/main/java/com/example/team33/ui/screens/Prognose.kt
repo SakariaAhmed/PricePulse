@@ -24,7 +24,7 @@ import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
-fun PrognoseScreen() {
+fun PrognoseScreen(modifier: Modifier, onNavigateToNext: () -> Unit) {
     // Toppbar
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Prognose", fontSize = 40.sp)
@@ -86,6 +86,20 @@ fun PrognoseScreen() {
 
                 }
             }
+            
+            Column(modifier = Modifier.weight(1f)) {
+            }
+            
+            //button to the next screen
+            Button(
+            onClick = onNavigateToNext,
+            Modifier
+                .height(75.dp)
+                .fillMaxWidth(), shape = RectangleShape
+        ) {
+            //name of the button
+            Text(text = "Home")
+        }
 
 
         }
