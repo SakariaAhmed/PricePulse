@@ -10,6 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.team33.ui.screens.HomeApp
 import com.example.team33.ui.screens.PrognoseScreen
 import com.example.team33.ui.theme.Team33Theme
@@ -39,9 +42,13 @@ fun MultipleScreenNavigator() {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
             HomeApp(modifier = Modifier.fillMaxSize(), onNavigateToNext = {
-                navController.navigate("prognose")}) }
+                navController.navigate("prognose")
+            })
+        }
         composable("prognose") {
             PrognoseScreen(modifier = Modifier.fillMaxSize(), onNavigateToNext = {
-                navController.navigate("home")}) }
-
+                navController.navigate("home")
+            })
+        }
+    }
 }
