@@ -1,4 +1,5 @@
 package com.example.team33.ui.screens
 
-class MainUiState {
-}
+data class MainUiState(
+    var currentElectricityPrice: Double = 0.0
+)

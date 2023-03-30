@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">team33</string>
+    <string name="oslo">Oslo</string>
+    <string name="current_electricity_price">Current electricity price</string>
 </resources>
