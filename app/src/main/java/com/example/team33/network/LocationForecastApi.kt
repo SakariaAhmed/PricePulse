@@ -7,6 +7,7 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 
 private const val TAG = "LocationforecastApi"
 
@@ -18,7 +19,9 @@ object LocationForecastApi {
     private val jsonClient by lazy {
         HttpClient(CIO) {
             install(ContentNegotiation) {
-                json()
+                json(Json{
+                    ignoreUnknownKeys = true
+                })
             }
             expectSuccess=true
         }
