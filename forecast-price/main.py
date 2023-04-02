@@ -53,8 +53,8 @@ def get_data_from_frost():
     df = pd.DataFrame()
     for i in range(len(data)):
         row = pd.DataFrame(data[i]["observations"])
-        row["time_start"] = pd.to_datetime(data[i]["referenceTime"])
-        row["time_start"] = row["time_start"].dt.strftime("%Y-%m-%dT%H:%M:%S")
+        row["UTC time"] = pd.to_datetime(data[i]["referenceTime"])
+        row["UTC time"] = row["UTC time"].dt.strftime("%Y-%m-%dT%H:%M:%S")
         row["region"] = "Oslo"
 
         df = pd.concat([df, row], ignore_index=True)
@@ -123,6 +123,8 @@ def get_data_from_stroempris():
             day_data["time_start"], format="%Y-%m-%dT%H:%M:%S", utc=True
         )
         day_data["time_start"] = day_data["time_start"].dt.strftime("%Y-%m-%dT%H:%M:%S")
+        day_data = day_data.rename(columns={"time_start": "UTC time"})
+
         df = pd.concat([df, day_data], ignore_index=True)
 
     df = df.drop(columns=["EUR_per_kWh", "EXR", "time_end"])
@@ -138,8 +140,12 @@ df1 = get_data_from_frost()
 df2 = get_data_from_stroempris()
 
 print("Merging the two DataFrames...")
-df = pd.merge(df1, df2, how="inner", on="time_start")
+df = pd.merge(df1, df2, how="inner", on="UTC time")
+df = df[["UTC time", "temperature", "NOK_per_kWh", "region"]]
+df.set_index("UTC time", inplace=True)
 
 print(df.head(5))
-df2.to_csv("oslo.csv", sep="\t")
+
+df.to_csv("oslo.csv", sep="\t")
+
 print("\nOutput: oslo.csv")
