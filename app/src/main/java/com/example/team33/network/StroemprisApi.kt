@@ -8,6 +8,7 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 import java.util.*
 
 private const val TAG = "StroemprosApi"
@@ -24,7 +25,9 @@ object StroemprisApi {
     private val jsonClient by lazy {
         HttpClient(CIO) {
             install(ContentNegotiation) {
-                json()
+                json(Json{
+                    ignoreUnknownKeys = true
+                })
             }
             expectSuccess=true
         }
