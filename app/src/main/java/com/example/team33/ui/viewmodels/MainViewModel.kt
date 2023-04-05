@@ -1,9 +1,10 @@
-package com.example.team33.ui.screens
+package com.example.team33.ui.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.team33.network.*
+import com.example.team33.ui.uistates.MainUiState
 import io.ktor.client.plugins.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,6 @@ class MainViewModel : ViewModel() {
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
     init {
-        // TODO: implement a check for internet connection before trying to do api call
         getPrice()
         getLocationForcast()
     }
@@ -43,10 +43,9 @@ class MainViewModel : ViewModel() {
                 val errorMsg = "Something terrible went wrong because:"
                 Log.e(TAG, "$errorMsg $e")
             }
-            _uiState.update {
-                    currentState ->
+            _uiState.update { currentState ->
                 currentState.copy(
-                    stroemList=data
+                    stroemList = data
                 )
 
             }
@@ -55,7 +54,7 @@ class MainViewModel : ViewModel() {
 
     fun getLocationForcast() {
         viewModelScope.launch(Dispatchers.IO) {
-            var data: LocationForecast?=null
+            var data: LocationForecast? = null
             try {
                 data = LocationForecastApi.getLocationForecast()
             } catch (e: RedirectResponseException) {
@@ -71,10 +70,9 @@ class MainViewModel : ViewModel() {
                 val errorMsg = "Something terrible went wrong because:"
                 Log.e(TAG, "$errorMsg $e")
             }
-            _uiState.update {
-                    currentState ->
+            _uiState.update { currentState ->
                 currentState.copy(
-                    forecast=data
+                    forecast = data
                 )
 
             }

@@ -1,12 +1,12 @@
 package com.example.team33.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
@@ -24,7 +24,23 @@ import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
-fun PrognoseScreen(modifier: Modifier, onNavigateToNext: () -> Unit) {
+fun PrognoseScreen(
+    onNavigateToNext: () -> Unit,
+    windowSize: WindowWidthSizeClass,
+    modifier: Modifier
+) {
+
+    // TODO: Implement adaptive layout
+    if (windowSize == WindowWidthSizeClass.Compact) {
+
+    }
+    if (windowSize == WindowWidthSizeClass.Medium) {
+
+    }
+    if (windowSize == WindowWidthSizeClass.Expanded) {
+
+    }
+
     // Toppbar
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Prognose", fontSize = 40.sp)
@@ -36,16 +52,19 @@ fun PrognoseScreen(modifier: Modifier, onNavigateToNext: () -> Unit) {
             //Lagde en variabel som holder styr på dette for nå
             var showChart by remember { mutableStateOf(true) }
             // Tabell og Graf
-            Row() {
-                Button(onClick = { showChart=false }, modifier = Modifier.clip(shape = RectangleShape)) {
+            Row {
+                Button(
+                    onClick = { showChart = false },
+                    modifier = Modifier.clip(shape = RectangleShape)
+                ) {
                     Text(text = "Tabell")
                 }
-                Button(onClick = { showChart=true }) {
+                Button(onClick = { showChart = true }) {
                     Text(text = "Graf")
                 }
             }
             //Resultat
-            Box() {
+            Box {
                 Box(
                     Modifier
                         .align(Center)
@@ -56,10 +75,10 @@ fun PrognoseScreen(modifier: Modifier, onNavigateToNext: () -> Unit) {
 
                 )
                 //Lagde eksempel data som skal etterligne liste med Kr/kWt
-                val liste = arrayListOf(2.1F,1.5F,3.2F,5.3F,2F, 2.15F,2.4F)
-                if (showChart){
+                val liste = arrayListOf(2.1F, 1.5F, 3.2F, 5.3F, 2F, 2.15F, 2.4F)
+                if (showChart) {
                     ShowGraph(liste)
-                }else{
+                } else {
                     ShowTable(liste)
                 }
 
@@ -67,7 +86,7 @@ fun PrognoseScreen(modifier: Modifier, onNavigateToNext: () -> Unit) {
 
             //Fire knapper
 
-            Row() {
+            Row {
                 Button(onClick = { /*TODO*/ }, Modifier.height(50.dp)) {
 
                 }
@@ -86,20 +105,20 @@ fun PrognoseScreen(modifier: Modifier, onNavigateToNext: () -> Unit) {
 
                 }
             }
-            
+
             Column(modifier = Modifier.weight(1f)) {
             }
-            
+
             //button to the next screen
             Button(
-            onClick = onNavigateToNext,
-            Modifier
-                .height(75.dp)
-                .fillMaxWidth(), shape = RectangleShape
-        ) {
-            //name of the button
-            Text(text = "Home")
-        }
+                onClick = onNavigateToNext,
+                Modifier
+                    .height(75.dp)
+                    .fillMaxWidth(), shape = RectangleShape
+            ) {
+                //name of the button
+                Text(text = "Home")
+            }
 
 
         }
@@ -107,9 +126,11 @@ fun PrognoseScreen(modifier: Modifier, onNavigateToNext: () -> Unit) {
 
 
 }
+
 @Composable
-fun ShowGraph(list: List<Float>){
-    val chartEntryModelProducer = entryModelOf(List(list.size){ FloatEntry(it.toFloat(),list[it] ) })
+fun ShowGraph(list: List<Float>) {
+    val chartEntryModelProducer =
+        entryModelOf(List(list.size) { FloatEntry(it.toFloat(), list[it]) })
 
     Chart(
         chart = lineChart(),
@@ -120,25 +141,25 @@ fun ShowGraph(list: List<Float>){
 }
 
 @Composable
-fun ShowTable(list:List<Float>){
-    var teller=0
-    LazyColumn(
-    ){
-        items(list) {element ->
-            RowInTable(verdi = teller++ , pris = element)
+fun ShowTable(list: List<Float>) {
+    var teller = 0
+    LazyColumn {
+        items(list) { element ->
+            RowInTable(verdi = teller++, pris = element)
 
         }
     }
 }
 
 @Composable
-fun RowInTable(verdi:Int,pris:Float){
+fun RowInTable(verdi: Int, pris: Float) {
     Row(
         modifier = Modifier
             .fillMaxSize()
             .padding(4.dp)
-            .border(width = 2.dp, color = Color.Black)) {
-        Text(text="         $verdi :                           ")
-        Text(text="$pris kr/kWt")
+            .border(width = 2.dp, color = Color.Black)
+    ) {
+        Text(text = "         $verdi :                           ")
+        Text(text = "$pris kr/kWt")
     }
 }

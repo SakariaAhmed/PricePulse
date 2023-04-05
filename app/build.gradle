@@ -65,6 +65,8 @@ dependencies {
     // Implements viewModel compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 
+    // Implements window size class
+    implementation "androidx.compose.material3:material3-window-size-class:1.0.1"
 
     //Implements chart compose
     implementation "com.patrykandpatrick.vico:core:1.6.4"
