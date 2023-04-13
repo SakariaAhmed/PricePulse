@@ -47,7 +47,6 @@ class MainViewModel : ViewModel() {
                 currentState.copy(
                     stroemList = data
                 )
-
             }
         }
     }
@@ -74,7 +73,6 @@ class MainViewModel : ViewModel() {
                 currentState.copy(
                     forecast = data
                 )
-
             }
         }
     }
@@ -82,7 +80,6 @@ class MainViewModel : ViewModel() {
     fun setCurrentElectricityPrice(hour: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val data = StroemprisApi.getCurrentPriceFromRegion(StroemprisApiRegion.NO1)
-
             _uiState.value.currentElectricityPrice = data[hour].NOK_per_kWh
         }
     }
