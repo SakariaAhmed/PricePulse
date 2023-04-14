@@ -5,4 +5,10 @@
     <string name="unable_to_connect">Unable to connect to the Internet</string>
     <string name="lost_connection">Lost internet connection</string>
     <string name="losing_connection">Losing internet connection...</string>
+    <string name="select_region">Select region</string>
+    <string name="east_norway">East-Norway</string>
+    <string name="south_norway">South-Norway</string>
+    <string name="mid_norway">Mid-Norway</string>
+    <string name="north_norway">North-Norway</string>
+    <string name="west_norway">West-Norway</string>
 </resources>

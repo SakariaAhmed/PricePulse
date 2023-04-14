@@ -17,14 +17,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.team33.network.ConnectivityObserver
 import com.example.team33.network.NetworkConnectivityObserver
+import com.example.team33.ui.screens.ElectricityScreen
 import com.example.team33.ui.screens.HomeScreen
 import com.example.team33.ui.screens.PrognoseScreen
 import com.example.team33.ui.theme.Team33Theme
+import com.example.team33.ui.uistates.MainUiState
+import com.example.team33.ui.viewmodels.MainViewModel
 
 class MainActivity : ComponentActivity() {
     private lateinit var connectivityObserver: ConnectivityObserver
@@ -45,13 +49,22 @@ class MainActivity : ComponentActivity() {
 
                 val windowSize = calculateWindowSizeClass(this)
 
+                val mainViewModel: MainViewModel = viewModel()
+                val mainUiState by mainViewModel.uiState.collectAsState()
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
+
+
                     when (status.toString()) {
                         "Available" -> {
-                            MultipleScreenNavigator(windowSize = windowSize)
+                            MultipleScreenNavigator(
+                                windowSize = windowSize,
+                                mainViewModel = mainViewModel,
+                                mainUiState = mainUiState
+                            )
                         }
                         "Unavailable" -> {
                             UnavailableScreen(modifier = Modifier)
@@ -70,28 +83,50 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MultipleScreenNavigator(windowSize: WindowSizeClass) {
+fun MultipleScreenNavigator(
+    windowSize: WindowSizeClass,
+    mainViewModel: MainViewModel,
+    mainUiState: MainUiState
+) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
             HomeScreen(
-                onNavigateToNext = {
-                    navController.navigate("prognose")
-                },
+                onNavigateToHomeScreen = { navController.navigate("home") },
+                onNavigateToForecastScreen = { navController.navigate("prognose") },
+                onNavigateToElectricityScreen = { navController.navigate("electricity") },
                 windowSize = windowSize.widthSizeClass,
+                mainViewModel = mainViewModel,
+                mainUiState = mainUiState,
                 modifier = Modifier.fillMaxSize()
             )
         }
+
         composable("prognose") {
             PrognoseScreen(
-                onNavigateToNext = {
-                    navController.navigate("home")
-                },
+                onNavigateToHomeScreen = { navController.navigate("home") },
+                onNavigateToForecastScreen = { navController.navigate("prognose") },
+                onNavigateToElectricityScreen = { navController.navigate("electricity") },
                 windowSize = windowSize.widthSizeClass,
+                mainViewModel = mainViewModel,
+                mainUiState = mainUiState,
                 modifier = Modifier.fillMaxSize()
             )
         }
+
+        composable("electricity") {
+            ElectricityScreen(
+                onNavigateToHomeScreen = { navController.navigate("home") },
+                onNavigateToForecastScreen = { navController.navigate("prognose") },
+                onNavigateToElectricityScreen = { navController.navigate("electricity") },
+                windowSize = windowSize.widthSizeClass,
+                mainViewModel = mainViewModel,
+                mainUiState = mainUiState,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
     }
 }
 

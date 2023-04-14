@@ -83,4 +83,25 @@ class MainViewModel : ViewModel() {
             _uiState.value.currentElectricityPrice = data[hour].NOK_per_kWh
         }
     }
+
+    fun setElectricityPricesToday(selectedRegion: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            var region: StroemprisApiRegion = StroemprisApiRegion.NO1
+            when (selectedRegion) {
+                "East-Norway" -> region = StroemprisApiRegion.NO1
+                "South-Norway" -> region = StroemprisApiRegion.NO2
+                "Mid-Norway" -> region = StroemprisApiRegion.NO3
+                "North-Norway" -> region = StroemprisApiRegion.NO4
+                "West-Norway" -> region = StroemprisApiRegion.NO5
+            }
+
+            val data = StroemprisApi.getCurrentPriceFromRegion(region)
+            var electricityPricesList: MutableList<Double> = mutableListOf()
+            for (element in data) {
+                electricityPricesList.add(element.NOK_per_kWh)
+            }
+
+            _uiState.value.electricityPricesList = electricityPricesList
+        }
+    }
 }

@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.team33.R
 import com.example.team33.ui.uistates.MainUiState
@@ -20,10 +21,15 @@ import com.example.team33.ui.viewmodels.MainViewModel
 import java.util.*
 
 @Composable
-fun HomeScreen(onNavigateToNext: () -> Unit, windowSize: WindowWidthSizeClass, modifier: Modifier) {
-    val mainViewModel: MainViewModel = viewModel()
-    val mainUiState by mainViewModel.uiState.collectAsState()
-
+fun HomeScreen(
+    onNavigateToHomeScreen: () -> Unit,
+    onNavigateToForecastScreen: () -> Unit,
+    onNavigateToElectricityScreen: () -> Unit,
+    windowSize: WindowWidthSizeClass,
+    mainViewModel: MainViewModel,
+    mainUiState: MainUiState,
+    modifier: Modifier
+) {
     // TODO: Implement adaptive layout
     if (windowSize == WindowWidthSizeClass.Compact) {
 
@@ -36,36 +42,34 @@ fun HomeScreen(onNavigateToNext: () -> Unit, windowSize: WindowWidthSizeClass, m
     }
 
     Column(
-        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxSize()
     )
     {
         //name of the screen
-        Text(text = "Home Screen")
+        Text(text = "Home Screen", fontSize = 40.sp)
 
-        informationComposable(mainViewModel, mainUiState)
+        // Calls on a private function that displays location, date and current electricity price
+        InformationComposable(mainViewModel, mainUiState)
 
         Column(modifier = Modifier.weight(3f)) {
 
         }
 
-        //button to the next screen
-        Button(
-            onClick = onNavigateToNext,
-            Modifier
-                .height(75.dp)
-                .fillMaxWidth(), shape = RectangleShape
-        ) {
-            //name of the button
-            Text(text = "Prognose")
-        }
+        // Calls on a function that lets user navigate to different screens
+        NavigateScreensComposable(
+            onNavigateToHomeScreen = onNavigateToHomeScreen,
+            onNavigateToForecastScreen = onNavigateToForecastScreen,
+            onNavigateToElectricityScreen = onNavigateToElectricityScreen
+        )
+
     }
 }
 
 // Displays location, date and current electricity price
 @Composable
-fun informationComposable(mainViewModel: MainViewModel, mainUiState: MainUiState) {
+private fun InformationComposable(mainViewModel: MainViewModel, mainUiState: MainUiState) {
     Spacer(modifier = Modifier.padding(15.dp))
     Column {
         val time = SimpleDateFormat("yyyy/MM-dd-hh-mm-ss", Locale.getDefault()).format(Date())
@@ -84,5 +88,50 @@ fun informationComposable(mainViewModel: MainViewModel, mainUiState: MainUiState
         Text(text = "$hour:$minute:$second")
         Text(text = "$day/$month/$year")
         Text(text = "${mainUiState.currentElectricityPrice} NOK_per_kWh")
+    }
+}
+
+// Lets user navigate to different screens
+@Composable
+fun NavigateScreensComposable(
+    onNavigateToHomeScreen: () -> Unit,
+    onNavigateToForecastScreen: () -> Unit,
+    onNavigateToElectricityScreen: () -> Unit
+) {
+    // A row of buttons to multiple screens
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.End
+    ) {
+
+        // Button to home screen
+        Button(
+            onClick = onNavigateToHomeScreen,
+            modifier = Modifier.size(width = 131.dp, height = 75.dp),
+            shape = RectangleShape
+        ) {
+            //name of the button
+            Text(text = "Home")
+        }
+
+        // Button to forecast screen
+        Button(
+            onClick = onNavigateToForecastScreen,
+            modifier = Modifier.size(width = 131.dp, height = 75.dp),
+            shape = RectangleShape
+        ) {
+            //name of the button
+            Text(text = "Forecast")
+        }
+
+        // Button to electricity screen
+        Button(
+            onClick = onNavigateToElectricityScreen,
+            modifier = Modifier.size(width = 131.dp, height = 75.dp),
+            shape = RectangleShape
+        ) {
+            //name of the button
+            Text(text = "Electricity")
+        }
     }
 }

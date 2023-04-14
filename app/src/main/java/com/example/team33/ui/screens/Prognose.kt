@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.team33.ui.uistates.MainUiState
+import com.example.team33.ui.viewmodels.MainViewModel
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
@@ -25,11 +27,14 @@ import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
 fun PrognoseScreen(
-    onNavigateToNext: () -> Unit,
+    onNavigateToHomeScreen: () -> Unit,
+    onNavigateToForecastScreen: () -> Unit,
+    onNavigateToElectricityScreen: () -> Unit,
     windowSize: WindowWidthSizeClass,
+    mainViewModel: MainViewModel,
+    mainUiState: MainUiState,
     modifier: Modifier
 ) {
-
     // TODO: Implement adaptive layout
     if (windowSize == WindowWidthSizeClass.Compact) {
 
@@ -41,89 +46,81 @@ fun PrognoseScreen(
 
     }
 
-    // Toppbar
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Prognose", fontSize = 40.sp)
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
-            //Lagde en variabel som holder styr på dette for nå
-            var showChart by remember { mutableStateOf(true) }
-            // Tabell og Graf
-            Row {
-                Button(
-                    onClick = { showChart = false },
-                    modifier = Modifier.clip(shape = RectangleShape)
-                ) {
-                    Text(text = "Tabell")
-                }
-                Button(onClick = { showChart = true }) {
-                    Text(text = "Graf")
-                }
-            }
-            //Resultat
-            Box {
-                Box(
-                    Modifier
-                        .align(Center)
-                        .height(200.dp)
-                        .width(
-                            300.dp
-                        )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(text = "Forecast Screen", fontSize = 40.sp)
 
-                )
-                //Lagde eksempel data som skal etterligne liste med Kr/kWt
-                val liste = arrayListOf(2.1F, 1.5F, 3.2F, 5.3F, 2F, 2.15F, 2.4F)
-                if (showChart) {
-                    ShowGraph(liste)
-                } else {
-                    ShowTable(liste)
-                }
-
-            }
-
-            //Fire knapper
-
-            Row {
-                Button(onClick = { /*TODO*/ }, Modifier.height(50.dp)) {
-
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
-                Button(onClick = { /*TODO*/ }, Modifier.height(50.dp)) {
-
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
-
-                Button(onClick = { /*TODO*/ }, Modifier.height(50.dp)) {
-
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
-
-                Button(onClick = { /*TODO*/ }, Modifier.height(50.dp)) {
-
-                }
-            }
-
-            Column(modifier = Modifier.weight(1f)) {
-            }
-
-            //button to the next screen
+        //Lagde en variabel som holder styr på dette for nå
+        var showChart by remember { mutableStateOf(true) }
+        // Tabell og Graf
+        Row {
             Button(
-                onClick = onNavigateToNext,
-                Modifier
-                    .height(75.dp)
-                    .fillMaxWidth(), shape = RectangleShape
+                onClick = { showChart = false },
+                modifier = Modifier.clip(shape = RectangleShape)
             ) {
-                //name of the button
-                Text(text = "Home")
+                Text(text = "Tabell")
             }
+            Button(onClick = { showChart = true }) {
+                Text(text = "Graf")
+            }
+        }
+        //Resultat
+        Box {
+            Box(
+                Modifier
+                    .align(Center)
+                    .height(200.dp)
+                    .width(
+                        300.dp
+                    )
 
+            )
+            //Lagde eksempel data som skal etterligne liste med Kr/kWt
+            val liste = arrayListOf(2.1F, 1.5F, 3.2F, 5.3F, 2F, 2.15F, 2.4F)
+            if (showChart) {
+                ShowGraph(liste)
+            } else {
+                ShowTable(liste)
+            }
 
         }
-    }
 
+        //Fire knapper
+
+        Row {
+            Button(onClick = { /*TODO*/ }, Modifier.height(50.dp)) {
+
+            }
+            Spacer(modifier = Modifier.padding(10.dp))
+            Button(onClick = { /*TODO*/ }, Modifier.height(50.dp)) {
+
+            }
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            Button(onClick = { /*TODO*/ }, Modifier.height(50.dp)) {
+
+            }
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            Button(onClick = { /*TODO*/ }, Modifier.height(50.dp)) {
+
+            }
+        }
+
+        Column(modifier = Modifier.weight(1f)) {
+        }
+
+        // Calls on a function from HomeScreen.kt that lets user navigate to different screens
+        NavigateScreensComposable(
+            onNavigateToHomeScreen = onNavigateToHomeScreen,
+            onNavigateToForecastScreen = onNavigateToForecastScreen,
+            onNavigateToElectricityScreen = onNavigateToElectricityScreen
+        )
+
+    }
 
 }
 
