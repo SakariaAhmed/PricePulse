@@ -30,100 +30,60 @@ fun ElectricityScreen(
     mainUiState: MainUiState,
     modifier: Modifier
 ) {
-    // TODO: Implement adaptive layout
-    if (windowSize == WindowWidthSizeClass.Compact) {
-
-    }
-    if (windowSize == WindowWidthSizeClass.Medium) {
-
-    }
-    if (windowSize == WindowWidthSizeClass.Expanded) {
-
-    }
-
-    var expanded by remember { mutableStateOf(false) }
-    var selectedRegion by remember { mutableStateOf(mainUiState.selectedRegion) }
-    val regionOptions: List<String> = listOf(
-        stringResource(id = R.string.east_norway),
-        stringResource(id = R.string.south_norway),
-        stringResource(id = R.string.mid_norway),
-        stringResource(id = R.string.north_norway),
-        stringResource(id = R.string.west_norway)
-    )
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxSize()
     ) {
+        // TODO: Implement adaptive layout
+        if (windowSize == WindowWidthSizeClass.Compact) {
+
+        }
+        if (windowSize == WindowWidthSizeClass.Medium) {
+
+        }
+        if (windowSize == WindowWidthSizeClass.Expanded) {
+
+        }
+
         Text(text = "Electricity Screen", fontSize = 40.sp)
 
-        // TODO: and use a for loop for dropwdownmenu-items
+        var selectedOptionText by remember { mutableStateOf(mainUiState.selectedRegion) }
+        var expanded by remember { mutableStateOf(false) }
+        val regionOptions: List<String> = listOf(
+            stringResource(id = R.string.east_norway),
+            stringResource(id = R.string.south_norway),
+            stringResource(id = R.string.mid_norway),
+            stringResource(id = R.string.north_norway),
+            stringResource(id = R.string.west_norway)
+        )
 
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = {expanded = it}
-        ) {
+        // Dropdown-Menu that lets user select the electricity price from 5 different regions in Norway
+        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
             TextField(
-                value = selectedRegion,
+                readOnly = true,
+                value = selectedOptionText,
                 onValueChange = {},
                 label = { Text(stringResource(R.string.select_region)) },
-                readOnly = true,
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 colors = ExposedDropdownMenuDefaults.textFieldColors(),
                 modifier = Modifier.menuAnchor()
             )
-
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                DropdownMenuItem(
-                    text = { Text(text = "East-Norway") },
-                    onClick = {
-                        selectedRegion = "East-Norway"
-                        mainUiState.selectedRegion = "East-Norway"
-                        expanded = false
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(text = "South-Norway") },
-                    onClick = {
-                        selectedRegion = "South-Norway"
-                        mainUiState.selectedRegion = "South-Norway"
-                        expanded = false
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(text = "Mid-Norway") },
-                    onClick = {
-                        selectedRegion = "Mid-Norway"
-                        mainUiState.selectedRegion = "Mid-Norway"
-                        expanded = false
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(text = "North-Norway") },
-                    onClick = {
-                        selectedRegion = "North-Norway"
-                        mainUiState.selectedRegion = "North-Norway"
-                        expanded = false
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(text = "West-Norway") },
-                    onClick = {
-                        selectedRegion = "West-Norway"
-                        mainUiState.selectedRegion = "West-Norway"
-                        expanded = false
-                    }
-                )
+            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                regionOptions.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = { Text(selectionOption) },
+                        onClick = {
+                            selectedOptionText = selectionOption
+                            mainUiState.selectedRegion = selectionOption
+                            expanded = false
+                        }
+                    )
+                }
             }
         }
 
-        mainViewModel.setElectricityPricesToday(selectedRegion = selectedRegion)
+        mainViewModel.setElectricityPricesToday(selectedRegion = mainUiState.selectedRegion)
         ShowElectricityGraph(mainUiState.electricityPricesList)
 
         // Calls on a function from HomeScreen.kt that lets user navigate to different screens
@@ -137,8 +97,7 @@ fun ElectricityScreen(
 
 @Composable
 fun ShowElectricityGraph(list: List<Double>) {
-    val chartEntryModelProducer =
-        entryModelOf(List(list.size) { FloatEntry(it.toFloat(), list[it].toFloat()) })
+    val chartEntryModelProducer = entryModelOf(List(list.size) { FloatEntry(it.toFloat(), list[it].toFloat()) })
 
     Chart(
         chart = lineChart(),

@@ -30,23 +30,23 @@ fun HomeScreen(
     mainUiState: MainUiState,
     modifier: Modifier
 ) {
-    // TODO: Implement adaptive layout
-    if (windowSize == WindowWidthSizeClass.Compact) {
-
-    }
-    if (windowSize == WindowWidthSizeClass.Medium) {
-
-    }
-    if (windowSize == WindowWidthSizeClass.Expanded) {
-
-    }
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxSize()
     )
     {
+        // TODO: Implement adaptive layout
+        if (windowSize == WindowWidthSizeClass.Compact) {
+
+        }
+        if (windowSize == WindowWidthSizeClass.Medium) {
+
+        }
+        if (windowSize == WindowWidthSizeClass.Expanded) {
+
+        }
+
         //name of the screen
         Text(text = "Home Screen", fontSize = 40.sp)
 

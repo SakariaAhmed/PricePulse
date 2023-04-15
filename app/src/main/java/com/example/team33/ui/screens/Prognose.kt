@@ -35,22 +35,22 @@ fun PrognoseScreen(
     mainUiState: MainUiState,
     modifier: Modifier
 ) {
-    // TODO: Implement adaptive layout
-    if (windowSize == WindowWidthSizeClass.Compact) {
-
-    }
-    if (windowSize == WindowWidthSizeClass.Medium) {
-
-    }
-    if (windowSize == WindowWidthSizeClass.Expanded) {
-
-    }
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxSize()
     ) {
+        // TODO: Implement adaptive layout
+        if (windowSize == WindowWidthSizeClass.Compact) {
+
+        }
+        if (windowSize == WindowWidthSizeClass.Medium) {
+
+        }
+        if (windowSize == WindowWidthSizeClass.Expanded) {
+
+        }
+
         Text(text = "Forecast Screen", fontSize = 40.sp)
 
         //Lagde en variabel som holder styr på dette for nå
