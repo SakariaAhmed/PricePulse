@@ -8,6 +8,10 @@ android {
     namespace 'com.example.team33'
     compileSdk 33
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     defaultConfig {
         applicationId "com.example.team33"
         minSdk 24
@@ -94,6 +98,13 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
     }
+
+    // Added this dependecy to resolve a fail in loading Class org.slf4j.impl.StaticLoggerBinder
+
+    dependencies {
+        implementation("org.slf4j:slf4j-jdk14:1.7.36")
+    }
+
 
 
 }

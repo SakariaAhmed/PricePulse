@@ -1,5 +1,11 @@
 package com.example.team33
 
+import android.util.Log
+import com.example.team33.network.LocationForecastApi
+import com.example.team33.network.StroemprisApi
+import com.example.team33.network.StroemprisApiRegion
+import com.example.team33.ui.viewmodels.MainViewModel
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -14,4 +20,6 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+
 }
