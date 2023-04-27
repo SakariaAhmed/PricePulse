@@ -1,0 +1,5 @@
+*.csv
+FROST_CLIENT_ID
+*.tflite
+.*/
+__pycache__
