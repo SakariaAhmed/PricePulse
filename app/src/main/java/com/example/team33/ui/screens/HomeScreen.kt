@@ -1,6 +1,7 @@
 package com.example.team33.ui.screens
 
 import android.icu.text.SimpleDateFormat
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -11,6 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -111,7 +114,14 @@ fun NavigateScreensComposable(
             shape = RectangleShape
         ) {
             //name of the button
-            Text(text = "Home")
+            Image(
+                painter = painterResource(R.drawable.home),
+                contentDescription = "HomeScreen",
+                modifier=Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+
+            )
         }
 
         // Button to forecast screen
@@ -121,7 +131,14 @@ fun NavigateScreensComposable(
             shape = RectangleShape
         ) {
             //name of the button
-            Text(text = "Forecast")
+            Image(
+                painter = painterResource(R.drawable.appliance),
+                contentDescription = "ApplianceScreen",
+                modifier=Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+
+            )
         }
 
         // Button to electricity screen
@@ -131,7 +148,13 @@ fun NavigateScreensComposable(
             shape = RectangleShape
         ) {
             //name of the button
-            Text(text = "Electricity")
+            Image(
+                painter = painterResource(R.drawable.forecast),
+                contentDescription = "ForecastScreen",
+                modifier=Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+            )
         }
     }
 }
