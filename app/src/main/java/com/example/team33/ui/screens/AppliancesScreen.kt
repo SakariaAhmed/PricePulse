@@ -26,10 +26,10 @@ import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
-fun PrognoseScreen(
+fun AppliancesScreen(
     onNavigateToHomeScreen: () -> Unit,
-    onNavigateToForecastScreen: () -> Unit,
     onNavigateToElectricityScreen: () -> Unit,
+    onNavigateToAppliancesScreen: () -> Unit,
     windowSize: WindowWidthSizeClass,
     mainViewModel: MainViewModel,
     mainUiState: MainUiState,
@@ -51,7 +51,7 @@ fun PrognoseScreen(
 
         }
 
-        Text(text = "Forecast Screen", fontSize = 40.sp)
+        Text(text = "Appliances Screen", fontSize = 40.sp)
 
         //Lagde en variabel som holder styr på dette for nå
         var showChart by remember { mutableStateOf(true) }
@@ -116,8 +116,8 @@ fun PrognoseScreen(
         // Calls on a function from HomeScreen.kt that lets user navigate to different screens
         NavigateScreensComposable(
             onNavigateToHomeScreen = onNavigateToHomeScreen,
-            onNavigateToForecastScreen = onNavigateToForecastScreen,
-            onNavigateToElectricityScreen = onNavigateToElectricityScreen
+            onNavigateToElectricityScreen = onNavigateToElectricityScreen,
+            onNavigateToAppliancesScreen = onNavigateToAppliancesScreen,
         )
 
     }

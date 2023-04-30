@@ -11,4 +11,6 @@
     <string name="mid_norway">Mid-Norway</string>
     <string name="north_norway">North-Norway</string>
     <string name="west_norway">West-Norway</string>
+    <string name="selected_region">Selected region</string>
+    <string name="spot_price">Spot price now: </string>
 </resources>

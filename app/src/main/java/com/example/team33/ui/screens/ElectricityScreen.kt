@@ -19,16 +19,15 @@ import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 // Displays the electricity price of chosen region for the current day
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ElectricityScreen(
     onNavigateToHomeScreen: () -> Unit,
-    onNavigateToForecastScreen: () -> Unit,
     onNavigateToElectricityScreen: () -> Unit,
+    onNavigateToAppliancesScreen: () -> Unit,
     windowSize: WindowWidthSizeClass,
     mainViewModel: MainViewModel,
     mainUiState: MainUiState,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -48,49 +47,15 @@ fun ElectricityScreen(
 
         Text(text = "Electricity Screen", fontSize = 40.sp)
 
-        var selectedOptionText by remember { mutableStateOf(mainUiState.selectedRegion) }
-        var expanded by remember { mutableStateOf(false) }
-        val regionOptions: List<String> = listOf(
-            stringResource(id = R.string.east_norway),
-            stringResource(id = R.string.south_norway),
-            stringResource(id = R.string.mid_norway),
-            stringResource(id = R.string.north_norway),
-            stringResource(id = R.string.west_norway)
-        )
+        Text(text = stringResource(id = R.string.selected_region) + ": ${mainUiState.selectedRegion}")
 
-        // Dropdown-Menu that lets user select the electricity price from 5 different regions in Norway
-        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
-            TextField(
-                readOnly = true,
-                value = selectedOptionText,
-                onValueChange = {},
-                label = { Text(stringResource(R.string.select_region)) },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                colors = ExposedDropdownMenuDefaults.textFieldColors(),
-                modifier = Modifier.menuAnchor()
-            )
-            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                regionOptions.forEach { selectionOption ->
-                    DropdownMenuItem(
-                        text = { Text(selectionOption) },
-                        onClick = {
-                            selectedOptionText = selectionOption
-                            mainUiState.selectedRegion = selectionOption
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
-
-        mainViewModel.setElectricityPricesToday(selectedRegion = mainUiState.selectedRegion)
         ShowElectricityGraph(mainUiState.electricityPricesList)
 
         // Calls on a function from HomeScreen.kt that lets user navigate to different screens
         NavigateScreensComposable(
             onNavigateToHomeScreen = onNavigateToHomeScreen,
-            onNavigateToForecastScreen = onNavigateToForecastScreen,
-            onNavigateToElectricityScreen = onNavigateToElectricityScreen
+            onNavigateToElectricityScreen = onNavigateToElectricityScreen,
+            onNavigateToAppliancesScreen = onNavigateToAppliancesScreen,
         )
     }
 }

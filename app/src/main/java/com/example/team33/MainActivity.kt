@@ -23,9 +23,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.team33.network.ConnectivityObserver
 import com.example.team33.network.NetworkConnectivityObserver
+import com.example.team33.ui.screens.AppliancesScreen
 import com.example.team33.ui.screens.ElectricityScreen
 import com.example.team33.ui.screens.HomeScreen
-import com.example.team33.ui.screens.PrognoseScreen
 import com.example.team33.ui.theme.Team33Theme
 import com.example.team33.ui.uistates.MainUiState
 import com.example.team33.ui.viewmodels.MainViewModel
@@ -56,8 +56,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-
-
                     when (status.toString()) {
                         "Available" -> {
                             MultipleScreenNavigator(
@@ -94,20 +92,8 @@ fun MultipleScreenNavigator(
         composable("home") {
             HomeScreen(
                 onNavigateToHomeScreen = { navController.navigate("home") },
-                onNavigateToForecastScreen = { navController.navigate("prognose") },
                 onNavigateToElectricityScreen = { navController.navigate("electricity") },
-                windowSize = windowSize.widthSizeClass,
-                mainViewModel = mainViewModel,
-                mainUiState = mainUiState,
-                modifier = Modifier.fillMaxSize()
-            )
-        }
-
-        composable("prognose") {
-            PrognoseScreen(
-                onNavigateToHomeScreen = { navController.navigate("home") },
-                onNavigateToForecastScreen = { navController.navigate("prognose") },
-                onNavigateToElectricityScreen = { navController.navigate("electricity") },
+                onNavigateToAppliancesScreen = { navController.navigate("appliances") },
                 windowSize = windowSize.widthSizeClass,
                 mainViewModel = mainViewModel,
                 mainUiState = mainUiState,
@@ -118,8 +104,8 @@ fun MultipleScreenNavigator(
         composable("electricity") {
             ElectricityScreen(
                 onNavigateToHomeScreen = { navController.navigate("home") },
-                onNavigateToForecastScreen = { navController.navigate("prognose") },
                 onNavigateToElectricityScreen = { navController.navigate("electricity") },
+                onNavigateToAppliancesScreen = { navController.navigate("appliances") },
                 windowSize = windowSize.widthSizeClass,
                 mainViewModel = mainViewModel,
                 mainUiState = mainUiState,
@@ -127,6 +113,17 @@ fun MultipleScreenNavigator(
             )
         }
 
+        composable("appliances") {
+            AppliancesScreen(
+                onNavigateToHomeScreen = { navController.navigate("home") },
+                onNavigateToElectricityScreen = { navController.navigate("electricity") },
+                onNavigateToAppliancesScreen = { navController.navigate("appliances") },
+                windowSize = windowSize.widthSizeClass,
+                mainViewModel = mainViewModel,
+                mainUiState = mainUiState,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
     }
 }
 

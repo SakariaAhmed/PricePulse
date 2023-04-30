@@ -3,31 +3,27 @@ package com.example.team33.ui.screens
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.team33.R
 import com.example.team33.ui.uistates.MainUiState
 import com.example.team33.ui.viewmodels.MainViewModel
 import java.util.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onNavigateToHomeScreen: () -> Unit,
-    onNavigateToForecastScreen: () -> Unit,
     onNavigateToElectricityScreen: () -> Unit,
+    onNavigateToAppliancesScreen: () -> Unit,
     windowSize: WindowWidthSizeClass,
     mainViewModel: MainViewModel,
     mainUiState: MainUiState,
@@ -37,8 +33,7 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxSize()
-    )
-    {
+    ) {
         // TODO: Implement adaptive layout
         if (windowSize == WindowWidthSizeClass.Compact) {
 
@@ -53,44 +48,59 @@ fun HomeScreen(
         //name of the screen
         Text(text = "Home Screen", fontSize = 40.sp)
 
-        // Calls on a private function that displays location, date and current electricity price
-        InformationComposable(mainViewModel, mainUiState)
-
-        Column(modifier = Modifier.weight(3f)) {
-
-        }
-
-        // Calls on a function that lets user navigate to different screens
-        NavigateScreensComposable(
-            onNavigateToHomeScreen = onNavigateToHomeScreen,
-            onNavigateToForecastScreen = onNavigateToForecastScreen,
-            onNavigateToElectricityScreen = onNavigateToElectricityScreen
-        )
-
-    }
-}
-
-// Displays location, date and current electricity price
-@Composable
-private fun InformationComposable(mainViewModel: MainViewModel, mainUiState: MainUiState) {
-    Spacer(modifier = Modifier.padding(15.dp))
-    Column {
         val time = SimpleDateFormat("yyyy/MM-dd-hh-mm-ss", Locale.getDefault()).format(Date())
-        val year = time[0].toString() + time[1].toString() + time[2].toString() + time[3].toString()
-        val month = time[5].toString() + time[6].toString()
-        val day = time[8].toString() + time[9].toString()
         val hour = time[11].toString() + time[12].toString()
         if (hour[0] == '0') {
             hour.drop(1)
         }
-        val minute = time[14].toString() + time[15].toString()
-        val second = time[17].toString() + time[18].toString()
-
         mainViewModel.setCurrentElectricityPrice(hour.toInt())
-        Text(text = stringResource(id = R.string.oslo))
-        Text(text = "$hour:$minute:$second")
-        Text(text = "$day/$month/$year")
+
+        Text(text = stringResource(id = R.string.spot_price))
         Text(text = "${mainUiState.currentElectricityPrice} NOK_per_kWh")
+
+        var selectedOptionText by remember { mutableStateOf(mainUiState.selectedRegion) }
+        var expanded by remember { mutableStateOf(false) }
+        val regionOptions: List<String> = listOf(
+            stringResource(id = R.string.east_norway),
+            stringResource(id = R.string.south_norway),
+            stringResource(id = R.string.mid_norway),
+            stringResource(id = R.string.north_norway),
+            stringResource(id = R.string.west_norway)
+        )
+
+        // Dropdown-Menu that lets user select the electricity price from 5 different regions in Norway
+        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+            TextField(
+                readOnly = true,
+                value = selectedOptionText,
+                onValueChange = {},
+                label = { Text(stringResource(R.string.select_region)) },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                modifier = Modifier.menuAnchor()
+            )
+            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                regionOptions.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = { Text(selectionOption) },
+                        onClick = {
+                            selectedOptionText = selectionOption
+                            mainUiState.selectedRegion = selectionOption
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+
+        mainViewModel.setElectricityPricesToday(selectedRegion = mainUiState.selectedRegion)
+
+        // Calls on a function that lets user navigate to different screens
+        NavigateScreensComposable(
+            onNavigateToHomeScreen = onNavigateToHomeScreen,
+            onNavigateToElectricityScreen = onNavigateToElectricityScreen,
+            onNavigateToAppliancesScreen = onNavigateToAppliancesScreen,
+        )
     }
 }
 
@@ -98,8 +108,8 @@ private fun InformationComposable(mainViewModel: MainViewModel, mainUiState: Mai
 @Composable
 fun NavigateScreensComposable(
     onNavigateToHomeScreen: () -> Unit,
-    onNavigateToForecastScreen: () -> Unit,
-    onNavigateToElectricityScreen: () -> Unit
+    onNavigateToElectricityScreen: () -> Unit,
+    onNavigateToAppliancesScreen: () -> Unit,
 ) {
     // A row of buttons to multiple screens
     Row(
@@ -117,24 +127,7 @@ fun NavigateScreensComposable(
             Image(
                 painter = painterResource(R.drawable.home),
                 contentDescription = "HomeScreen",
-                modifier=Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth()
-
-            )
-        }
-
-        // Button to forecast screen
-        Button(
-            onClick = onNavigateToForecastScreen,
-            modifier = Modifier.size(width = 131.dp, height = 75.dp),
-            shape = RectangleShape
-        ) {
-            //name of the button
-            Image(
-                painter = painterResource(R.drawable.appliance),
-                contentDescription = "ApplianceScreen",
-                modifier=Modifier
+                modifier= Modifier
                     .fillMaxHeight()
                     .fillMaxWidth()
 
@@ -150,10 +143,27 @@ fun NavigateScreensComposable(
             //name of the button
             Image(
                 painter = painterResource(R.drawable.forecast),
-                contentDescription = "ForecastScreen",
-                modifier=Modifier
+                contentDescription = "ElectricityScreen",
+                modifier= Modifier
                     .fillMaxHeight()
                     .fillMaxWidth()
+            )
+        }
+
+        // Button to appliances screen
+        Button(
+            onClick = onNavigateToAppliancesScreen,
+            modifier = Modifier.size(width = 131.dp, height = 75.dp),
+            shape = RectangleShape
+        ) {
+            //name of the button
+            Image(
+                painter = painterResource(R.drawable.appliance),
+                contentDescription = "ApplianceScreen",
+                modifier= Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+
             )
         }
     }
