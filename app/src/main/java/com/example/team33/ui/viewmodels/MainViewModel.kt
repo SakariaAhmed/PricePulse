@@ -16,20 +16,19 @@ import kotlinx.coroutines.launch
 private const val TAG = "HomeViewModel"
 
 class MainViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(MainUiState(emptyList()))
+    private val _uiState = MutableStateFlow(MainUiState())
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
     init {
-        getPrice()
-        getLocationForcast()
+        getElectricityPrice()
+        getLocationForecast()
     }
 
-    // TODO: Extracting the electricity price from the data
-    fun getPrice() {
+    private fun getElectricityPrice() {
         viewModelScope.launch(Dispatchers.IO) {
             var data = emptyList<StroemprisData>()
             try {
-                data = StroemprisApi.getCurrentPriceFromRegion(StroemprisApiRegion.NO1)
+                data = StroemprisApi.getCurrentPriceFromRegion(_uiState.value.currentRegion)
             } catch (e: RedirectResponseException) {
                 val errorMsg = "${e.response.status}: ${e.response.call.request.url}"
                 Log.d(TAG, errorMsg)
@@ -43,15 +42,17 @@ class MainViewModel : ViewModel() {
                 val errorMsg = "Something terrible went wrong because:"
                 Log.e(TAG, "$errorMsg $e")
             }
+
             _uiState.update { currentState ->
                 currentState.copy(
-                    stroemList = data
+                    // remove all other unnecessary properties for fetched data
+                    electricityPrices = data.map {it.NOK_per_kWh}
                 )
             }
         }
     }
 
-    fun getLocationForcast() {
+    private fun getLocationForecast() {
         viewModelScope.launch(Dispatchers.IO) {
             var data: LocationForecast? = null
             try {
@@ -69,6 +70,7 @@ class MainViewModel : ViewModel() {
                 val errorMsg = "Something terrible went wrong because:"
                 Log.e(TAG, "$errorMsg $e")
             }
+
             _uiState.update { currentState ->
                 currentState.copy(
                     forecast = data
@@ -77,31 +79,12 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun setCurrentElectricityPrice(hour: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val data = StroemprisApi.getCurrentPriceFromRegion(StroemprisApiRegion.NO1)
-            _uiState.value.currentElectricityPrice = data[hour].NOK_per_kWh
-        }
-    }
-
-    fun setElectricityPricesToday(selectedRegion: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            var region: StroemprisApiRegion = StroemprisApiRegion.NO1
-            when (selectedRegion) {
-                "East-Norway" -> region = StroemprisApiRegion.NO1
-                "South-Norway" -> region = StroemprisApiRegion.NO2
-                "Mid-Norway" -> region = StroemprisApiRegion.NO3
-                "North-Norway" -> region = StroemprisApiRegion.NO4
-                "West-Norway" -> region = StroemprisApiRegion.NO5
+    fun changeElectricityRegion(region: ElectricityRegion){
+        if (_uiState.value.currentRegion != region) {
+            _uiState.update { currentState ->
+                currentState.copy(currentRegion = region)
             }
-
-            val data = StroemprisApi.getCurrentPriceFromRegion(region)
-            var electricityPricesList: MutableList<Double> = mutableListOf()
-            for (element in data) {
-                electricityPricesList.add(element.NOK_per_kWh)
-            }
-
-            _uiState.value.electricityPricesList = electricityPricesList
+            getElectricityPrice()
         }
     }
 }

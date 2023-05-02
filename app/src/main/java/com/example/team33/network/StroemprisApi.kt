@@ -13,7 +13,7 @@ import java.util.*
 
 private const val TAG = "StroemprosApi"
 
-enum class StroemprisApiRegion{
+enum class ElectricityRegion{
     NO1, // Oslo / Øst-Norge
     NO2, // Kristiansand / Sør-Norge
     NO3, // Trondheim / Midt-Norge
@@ -35,7 +35,7 @@ object StroemprisApi {
 
     private const val BASE_URL = "https://www.hvakosterstrommen.no/api/v1/prices"
 
-    suspend fun getCurrentPriceFromRegion(region: StroemprisApiRegion): List<StroemprisData> {
+    suspend fun getCurrentPriceFromRegion(region: ElectricityRegion): List<StroemprisData> {
         // get current date (year, month, day)
         val today = SimpleDateFormat("yyyy/MM-dd", Locale.getDefault()).format(Date())
 

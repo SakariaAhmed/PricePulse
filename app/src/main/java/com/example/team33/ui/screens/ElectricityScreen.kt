@@ -1,9 +1,11 @@
 package com.example.team33.ui.screens
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -47,9 +49,12 @@ fun ElectricityScreen(
 
         Text(text = "Electricity Screen", fontSize = 40.sp)
 
-        Text(text = stringResource(id = R.string.selected_region) + ": ${mainUiState.selectedRegion}")
+        Text(text = stringResource(id = R.string.selected_region) + ": ${mainUiState.currentRegion}")
 
-        ShowElectricityGraph(mainUiState.electricityPricesList)
+        // FIXME: Don't show a graph if there was an error fetching data from API
+        if (mainUiState.electricityPrices != null) {
+            ShowElectricityGraph(mainUiState.electricityPrices!!)
+        }
 
         // Calls on a function from HomeScreen.kt that lets user navigate to different screens
         NavigateScreensComposable(

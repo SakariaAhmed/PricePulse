@@ -14,9 +14,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.team33.R
+import com.example.team33.network.ElectricityRegion
 import com.example.team33.ui.uistates.MainUiState
 import com.example.team33.ui.viewmodels.MainViewModel
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import kotlin.math.round
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,18 +50,8 @@ fun HomeScreen(
 
         //name of the screen
         Text(text = "Home Screen", fontSize = 40.sp)
+        SpotpriceComposable(mainUiState.electricityPrices)
 
-        val time = SimpleDateFormat("yyyy/MM-dd-hh-mm-ss", Locale.getDefault()).format(Date())
-        val hour = time[11].toString() + time[12].toString()
-        if (hour[0] == '0') {
-            hour.drop(1)
-        }
-        mainViewModel.setCurrentElectricityPrice(hour.toInt())
-
-        Text(text = stringResource(id = R.string.spot_price))
-        Text(text = "${mainUiState.currentElectricityPrice} NOK_per_kWh")
-
-        var selectedOptionText by remember { mutableStateOf(mainUiState.selectedRegion) }
         var expanded by remember { mutableStateOf(false) }
         val regionOptions: List<String> = listOf(
             stringResource(id = R.string.east_norway),
@@ -72,7 +65,7 @@ fun HomeScreen(
         ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
             TextField(
                 readOnly = true,
-                value = selectedOptionText,
+                value = regionOptions[mainUiState.currentRegion.ordinal],
                 onValueChange = {},
                 label = { Text(stringResource(R.string.select_region)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -81,19 +74,17 @@ fun HomeScreen(
             )
             ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 regionOptions.forEach { selectionOption ->
-                    DropdownMenuItem(
-                        text = { Text(selectionOption) },
-                        onClick = {
-                            selectedOptionText = selectionOption
-                            mainUiState.selectedRegion = selectionOption
-                            expanded = false
+                    DropdownMenuItem(onClick = {
+                        expanded = false
+                        for ((index, region) in ElectricityRegion.values().withIndex()) {
+                            if (regionOptions[index] == selectionOption) {
+                                mainViewModel.changeElectricityRegion(region)
+                            }
                         }
-                    )
+                    }, text = { Text(selectionOption) })
                 }
             }
         }
-
-        mainViewModel.setElectricityPricesToday(selectedRegion = mainUiState.selectedRegion)
 
         // Calls on a function that lets user navigate to different screens
         NavigateScreensComposable(
@@ -104,12 +95,31 @@ fun HomeScreen(
     }
 }
 
+fun Double.round(decimals: Int): Double {
+    var multiplier = 1.0
+    repeat(decimals) { multiplier *= 10 }
+    return round(this * multiplier) / multiplier
+}
+
+// Displays location, date and current electricity price
+@Composable
+private fun SpotpriceComposable(electricityPrices: List<Double>?) {
+    Column {
+        val hour = SimpleDateFormat("HH", Locale.getDefault()).format(Date()).toInt()
+        // TODO: Make `Wait...` string localizable
+        val spotPrice = electricityPrices?.get(hour)?.round(2)?.toString() ?: "Wait..."
+
+        Text(stringResource(id = R.string.spot_price))
+        Text(text = "$spotPrice NOK/kWh")
+    }
+}
+
 // Lets user navigate to different screens
 @Composable
 fun NavigateScreensComposable(
     onNavigateToHomeScreen: () -> Unit,
     onNavigateToElectricityScreen: () -> Unit,
-    onNavigateToAppliancesScreen: () -> Unit,
+    onNavigateToAppliancesScreen: () -> Unit
 ) {
     // A row of buttons to multiple screens
     Row(
