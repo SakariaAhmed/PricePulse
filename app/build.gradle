@@ -69,6 +69,9 @@ dependencies {
     // Implements viewModel compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 
+    // Bottom bar navigation
+    implementation "androidx.compose.material:material:1.4.2"
+
     // Implements window size class
     implementation "androidx.compose.material3:material3-window-size-class:1.0.1"
 
@@ -104,6 +107,9 @@ dependencies {
     dependencies {
         implementation("org.slf4j:slf4j-jdk14:1.7.36")
     }
+
+    // Extra Meterial icons
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
     // Tensorflow Lite dependencies
     implementation 'org.tensorflow:tensorflow-lite-task-vision-play-services:0.4.2'

@@ -13,4 +13,7 @@
     <string name="west_norway">West-Norway</string>
     <string name="selected_region">Selected region</string>
     <string name="spot_price">Spot price now: </string>
+    <string name="home">Home</string>
+    <string name="electricity">Electricity</string>
+    <string name="appliances">Appliances</string>
 </resources>
