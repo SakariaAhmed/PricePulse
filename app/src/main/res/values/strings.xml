@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">team33</string>
-    <string name="oslo">Oslo</string>
+    <string name="oslo" translatable="false">Oslo</string>
     <string name="current_electricity_price">Current electricity price</string>
     <string name="unable_to_connect">Unable to connect to the Internet</string>
     <string name="lost_connection">Lost internet connection</string>
@@ -16,4 +16,9 @@
     <string name="home">Home</string>
     <string name="electricity">Electricity</string>
     <string name="appliances">Appliances</string>
+    <string name="settings">Settings</string>
+    <string name="table">Table</string>
+    <string name="graph">Graph</string>
+    <string name="language">Language selected: English</string>
+    <string name="change_language">Change language through system settings</string>
 </resources>

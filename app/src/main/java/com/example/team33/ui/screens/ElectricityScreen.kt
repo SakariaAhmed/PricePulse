@@ -31,7 +31,7 @@ fun ElectricityScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
         modifier = Modifier.fillMaxSize()
     ) {
 
-        Text(text = "Electricity Screen", fontSize = 40.sp)
+        Text(text = stringResource(id = R.string.electricity), fontSize = 40.sp)
 
         val regionOptions: List<String> = listOf(
             stringResource(id = R.string.east_norway),

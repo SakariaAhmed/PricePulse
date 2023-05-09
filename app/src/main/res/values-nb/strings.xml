@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">team33</string>
+    <string name="current_electricity_price">Gjeldende strømpris</string>
+    <string name="unable_to_connect">Kan ikke koble til Internettet</string>
+    <string name="lost_connection">Mistet internettforbindelse</string>
+    <string name="losing_connection">Mister internettforbindelse...</string>
+    <string name="select_region">Velg region</string>
+    <string name="east_norway">Øst-Norge</string>
+    <string name="south_norway">Sør-Norge</string>
+    <string name="mid_norway">Midt-Norge</string>
+    <string name="north_norway">Nord-Norge</string>
+    <string name="west_norway">Vest-Norge</string>
+    <string name="selected_region">Valgt region</string>
+    <string name="spot_price">Spotpris nå: </string>
+    <string name="home">Hjem</string>
+    <string name="electricity">Elektrisitet</string>
+    <string name="appliances">Hvitevarer</string>
+    <string name="settings">Innstillinger</string>
+    <string name="table">Tabell</string>
+    <string name="graph">Graf</string>
+    <string name="language">Språk valgt: Norsk</string>
+    <string name="change_language">Endre språk gjennom systeminnstillingene</string>
+</resources>

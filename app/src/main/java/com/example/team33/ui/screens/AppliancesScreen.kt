@@ -25,8 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.team33.R
 import com.example.team33.ui.viewmodels.MainViewModel
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
@@ -42,7 +44,7 @@ fun AppliancesScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = "Appliances Screen", fontSize = 40.sp)
+        Text(text = stringResource(id = R.string.appliances), fontSize = 40.sp)
 
         // Lagde en variabel som holder styr på dette for nå
         var showChart by remember { mutableStateOf(true) }
@@ -52,10 +54,10 @@ fun AppliancesScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
                 onClick = { showChart = false },
                 modifier = Modifier.clip(shape = RectangleShape)
             ) {
-                Text(text = "Tabell")
+                Text(text = stringResource(id = R.string.table))
             }
             Button(onClick = { showChart = true }) {
-                Text(text = "Graf")
+                Text(text = stringResource(id = R.string.graph))
             }
         }
         //Resultat
@@ -139,6 +141,6 @@ fun RowInTable(verdi: Int, pris: Float) {
             .border(width = 2.dp, color = Color.Black)
     ) {
         Text(text = "         $verdi :                           ")
-        Text(text = "$pris kr/kWt")
+        Text(text = "$pris NOK/kWh")
     }
 }

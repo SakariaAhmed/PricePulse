@@ -1,4 +1,4 @@
-package com.example.team33
+package com.example.team33.ui
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -25,6 +25,7 @@ import com.example.team33.navigation.TopLevelDestination
 import com.example.team33.ui.screens.AppliancesScreen
 import com.example.team33.ui.screens.ElectricityScreen
 import com.example.team33.ui.screens.HomeScreen
+import com.example.team33.ui.screens.SettingsScreen
 import com.example.team33.ui.viewmodels.MainViewModel
 
 @Composable
@@ -40,7 +41,7 @@ fun AppScreen(windowSizeClass: WindowSizeClass, viewModel: MainViewModel = viewM
             composable(TopLevelDestination.HOME.route) { HomeScreen(viewModel = viewModel) }
             composable(TopLevelDestination.ELECTRICITY.route) { ElectricityScreen(viewModel = viewModel) }
             composable(TopLevelDestination.APPLIANCES.route) { AppliancesScreen(viewModel = viewModel) }
-
+            composable(TopLevelDestination.SETTINGS.route) { SettingsScreen(viewModel = viewModel) }
         }
     }
 }

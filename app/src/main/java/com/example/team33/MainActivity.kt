@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.team33.network.ConnectivityObserver
 import com.example.team33.network.NetworkConnectivityObserver
+import com.example.team33.ui.AppScreen
 import com.example.team33.ui.theme.Team33Theme
 
 class MainActivity : ComponentActivity() {

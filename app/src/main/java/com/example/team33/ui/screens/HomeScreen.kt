@@ -15,7 +15,6 @@ import java.util.Date
 import java.util.Locale
 import kotlin.math.round
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
     val mainUiState by viewModel.uiState.collectAsState()
@@ -27,42 +26,8 @@ fun HomeScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
         modifier = Modifier.fillMaxSize()
     ) {
         // name of the screen
-        Text(text = "Home Screen", fontSize = 40.sp)
+        Text(text = stringResource(id = R.string.home), fontSize = 40.sp)
         SpotpriceComposable(mainUiState.electricityPrices)
-
-        var expanded by remember { mutableStateOf(false) }
-        val regionOptions: List<String> = listOf(
-            stringResource(id = R.string.east_norway),
-            stringResource(id = R.string.south_norway),
-            stringResource(id = R.string.mid_norway),
-            stringResource(id = R.string.north_norway),
-            stringResource(id = R.string.west_norway)
-        )
-
-        // Dropdown-Menu that lets user select the electricity price from 5 different regions in Norway
-        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
-            TextField(
-                readOnly = true,
-                value = regionOptions[mainUiState.currentRegion.ordinal],
-                onValueChange = {},
-                label = { Text(stringResource(R.string.select_region)) },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                colors = ExposedDropdownMenuDefaults.textFieldColors(),
-                modifier = Modifier.menuAnchor()
-            )
-            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                regionOptions.forEach { selectionOption ->
-                    DropdownMenuItem(onClick = {
-                        expanded = false
-                        for ((index, region) in ElectricityRegion.values().withIndex()) {
-                            if (regionOptions[index] == selectionOption) {
-                                viewModel.changeElectricityRegion(region)
-                            }
-                        }
-                    }, text = { Text(selectionOption) })
-                }
-            }
-        }
     }
 }
 
