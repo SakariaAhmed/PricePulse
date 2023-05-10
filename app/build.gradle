@@ -69,9 +69,6 @@ dependencies {
     // Implements viewModel compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 
-    // Bottom bar navigation
-    implementation "androidx.compose.material:material:1.4.2"
-
     // Implements window size class
     implementation "androidx.compose.material3:material3-window-size-class:1.0.1"
 
@@ -94,12 +91,11 @@ dependencies {
     implementation "io.ktor:ktor-serialization-kotlinx-cbor:$ktor_version"
     implementation "io.ktor:ktor-serialization-kotlinx-protobuf:$ktor_version"
     implementation "io.ktor:ktor-client-logging:$ktor_version"
-    
+
     // Navigation
     dependencies {
-    def nav_version = "2.5.3"
-
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+        def nav_version = "2.5.3"
+        implementation("androidx.navigation:navigation-compose:$nav_version")
     }
 
     // Added this dependecy to resolve a fail in loading Class org.slf4j.impl.StaticLoggerBinder

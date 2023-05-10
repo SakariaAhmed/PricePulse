@@ -2,11 +2,12 @@ package com.example.team33.ui
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +29,7 @@ import com.example.team33.ui.screens.HomeScreen
 import com.example.team33.ui.screens.SettingsScreen
 import com.example.team33.ui.viewmodels.MainViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScreen(windowSizeClass: WindowSizeClass, viewModel: MainViewModel = viewModel()) {
     val navController = rememberNavController()
@@ -51,7 +53,7 @@ fun BottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    BottomNavigation {
+    NavigationBar(){
         TopLevelDestination.values().forEach { screen ->
             AddNavItem(
                 screen = screen,
@@ -68,7 +70,7 @@ fun RowScope.AddNavItem(
     currentDestination: NavDestination?,
     navController: NavHostController
 ) {
-    BottomNavigationItem(icon = {
+    NavigationBarItem(icon = {
         Icon(
             imageVector = screen.selectedIcon,
             contentDescription = stringResource(id = screen.titleTextId)
