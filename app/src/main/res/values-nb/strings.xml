@@ -21,4 +21,19 @@
     <string name="graph">Graf</string>
     <string name="language">Språk valgt: Norsk</string>
     <string name="change_language">Endre språk gjennom systeminnstillingene</string>
+    <string name="show_developers">Vis utviklerne</string>
+    <string name="show_usage">Vis bruksområde</string>
+    <string name="made_by">Denne appen er utviklet av: Osman Nasib Ali Ahmed,
+        Kashmala Hafeez Sheikh,
+        Sofia Ibn El Moujdi Troger,
+        Suleyman Mert Boyar,
+        Syed Adam Hussainy,
+        Sakaria Abdi Ahmed</string>
+    <string name="purpose">Hensikten med appen her er å vise elektrisitetsprisen
+        for et tidsrom, og kostnaden for å bruke ulike apparaturer
+        innen disse tidsrommene. Hjemskjermen viser spotprisen til brukeren,
+        mens elektrisitets skjermen viser elektrisitets prisen for dagen i dag,
+        og regionen den viser for. Apparat skjermen viser prisen for apparatet som
+        ble valgt som en graf eller en tabell.
+        Og i innstillingene så kan du endre regionen som er valgt.</string>
 </resources>

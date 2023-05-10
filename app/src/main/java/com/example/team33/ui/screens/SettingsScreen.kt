@@ -16,7 +16,8 @@ import com.example.team33.ui.viewmodels.MainViewModel
 @Composable
 fun SettingsScreen(viewModel: MainViewModel) {
     val mainUiState by viewModel.uiState.collectAsState()
-
+    var showDevelopers by remember { mutableStateOf(false) }
+    var showPurpose by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val regionOptions: List<String> = listOf(
         stringResource(id = R.string.east_norway),
@@ -58,5 +59,21 @@ fun SettingsScreen(viewModel: MainViewModel) {
 
         Text(text = stringResource(id = R.string.language))
         Text(text = stringResource(id = R.string.change_language))
+
+        Button(onClick = { showDevelopers = !showDevelopers }, modifier= Modifier
+            .align(Alignment.CenterHorizontally)) {
+            Text(stringResource(id = R.string.show_developers))
+        }
+        if (showDevelopers) {
+            Text(text = stringResource(id = R.string.made_by))
+        }
+
+        Button(onClick = { showPurpose = !showPurpose }, modifier= Modifier
+            .align(Alignment.CenterHorizontally)) {
+            Text(stringResource(id = R.string.show_usage))
+        }
+        if (showPurpose){
+        Text(text = stringResource(id = R.string.purpose))
+        }
     }
 }
