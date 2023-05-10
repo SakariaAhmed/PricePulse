@@ -7,17 +7,18 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
 import com.example.team33.R
 import com.example.team33.network.ElectricityRegion
 import com.example.team33.ui.viewmodels.MainViewModel
+import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(viewModel: MainViewModel) {
+fun SettingsScreen(viewModel: MainViewModel, navController: NavHostController) {
     val mainUiState by viewModel.uiState.collectAsState()
-    var showDevelopers by remember { mutableStateOf(false) }
-    var showPurpose by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val regionOptions: List<String> = listOf(
         stringResource(id = R.string.east_norway),
@@ -60,20 +61,44 @@ fun SettingsScreen(viewModel: MainViewModel) {
         Text(text = stringResource(id = R.string.language))
         Text(text = stringResource(id = R.string.change_language))
 
-        Button(onClick = { showDevelopers = !showDevelopers }, modifier= Modifier
+        Button(onClick = { navController.navigate("showDeveloper")}, modifier= Modifier
             .align(Alignment.CenterHorizontally)) {
             Text(stringResource(id = R.string.show_developers))
         }
-        if (showDevelopers) {
-            Text(text = stringResource(id = R.string.made_by))
-        }
 
-        Button(onClick = { showPurpose = !showPurpose }, modifier= Modifier
+
+        Button(onClick = { navController.navigate("showPurpose")}, modifier= Modifier
             .align(Alignment.CenterHorizontally)) {
             Text(stringResource(id = R.string.show_usage))
         }
-        if (showPurpose){
-        Text(text = stringResource(id = R.string.purpose))
+
+        Button(onClick = {navController.navigate("openSource") }) {
+            Text(stringResource(id = R.string.opensource))
+        }
+    
+    }
+}
+
+@Composable
+fun OpenSource(){
+    LibrariesContainer(Modifier.fillMaxSize())
+}
+
+
+@Composable
+fun ShowDevelopers(){
+    val array: Array<String> = stringArrayResource(id = R.array.names)
+    Column {
+        Text(text = stringResource(id = R.string.made_by))
+        array.forEach { selectedOption ->
+            Text(text = selectedOption)
         }
     }
 }
+
+
+@Composable
+fun ShowPurpose(){
+    Text(text = stringResource(id = R.string.purpose))
+}
+

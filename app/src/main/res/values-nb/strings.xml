@@ -23,12 +23,8 @@
     <string name="change_language">Endre språk gjennom systeminnstillingene</string>
     <string name="show_developers">Vis utviklerne</string>
     <string name="show_usage">Vis bruksområde</string>
-    <string name="made_by">Denne appen er utviklet av: Osman Nasib Ali Ahmed,
-        Kashmala Hafeez Sheikh,
-        Sofia Ibn El Moujdi Troger,
-        Suleyman Mert Boyar,
-        Syed Adam Hussainy,
-        Sakaria Abdi Ahmed</string>
+    <string name="made_by">Denne appen er utviklet av:</string>
+    <string name="opensource">Vis åpen kildekode lisenser </string>
     <string name="purpose">Hensikten med appen her er å vise elektrisitetsprisen
         for et tidsrom, og kostnaden for å bruke ulike apparaturer
         innen disse tidsrommene. Hjemskjermen viser spotprisen til brukeren,
@@ -36,4 +32,12 @@
         og regionen den viser for. Apparat skjermen viser prisen for apparatet som
         ble valgt som en graf eller en tabell.
         Og i innstillingene så kan du endre regionen som er valgt.</string>
+    <string-array name="names">
+        <item>Osman Nasib Ali Ahmed</item>
+        <item>Kashmala Hafeez Sheikh</item>
+        <item>Sofia Ibn El Moujdi Troger</item>
+        <item>Suleyman Mert Boyar</item>
+        <item>Syed Adam Hussainy</item>
+        <item>Sakaria Abdi Ahmed</item>
+    </string-array>
 </resources>

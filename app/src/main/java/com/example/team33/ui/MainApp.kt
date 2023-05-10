@@ -23,10 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.team33.navigation.TopLevelDestination
-import com.example.team33.ui.screens.AppliancesScreen
-import com.example.team33.ui.screens.ElectricityScreen
-import com.example.team33.ui.screens.HomeScreen
-import com.example.team33.ui.screens.SettingsScreen
+import com.example.team33.ui.screens.*
 import com.example.team33.ui.viewmodels.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +40,10 @@ fun AppScreen(windowSizeClass: WindowSizeClass, viewModel: MainViewModel = viewM
             composable(TopLevelDestination.HOME.route) { HomeScreen(viewModel = viewModel) }
             composable(TopLevelDestination.ELECTRICITY.route) { ElectricityScreen(viewModel = viewModel) }
             composable(TopLevelDestination.APPLIANCES.route) { AppliancesScreen(viewModel = viewModel) }
-            composable(TopLevelDestination.SETTINGS.route) { SettingsScreen(viewModel = viewModel) }
+            composable(TopLevelDestination.SETTINGS.route) { SettingsScreen(viewModel = viewModel, navController) }
+            composable(route = "openSource") { OpenSource() }
+            composable(route = "showDeveloper") { ShowDevelopers() }
+            composable(route = "showPurpose") { ShowPurpose() }
         }
     }
 }
@@ -64,6 +64,8 @@ fun BottomBar(navController: NavHostController) {
     }
 }
 
+
+
 @Composable
 fun RowScope.AddNavItem(
     screen: TopLevelDestination,
@@ -81,7 +83,7 @@ fun RowScope.AddNavItem(
         onClick = {
             navController.navigate(screen.route) {
                 popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
+                    saveState = false
                 }
                 launchSingleTop = true
                 restoreState = true

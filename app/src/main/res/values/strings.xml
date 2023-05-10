@@ -23,13 +23,8 @@
     <string name="change_language">Change language through system settings</string>
     <string name="show_developers">Show the developers</string>
     <string name="show_usage">Show the usages</string>
-    <string name="made_by">This app is developed by:
-        Osman Nasib Ali Ahmed,
-        Kashmala Hafeez Sheikh,
-        Sofia Ibn El Moujdi Troger,
-        Suleyman Mert Boyar,
-        Syed Adam Hussainy,
-        Sakaria Abdi Ahmed</string>
+    <string name="made_by">This app is developed by: </string>
+    <string name="opensource">Show open source licence </string>
     <string name="purpose">The purpose of this app is to show the electricity
         price for a timeframe, and show the cost for common appliances during the
         different timeframes. The home screen shows the current spot price for the
@@ -38,4 +33,12 @@
         of using the appliance that
         was chosen as a graph or a table. And in the settings, you can change the
         region.</string>
+    <string-array name="names">
+        <item>Osman Nasib Ali Ahmed</item>
+        <item>Kashmala Hafeez Sheikh</item>
+        <item>Sofia Ibn El Moujdi Troger</item>
+        <item>Suleyman Mert Boyar</item>
+        <item>Syed Adam Hussainy</item>
+        <item>Sakaria Abdi Ahmed</item>
+    </string-array>
 </resources>
