@@ -4,12 +4,13 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,6 +31,7 @@ import com.example.team33.ui.viewmodels.MainViewModel
 @Composable
 fun AppScreen(windowSizeClass: WindowSizeClass, viewModel: MainViewModel = viewModel()) {
     val navController = rememberNavController()
+    val mainUiState by viewModel.uiState.collectAsState()
 
     Scaffold(bottomBar = { BottomBar(navController) }) { innerPadding ->
         NavHost(
@@ -37,10 +39,16 @@ fun AppScreen(windowSizeClass: WindowSizeClass, viewModel: MainViewModel = viewM
             startDestination = TopLevelDestination.HOME.route,
             Modifier.padding(innerPadding)
         ) {
-            composable(TopLevelDestination.HOME.route) { HomeScreen(viewModel = viewModel) }
-            composable(TopLevelDestination.ELECTRICITY.route) { ElectricityScreen(viewModel = viewModel) }
-            composable(TopLevelDestination.APPLIANCES.route) { AppliancesScreen(viewModel = viewModel) }
-            composable(TopLevelDestination.SETTINGS.route) { SettingsScreen(viewModel = viewModel, navController) }
+            composable(TopLevelDestination.HOME.route) { HomeScreen(mainUiState = mainUiState) }
+            composable(TopLevelDestination.ELECTRICITY.route) { ElectricityScreen(mainUiState = mainUiState) }
+            composable(TopLevelDestination.APPLIANCES.route) { AppliancesScreen(mainUiState = mainUiState) }
+            composable(TopLevelDestination.SETTINGS.route) {
+                SettingsScreen(mainUiState = mainUiState,
+                    navController = navController,
+                    // This is done because view-model should not be passed as an argument
+                    // https://developer.android.com/jetpack/compose/state
+                    changeElectricityRegion = { viewModel.changeElectricityRegion(it) })
+            }
             composable(route = "openSource") { OpenSource() }
             composable(route = "showDeveloper") { ShowDevelopers() }
             composable(route = "showPurpose") { ShowPurpose() }

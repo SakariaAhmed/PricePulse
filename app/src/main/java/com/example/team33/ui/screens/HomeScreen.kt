@@ -9,17 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import com.example.team33.R
-import com.example.team33.network.ElectricityRegion
-import com.example.team33.ui.viewmodels.MainViewModel
+import com.example.team33.ui.uistates.MainUiState
 import java.util.Date
 import java.util.Locale
 import kotlin.math.round
 
 @Composable
-fun HomeScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
-    val mainUiState by viewModel.uiState.collectAsState()
-
-    // TODO: I was working on implementing bottom bar for navigation
+fun HomeScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
@@ -42,8 +38,8 @@ fun Double.round(decimals: Int): Double {
 private fun SpotpriceComposable(electricityPrices: List<Double>?) {
     Column {
         val hour = SimpleDateFormat("HH", Locale.getDefault()).format(Date()).toInt()
-        // TODO: Make `Wait...` string localizable
-        val spotPrice = electricityPrices?.get(hour)?.round(2)?.toString() ?: "Wait..."
+        val spotPrice =
+            electricityPrices?.get(hour)?.round(2)?.toString() ?: stringResource(id = R.string.wait)
 
         Text(stringResource(id = R.string.spot_price))
         Text(text = "$spotPrice NOK/kWh")

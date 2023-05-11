@@ -13,12 +13,12 @@ import androidx.navigation.NavHostController
 import com.example.team33.R
 import com.example.team33.network.ElectricityRegion
 import com.example.team33.ui.viewmodels.MainViewModel
+import com.example.team33.ui.uistates.MainUiState
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(viewModel: MainViewModel, navController: NavHostController) {
-    val mainUiState by viewModel.uiState.collectAsState()
+fun SettingsScreen(mainUiState: MainUiState, navController: NavHostController, changeElectricityRegion: (ElectricityRegion) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     val regionOptions: List<String> = listOf(
         stringResource(id = R.string.east_norway),
@@ -50,7 +50,7 @@ fun SettingsScreen(viewModel: MainViewModel, navController: NavHostController) {
                         expanded = false
                         for ((index, region) in ElectricityRegion.values().withIndex()) {
                             if (regionOptions[index] == selectionOption) {
-                                viewModel.changeElectricityRegion(region)
+                                changeElectricityRegion(region)
                             }
                         }
                     }, text = { Text(selectionOption) })

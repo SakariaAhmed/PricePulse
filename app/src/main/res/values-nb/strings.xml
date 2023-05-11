@@ -40,4 +40,5 @@
         <item>Syed Adam Hussainy</item>
         <item>Sakaria Abdi Ahmed</item>
     </string-array>
+    <string name="wait">vent…</string>
 </resources>
