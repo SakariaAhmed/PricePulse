@@ -105,6 +105,10 @@ dependencies {
         implementation("org.slf4j:slf4j-jdk14:1.7.36")
     }
 
+    // Testing of navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:2.5.3"
+
+
     // Extra Meterial icons
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 

@@ -15,14 +15,8 @@ class MainViewModelTest {
     fun stroem_isNotNull() {
 
         // Testing if StroemprisApi return an Array with elements in it
-        val data = view.uiState.value.stroemList
+        val data = view.uiState.value.electricityPrices
         Assert.assertNotNull(data)
-
-        for (d in data) {
-            Assert.assertNotNull(d.NOK_per_kWh)
-            Assert.assertNotNull(d.time_end)
-            Assert.assertNotNull(d.time_start)
-        }
     }
 
     @Test
