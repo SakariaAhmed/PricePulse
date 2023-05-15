@@ -4,7 +4,7 @@
     <string name="current_electricity_price">Gjeldende strømpris</string>
     <string name="unable_to_connect">Kan ikke koble til Internettet</string>
     <string name="lost_connection">Mistet internettforbindelse</string>
-    <string name="losing_connection">Mister internettforbindelse...</string>
+    <string name="losing_connection">Mister internettforbindelse…</string>
     <string name="select_region">Velg region</string>
     <string name="east_norway">Øst-Norge</string>
     <string name="south_norway">Sør-Norge</string>
@@ -12,7 +12,7 @@
     <string name="north_norway">Nord-Norge</string>
     <string name="west_norway">Vest-Norge</string>
     <string name="selected_region">Valgt region</string>
-    <string name="spot_price">Spotpris nå: </string>
+    <string name="spot_price">Spotpris</string>
     <string name="home">Hjem</string>
     <string name="electricity">Elektrisitet</string>
     <string name="appliances">Hvitevarer</string>
@@ -21,10 +21,10 @@
     <string name="graph">Graf</string>
     <string name="language">Språk valgt: Norsk</string>
     <string name="change_language">Endre språk gjennom systeminnstillingene</string>
-    <string name="show_developers">Vis utviklerne</string>
-    <string name="show_usage">Vis bruksområde</string>
+    <string name="developers">Utviklere</string>
+    <string name="usage">Bruksområde</string>
     <string name="made_by">Denne appen er utviklet av:</string>
-    <string name="opensource">Vis åpen kildekode lisenser </string>
+    <string name="opensource">Åpen kildekode lisenser</string>
     <string name="purpose">Hensikten med appen her er å vise elektrisitetsprisen
         for et tidsrom, og kostnaden for å bruke ulike apparaturer
         innen disse tidsrommene. Hjemskjermen viser spotprisen til brukeren,
@@ -41,4 +41,6 @@
         <item>Sakaria Abdi Ahmed</item>
     </string-array>
     <string name="wait">vent…</string>
+    <string name="y_axis">NOK/kWh</string>
+    <string name="x_axis">time</string>
 </resources>

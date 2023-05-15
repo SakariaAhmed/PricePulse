@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.team33.R
 import com.example.team33.ui.uistates.MainUiState
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
@@ -42,10 +41,8 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
-        Text(text = stringResource(id = R.string.appliances), fontSize = 40.sp)
-
         // Lagde en variabel som holder styr på dette for nå
         var showChart by remember { mutableStateOf(true) }
         // Tabell og Graf
@@ -53,12 +50,10 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
             Button(
                 onClick = { showChart = false },
                 modifier = Modifier.clip(shape = RectangleShape)
-            ) {
-                Text(text = stringResource(id = R.string.table))
-            }
-            Button(onClick = { showChart = true }) {
-                Text(text = stringResource(id = R.string.graph))
-            }
+            ) { Text(text = stringResource(id = R.string.table)) }
+            Button(onClick = {
+                showChart = true
+            }) { Text(text = stringResource(id = R.string.graph)) }
         }
         //Resultat
         Box {
@@ -78,7 +73,6 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
             } else {
                 ShowTable(liste)
             }
-
         }
 
         //Fire knapper
@@ -103,13 +97,12 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
             }
         }
 
-        Column(modifier = Modifier.weight(1f)) {
-        }
+        Column(modifier = Modifier.weight(1f)) {}
     }
 }
 
 @Composable
-fun ShowGraph(list: List<Float>) {
+fun ShowGraph(list: List<Float>, modifier: Modifier = Modifier) {
     val chartEntryModelProducer =
         entryModelOf(List(list.size) { FloatEntry(it.toFloat(), list[it]) })
 
@@ -118,13 +111,14 @@ fun ShowGraph(list: List<Float>) {
         model = chartEntryModelProducer,
         startAxis = startAxis(),
         bottomAxis = bottomAxis(),
+        modifier = modifier
     )
 }
 
 @Composable
-fun ShowTable(list: List<Float>) {
+fun ShowTable(list: List<Float>, modifier: Modifier = Modifier) {
     var teller = 0
-    LazyColumn {
+    LazyColumn(modifier = modifier) {
         items(list) { element ->
             RowInTable(verdi = teller++, pris = element)
 
@@ -133,9 +127,9 @@ fun ShowTable(list: List<Float>) {
 }
 
 @Composable
-fun RowInTable(verdi: Int, pris: Float) {
+fun RowInTable(verdi: Int, pris: Float, modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(4.dp)
             .border(width = 2.dp, color = Color.Black)

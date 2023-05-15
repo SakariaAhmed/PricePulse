@@ -3,9 +3,15 @@ package com.example.team33.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.team33.network.*
+import com.example.team33.network.ElectricityRegion
+import com.example.team33.network.LocationForecast
+import com.example.team33.network.LocationForecastApi
+import com.example.team33.network.StroemprisApi
+import com.example.team33.network.StroemprisData
 import com.example.team33.ui.uistates.MainUiState
-import io.ktor.client.plugins.*
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.RedirectResponseException
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,6 +30,16 @@ class MainViewModel : ViewModel() {
         getLocationForecast()
     }
 
+    fun changeElectricityRegion(region: ElectricityRegion) {
+        if (_uiState.value.currentRegion != region) {
+            _uiState.update { currentState ->
+                currentState.copy(currentRegion = region)
+            }
+            getElectricityPrice()
+        }
+    }
+
+    // Fetches electricity prices from `strømpris API`
     private fun getElectricityPrice() {
         viewModelScope.launch(Dispatchers.IO) {
             var data = emptyList<StroemprisData>()
@@ -52,6 +68,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    // Fetches electricity prices from `Location Forecast API`
     private fun getLocationForecast() {
         viewModelScope.launch(Dispatchers.IO) {
             var data: LocationForecast? = null
@@ -76,15 +93,6 @@ class MainViewModel : ViewModel() {
                     forecast = data
                 )
             }
-        }
-    }
-
-    fun changeElectricityRegion(region: ElectricityRegion){
-        if (_uiState.value.currentRegion != region) {
-            _uiState.update { currentState ->
-                currentState.copy(currentRegion = region)
-            }
-            getElectricityPrice()
         }
     }
 }

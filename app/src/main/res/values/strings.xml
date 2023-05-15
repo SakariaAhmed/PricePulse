@@ -4,7 +4,7 @@
     <string name="current_electricity_price">Current electricity price</string>
     <string name="unable_to_connect">Unable to connect to the Internet</string>
     <string name="lost_connection">Lost internet connection</string>
-    <string name="losing_connection">Losing internet connection...</string>
+    <string name="losing_connection">Losing internet connection…</string>
     <string name="select_region">Select region</string>
     <string name="east_norway">East-Norway</string>
     <string name="south_norway">South-Norway</string>
@@ -12,7 +12,7 @@
     <string name="north_norway">North-Norway</string>
     <string name="west_norway">West-Norway</string>
     <string name="selected_region">Selected region</string>
-    <string name="spot_price">Spot price now: </string>
+    <string name="spot_price">Spot price</string>
     <string name="home">Home</string>
     <string name="electricity">Electricity</string>
     <string name="appliances">Appliances</string>
@@ -21,10 +21,10 @@
     <string name="graph">Graph</string>
     <string name="language">Language selected: English</string>
     <string name="change_language">Change language through system settings</string>
-    <string name="show_developers">Show the developers</string>
-    <string name="show_usage">Show the usages</string>
+    <string name="developers">Developers</string>
+    <string name="usage">Usage</string>
     <string name="made_by">This app is developed by: </string>
-    <string name="opensource">Show open source licence </string>
+    <string name="opensource">Open source licence</string>
     <string name="purpose">The purpose of this app is to show the electricity
         price for a timeframe, and show the cost for common appliances during the
         different timeframes. The home screen shows the current spot price for the
@@ -42,4 +42,6 @@
         <item>Sakaria Abdi Ahmed</item>
     </string-array>
     <string name="wait">wait…</string>
+    <string name="y_axis">NOK/kWh</string>
+    <string name="x_axis">hour of day</string>
 </resources>

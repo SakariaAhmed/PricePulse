@@ -12,13 +12,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.team33.R
 import com.example.team33.network.ElectricityRegion
-import com.example.team33.ui.viewmodels.MainViewModel
 import com.example.team33.ui.uistates.MainUiState
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(mainUiState: MainUiState, navController: NavHostController, changeElectricityRegion: (ElectricityRegion) -> Unit) {
+fun SettingsScreen(
+    mainUiState: MainUiState,
+    navController: NavHostController,
+    changeElectricityRegion: (ElectricityRegion) -> Unit,
+    modifier: Modifier = Modifier
+) {
     var expanded by remember { mutableStateOf(false) }
     val regionOptions: List<String> = listOf(
         stringResource(id = R.string.east_norway),
@@ -31,10 +35,12 @@ fun SettingsScreen(mainUiState: MainUiState, navController: NavHostController, c
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         // Dropdown-Menu that lets user select the electricity price from 5 different regions in Norway
-        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+        ExposedDropdownMenuBox(
+            expanded = expanded, onExpandedChange = { expanded = !expanded }
+        ) {
             TextField(
                 readOnly = true,
                 value = regionOptions[mainUiState.currentRegion.ordinal],
@@ -44,16 +50,22 @@ fun SettingsScreen(mainUiState: MainUiState, navController: NavHostController, c
                 colors = ExposedDropdownMenuDefaults.textFieldColors(),
                 modifier = Modifier.menuAnchor()
             )
-            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+            ) {
                 regionOptions.forEach { selectionOption ->
-                    DropdownMenuItem(onClick = {
-                        expanded = false
-                        for ((index, region) in ElectricityRegion.values().withIndex()) {
-                            if (regionOptions[index] == selectionOption) {
-                                changeElectricityRegion(region)
+                  DropdownMenuItem(
+                        onClick = {
+                            expanded = false
+                            for ((index, region) in ElectricityRegion.values().withIndex()) {
+                                if (regionOptions[index] == selectionOption) {
+                                    changeElectricityRegion(region)
+                                }
                             }
-                        }
-                    }, text = { Text(selectionOption) })
+                        },
+                        text = { Text(selectionOption) }
+                    )
                 }
             }
         }
@@ -61,34 +73,35 @@ fun SettingsScreen(mainUiState: MainUiState, navController: NavHostController, c
         Text(text = stringResource(id = R.string.language))
         Text(text = stringResource(id = R.string.change_language))
 
-        Button(onClick = { navController.navigate("showDeveloper")}, modifier= Modifier
-            .align(Alignment.CenterHorizontally)) {
-            Text(stringResource(id = R.string.show_developers))
+        Button(
+            onClick = { navController.navigate("showDeveloper") },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(stringResource(id = R.string.developers))
         }
 
-
-        Button(onClick = { navController.navigate("showPurpose")}, modifier= Modifier
-            .align(Alignment.CenterHorizontally)) {
-            Text(stringResource(id = R.string.show_usage))
+        Button(
+            onClick = { navController.navigate("showPurpose") },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(stringResource(id = R.string.usage))
         }
 
-        Button(onClick = {navController.navigate("openSource") }) {
+        Button(onClick = { navController.navigate("openSource") }) {
             Text(stringResource(id = R.string.opensource))
         }
-    
     }
 }
 
 @Composable
-fun OpenSource(){
-    LibrariesContainer(Modifier.fillMaxSize())
+fun OpenSource(modifier: Modifier = Modifier) {
+    LibrariesContainer(modifier.fillMaxSize())
 }
 
-
 @Composable
-fun ShowDevelopers(){
+fun ShowDevelopers(modifier: Modifier = Modifier) {
     val array: Array<String> = stringArrayResource(id = R.array.names)
-    Column {
+    Column(modifier = modifier) {
         Text(text = stringResource(id = R.string.made_by))
         array.forEach { selectedOption ->
             Text(text = selectedOption)
@@ -96,9 +109,10 @@ fun ShowDevelopers(){
     }
 }
 
-
 @Composable
-fun ShowPurpose(){
-    Text(text = stringResource(id = R.string.purpose))
+fun ShowPurpose(modifier: Modifier = Modifier) {
+    Text(
+        text = stringResource(id = R.string.purpose), modifier = modifier
+    )
 }
 

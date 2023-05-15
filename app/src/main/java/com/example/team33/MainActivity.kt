@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,7 +43,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     when (status.toString()) {
                         "Available" -> {
-                            AppScreen(windowSizeClass = calculateWindowSizeClass(this))
+                            AppScreen()
                         }
                         "Unavailable" -> {
                             UnavailableScreen(modifier = Modifier)
