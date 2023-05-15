@@ -88,7 +88,8 @@ fun PopulatedChartCard(
         model = model,
         axisValuesOverrider = axisValuesOverrider,
         decoration = decoration,
-        modifier = modifier
+        modifier = modifier,
+        xAxisTitlemsg = stringResource(R.string.x_axis)
     )
 }
 
@@ -109,6 +110,7 @@ private fun ChartTemplate(
     modifier: Modifier = Modifier,
     axisValuesOverrider: AxisValuesOverrider<ChartEntryModel>? = null,
     decoration: List<Decoration>? = null,
+    xAxisTitlemsg:String? = null
 ) {
     Card(
         shape = MaterialTheme.shapes.large,
@@ -156,7 +158,7 @@ private fun ChartTemplate(
                             margins = bottomAxisTitleMargins,
                             typeface = Typeface.MONOSPACE,
                         ),
-                        title = stringResource(R.string.x_axis),  // TODO: better name for X axis
+                        title = xAxisTitlemsg,  // TODO: better name for X axis
                     ),
                     marker = rememberMarker(),
                     fadingEdges = rememberFadingEdges(),
@@ -191,4 +193,34 @@ private fun rememberThresholdLine(thresholdValue: Float?): ThresholdLine? {
             labelHorizontalPosition = ThresholdLine.LabelHorizontalPosition.End
         )
     }
+}
+
+@Composable //This composable is here temporarily and will get removed
+fun ApplianceChartCard(
+    list: List<Float>, modifier: Modifier = Modifier, thresholdValue: Float? = null
+) {
+    val model: ChartEntryModel =
+        entryModelOf(List(list.size) { FloatEntry(it.toFloat(), list[it].toFloat()) })
+
+    val axisValuesOverrider: AxisValuesOverrider<ChartEntryModel> =
+        AxisValuesOverrider.fixed(minY = 0.0f, maxY = ceil(list.max() + 0.25).toFloat())
+    val decoration = when (val thresholdLine = rememberThresholdLine(thresholdValue)) {
+        else -> remember(thresholdLine!!) { listOf(thresholdLine) }
+    }
+
+    val chartColors: List<Color> = MutableList(list.size) {
+        if (list[it].toFloat() <= (thresholdValue ?: list[it].toFloat())) charColorUnderThreshold
+        else charColorOverThreshold
+    }
+    Log.d("test", "Size:${chartColors.size}")
+
+
+    ChartTemplate(
+        chartColors = chartColors,
+        model = model,
+        axisValuesOverrider = axisValuesOverrider,
+        decoration = decoration,
+        modifier = modifier,
+        xAxisTitlemsg = "Price per hour"
+    )
 }

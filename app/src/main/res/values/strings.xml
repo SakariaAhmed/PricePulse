@@ -44,4 +44,9 @@
     <string name="wait">wait…</string>
     <string name="y_axis">NOK/kWh</string>
     <string name="x_axis">hour of day</string>
+    <string name="x_axis2">Price per hour</string>
+    <string name="washing_machine">Washing machine Icon</string>
+    <string name="oven">Oven Icon</string>
+    <string name="heater">Heater Icon</string>
+    <string name="shower">Shower Icon</string>
 </resources>

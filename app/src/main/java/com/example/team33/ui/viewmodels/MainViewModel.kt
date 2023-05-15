@@ -62,7 +62,7 @@ class MainViewModel : ViewModel() {
             _uiState.update { currentState ->
                 currentState.copy(
                     // remove all other unnecessary properties for fetched data
-                    electricityPrices = data.map {it.NOK_per_kWh}
+                    electricityPrices = data.map { it.NOK_per_kWh }
                 )
             }
         }

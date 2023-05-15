@@ -43,4 +43,9 @@
     <string name="wait">vent…</string>
     <string name="y_axis">NOK/kWh</string>
     <string name="x_axis">time</string>
+    <string name="x_axis2">Price per time</string>
+    <string name="washing_machine">Vaskemaskin Ikon</string>
+    <string name="oven">Ovn Ikon</string>
+    <string name="heater">Varmeovn Ikon</string>
+    <string name="shower">Dusj Ikon</string>
 </resources>
