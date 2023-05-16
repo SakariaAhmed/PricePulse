@@ -1,7 +1,6 @@
 package com.example.team33.ui.chart
 
 import android.graphics.Typeface
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -36,12 +35,6 @@ import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import kotlin.math.ceil
 
-private const val COLOR_1_CODE = 0xffffbb00
-private const val COLOR_2_CODE = 0xff9db591
-private val color1 = Color(COLOR_1_CODE)
-private val color2 = Color(COLOR_2_CODE)
-private val charColorOverThreshold = color2
-private val charColorUnderThreshold = color1
 private val axisTitleHorizontalPaddingValue = 8.dp
 private val axisTitleVerticalPaddingValue = 2.dp
 private val axisTitlePadding =
@@ -63,6 +56,7 @@ private fun ChartCard(state: MainUiState) {
 
 }
 
+// TODO: make list accept float instead of double
 @Composable
 fun PopulatedChartCard(
     list: List<Double>, modifier: Modifier = Modifier, thresholdValue: Float? = null
@@ -76,12 +70,8 @@ fun PopulatedChartCard(
         else -> remember(thresholdLine!!) { listOf(thresholdLine) }
     }
 
-    val chartColors: List<Color> = MutableList(list.size) {
-        if (list[it].toFloat() <= (thresholdValue ?: list[it].toFloat())) charColorUnderThreshold
-        else charColorOverThreshold
-    }
-    Log.d("test", "Size:${chartColors.size}")
 
+    val chartColors: List<Color> = listOf(MaterialTheme.colorScheme.primary)
 
     ChartTemplate(
         chartColors = chartColors,
@@ -89,7 +79,7 @@ fun PopulatedChartCard(
         axisValuesOverrider = axisValuesOverrider,
         decoration = decoration,
         modifier = modifier,
-        xAxisTitlemsg = stringResource(R.string.x_axis)
+        xAxisTitlemsg = stringResource(R.string.x_axis2)
     )
 }
 
@@ -123,13 +113,6 @@ private fun ChartTemplate(
 
                 Chart(
                     chart = lineChart(
-                        lines = remember(defaultLines) {
-                            defaultLines.mapIndexed { index, defaultLine ->
-                                LineChart.LineSpec(
-                                    lineColor = defaultLine.lineColor
-                                )
-                            }
-                        },
                         pointPosition = LineChart.PointPosition.Start,
                         axisValuesOverrider = axisValuesOverrider,
                         decorations = decoration
@@ -139,8 +122,8 @@ private fun ChartTemplate(
                         guideline = null,
                         horizontalLabelPosition = VerticalAxis.HorizontalLabelPosition.Inside,
                         titleComponent = textComponent(
-                            color = Color.Black,
-                            background = shapeComponent(Shapes.pillShape, color1),
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            background = shapeComponent(Shapes.pillShape, MaterialTheme.colorScheme.secondaryContainer),
                             padding = dimensionsOf(
                                 axisTitleHorizontalPaddingValue, axisTitleVerticalPaddingValue
                             ),
@@ -152,8 +135,8 @@ private fun ChartTemplate(
                     ),
                     bottomAxis = bottomAxis(
                         titleComponent = textComponent(
-                            background = shapeComponent(Shapes.pillShape, color2),
-                            color = Color.Black,
+                            background = shapeComponent(Shapes.pillShape, MaterialTheme.colorScheme.secondaryContainer),
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
                             padding = axisTitlePadding,
                             margins = bottomAxisTitleMargins,
                             typeface = Typeface.MONOSPACE,
@@ -175,11 +158,11 @@ private fun rememberThresholdLine(thresholdValue: Float?): ThresholdLine? {
     }
 
     val line = shapeComponent(
-        strokeWidth = thresholdLineThickness, strokeColor = color2.copy(alpha = 0.75f)
+        strokeWidth = thresholdLineThickness, strokeColor = MaterialTheme.colorScheme.secondary.copy(alpha = 1f)//color2.copy(alpha = 0.75f)
     )
     val label = textComponent(
-        color = Color.Black,
-        background = shapeComponent(Shapes.pillShape, color2),
+        color = MaterialTheme.colorScheme.onSecondaryContainer,
+        background = shapeComponent(Shapes.pillShape, MaterialTheme.colorScheme.secondaryContainer),
         padding = thresholdLineLabelPadding,
         margins = thresholdLineLabelMargins,
         typeface = Typeface.MONOSPACE,
@@ -187,7 +170,7 @@ private fun rememberThresholdLine(thresholdValue: Float?): ThresholdLine? {
     return remember(line, label) {
         ThresholdLine(
             thresholdValue = thresholdValue,
-            thresholdLabel = "max",  // TODO: a better name for threshold indication
+            thresholdLabel = "limit",  // TODO: a better name for threshold indication
             lineComponent = line,
             labelComponent = label,
             labelHorizontalPosition = ThresholdLine.LabelHorizontalPosition.End
@@ -208,12 +191,7 @@ fun ApplianceChartCard(
         else -> remember(thresholdLine!!) { listOf(thresholdLine) }
     }
 
-    val chartColors: List<Color> = MutableList(list.size) {
-        if (list[it].toFloat() <= (thresholdValue ?: list[it].toFloat())) charColorUnderThreshold
-        else charColorOverThreshold
-    }
-    Log.d("test", "Size:${chartColors.size}")
-
+    val chartColors: List<Color> = listOf(MaterialTheme.colorScheme.primary)
 
     ChartTemplate(
         chartColors = chartColors,

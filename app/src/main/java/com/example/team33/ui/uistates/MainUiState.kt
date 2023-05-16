@@ -8,5 +8,5 @@ data class MainUiState(
     var electricityPrices: List<Double>? = null,
     var currentRegion: ElectricityRegion = ElectricityRegion.NO1,
     var currentHour: Int = 0,
-    var maxPrice: Float = 0.75f
+    var maxPrice: Float = 1.28f
 )
