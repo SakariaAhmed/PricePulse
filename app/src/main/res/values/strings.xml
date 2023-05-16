@@ -49,4 +49,6 @@
     <string name="oven">Oven Icon</string>
     <string name="heater">Heater Icon</string>
     <string name="shower">Shower Icon</string>
+    <string name="show_developers">Show developers</string>
+    <string name="show_usage">Show usage</string>
 </resources>

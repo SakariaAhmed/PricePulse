@@ -48,4 +48,6 @@
     <string name="oven">Ovn Ikon</string>
     <string name="heater">Varmeovn Ikon</string>
     <string name="shower">Dusj Ikon</string>
+    <string name="show_developers">Hvis utviklere</string>
+    <string name="show_usage">Hvis bruk</string>
 </resources>
