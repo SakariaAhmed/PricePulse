@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.team33.network.ElectricityRegion
-import com.example.team33.network.LocationForecast
-import com.example.team33.network.LocationForecastApi
 import com.example.team33.network.StroemprisApi
 import com.example.team33.network.StroemprisData
 import com.example.team33.ui.uistates.MainUiState
@@ -27,7 +25,6 @@ class MainViewModel : ViewModel() {
 
     init {
         getElectricityPrice()
-        getLocationForecast()
     }
 
     fun changeElectricityRegion(region: ElectricityRegion) {
@@ -69,30 +66,5 @@ class MainViewModel : ViewModel() {
     }
 
     // Fetches electricity prices from `Location Forecast API`
-    private fun getLocationForecast() {
-        viewModelScope.launch(Dispatchers.IO) {
-            var data: LocationForecast? = null
-            try {
-                data = LocationForecastApi.getLocationForecast()
-            } catch (e: RedirectResponseException) {
-                val errorMsg = "${e.response.status}: ${e.response.call.request.url}"
-                Log.d(TAG, errorMsg)
-            } catch (e: ClientRequestException) {
-                val errorMsg = "${e.response.status}: ${e.response.call.request.url}"
-                Log.e(TAG, errorMsg)
-            } catch (e: ServerResponseException) {
-                val errorMsg = "${e.response.status}: ${e.response.call.request.url}"
-                Log.e(TAG, errorMsg)
-            } catch (e: Exception) {
-                val errorMsg = "Something terrible went wrong because:"
-                Log.e(TAG, "$errorMsg $e")
-            }
 
-            _uiState.update { currentState ->
-                currentState.copy(
-                    forecast = data
-                )
-            }
-        }
-    }
 }

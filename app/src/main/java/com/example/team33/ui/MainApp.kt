@@ -93,10 +93,6 @@ private fun AppScreenUI(
                 topBarScreenTitleId = TopLevelDestination.HOME.titleTextId
                 HomeScreen(mainUiState = mainUiState, modifier = Modifier.padding(start = 10.dp))
             }
-            composable(TopLevelDestination.ELECTRICITY.route) {
-                topBarScreenTitleId = TopLevelDestination.ELECTRICITY.titleTextId
-                ElectricityScreen(mainUiState = mainUiState)
-            }
             composable(TopLevelDestination.APPLIANCES.route) {
                 topBarScreenTitleId = TopLevelDestination.APPLIANCES.titleTextId
                 AppliancesScreen(mainUiState = mainUiState)
