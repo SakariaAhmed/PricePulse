@@ -53,11 +53,13 @@ fun genSineWaveList(size: Int): List<Double> {
 fun AppScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = viewModel()) {
     val navController = rememberNavController()
     val mainUiState by viewModel.uiState.collectAsState()
-    
+
     AppScreenUI(
         navController = navController,
         mainUiState = mainUiState,
         changeElectricityRegion = { viewModel.changeElectricityRegion(it) },
+        graphVisible = { viewModel.graphVisible(it) },
+        changeAppliance = { viewModel.changeAppliance(it) },
         modifier = modifier
     )
 }
@@ -68,7 +70,9 @@ private fun AppScreenUI(
     navController: NavHostController,
     mainUiState: MainUiState,
     changeElectricityRegion: (ElectricityRegion) -> Unit,
-    modifier: Modifier = Modifier,
+    changeAppliance: (String) -> Unit,
+    graphVisible: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var topBarScreenTitleId by remember { mutableStateOf(TopLevelDestination.HOME.titleTextId) }
     Scaffold(topBar = {
@@ -95,7 +99,11 @@ private fun AppScreenUI(
             }
             composable(TopLevelDestination.APPLIANCES.route) {
                 topBarScreenTitleId = TopLevelDestination.APPLIANCES.titleTextId
-                AppliancesScreen(mainUiState = mainUiState)
+                AppliancesScreen(
+                    mainUiState = mainUiState,
+                    graphVisible = { graphVisible(it) },
+                    changeAppliance = { changeAppliance(it) }
+                )
             }
             composable(TopLevelDestination.SETTINGS.route) {
                 topBarScreenTitleId = TopLevelDestination.SETTINGS.titleTextId
@@ -173,7 +181,9 @@ private fun AppScreenPreview() {
             AppScreenUI(
                 rememberNavController(),
                 MainUiState(electricityPrices = genSineWaveList(24)),
-                {}
+                {},
+                graphVisible = {},
+                changeAppliance = {}
             )
         }
     }

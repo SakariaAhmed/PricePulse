@@ -100,7 +100,7 @@ private fun ChartTemplate(
     modifier: Modifier = Modifier,
     axisValuesOverrider: AxisValuesOverrider<ChartEntryModel>? = null,
     decoration: List<Decoration>? = null,
-    xAxisTitlemsg:String? = null
+    xAxisTitlemsg: String? = null
 ) {
     Card(
         shape = MaterialTheme.shapes.large,
@@ -123,7 +123,10 @@ private fun ChartTemplate(
                         horizontalLabelPosition = VerticalAxis.HorizontalLabelPosition.Inside,
                         titleComponent = textComponent(
                             color = MaterialTheme.colorScheme.onSecondaryContainer,
-                            background = shapeComponent(Shapes.pillShape, MaterialTheme.colorScheme.secondaryContainer),
+                            background = shapeComponent(
+                                Shapes.pillShape,
+                                MaterialTheme.colorScheme.secondaryContainer
+                            ),
                             padding = dimensionsOf(
                                 axisTitleHorizontalPaddingValue, axisTitleVerticalPaddingValue
                             ),
@@ -135,7 +138,10 @@ private fun ChartTemplate(
                     ),
                     bottomAxis = bottomAxis(
                         titleComponent = textComponent(
-                            background = shapeComponent(Shapes.pillShape, MaterialTheme.colorScheme.secondaryContainer),
+                            background = shapeComponent(
+                                Shapes.pillShape,
+                                MaterialTheme.colorScheme.secondaryContainer
+                            ),
                             color = MaterialTheme.colorScheme.onSecondaryContainer,
                             padding = axisTitlePadding,
                             margins = bottomAxisTitleMargins,
@@ -158,7 +164,8 @@ private fun rememberThresholdLine(thresholdValue: Float?): ThresholdLine? {
     }
 
     val line = shapeComponent(
-        strokeWidth = thresholdLineThickness, strokeColor = MaterialTheme.colorScheme.secondary.copy(alpha = 1f)//color2.copy(alpha = 0.75f)
+        strokeWidth = thresholdLineThickness,
+        strokeColor = MaterialTheme.colorScheme.secondary.copy(alpha = 1f)//color2.copy(alpha = 0.75f)
     )
     val label = textComponent(
         color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -178,27 +185,3 @@ private fun rememberThresholdLine(thresholdValue: Float?): ThresholdLine? {
     }
 }
 
-@Composable //This composable is here temporarily and will get removed
-fun ApplianceChartCard(
-    list: List<Float>, modifier: Modifier = Modifier, thresholdValue: Float? = null
-) {
-    val model: ChartEntryModel =
-        entryModelOf(List(list.size) { FloatEntry(it.toFloat(), list[it].toFloat()) })
-
-    val axisValuesOverrider: AxisValuesOverrider<ChartEntryModel> =
-        AxisValuesOverrider.fixed(minY = 0.0f, maxY = ceil(list.max() + 0.25).toFloat())
-    val decoration = when (val thresholdLine = rememberThresholdLine(thresholdValue)) {
-        else -> remember(thresholdLine!!) { listOf(thresholdLine) }
-    }
-
-    val chartColors: List<Color> = listOf(MaterialTheme.colorScheme.primary)
-
-    ChartTemplate(
-        chartColors = chartColors,
-        model = model,
-        axisValuesOverrider = axisValuesOverrider,
-        decoration = decoration,
-        modifier = modifier,
-        xAxisTitlemsg = "Price per hour"
-    )
-}

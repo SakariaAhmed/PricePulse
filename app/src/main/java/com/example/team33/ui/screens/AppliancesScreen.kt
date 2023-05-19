@@ -10,8 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Fireplace
-import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,27 +28,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.team33.R
 import com.example.team33.ui.uistates.MainUiState
-import androidx.compose.material.icons.rounded.Shower
 import androidx.compose.material3.*
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
-import com.example.team33.ui.chart.ApplianceChartCard
+import com.example.team33.network.ElectricityRegion
+import com.example.team33.ui.chart.PopulatedChartCard
 
 
 @Composable
-fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
+fun AppliancesScreen(
+    mainUiState: MainUiState, modifier: Modifier = Modifier,
+    graphVisible: (Boolean) -> Unit,
+    changeAppliance: (String) -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) {
-        // Lagde en variabel som holder styr på dette for nå
-        var showChart by remember { mutableStateOf(true) }
         // Tabell og Graf
         Row(modifier.fillMaxWidth()) {
             Spacer(Modifier.weight(0.5f))
             Button(
-                onClick = { showChart = true },
+                onClick = { graphVisible(true) },
                 modifier = Modifier
                     .clip(shape = RectangleShape)
                     .weight(4f)
@@ -61,7 +62,7 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
             }
             Spacer(Modifier.weight(0.5f))
             Button(
-                onClick = { showChart = false },
+                onClick = { graphVisible(false) },
                 modifier = Modifier
                     .clip(shape = RectangleShape)
                     .weight(4f)
@@ -86,36 +87,26 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
                     )
 
             )
-            //Lagde eksempel data som skal etterligne liste med Kr/kWt
-            val liste = arrayListOf(
-                2.1F,
-                1.5F,
-                3.2F,
-                5.3F,
-                2F,
-                2.15F,
-                2.4F,
-                2.3F,
-                1.5F,
-                3.2F,
-                5.3F,
-                2F,
-                2.15F,
-                2.4F,
-                2.3F,
-                1.5F,
-                3.2F,
-                5.3F,
-                2F,
-                2.15F,
-                2.4F,
-                2.3F
-            )
-            if (showChart) {
-                ShowGraph(liste)
-            } else {
-                Box(modifier = Modifier.fillMaxHeight(0.5F)) {
-                    ShowTable(liste)
+
+            var liste = mainUiState.electricityPrices
+            // times the list with the kwh cost of the product
+            if (liste != null) {
+                when (mainUiState.appliance) {
+                    "Washing" -> liste = liste.map { it * 0.57 }
+                    "Oven" -> liste = liste.map { it * 1.9 }
+                    "Heater" -> liste = liste.map { it * 0.9 }
+                    "Shower" -> liste = liste.map { it * 6 }
+
+                }
+            }
+
+            if (liste != null) {
+                if (mainUiState.showGraph) {
+                    ShowGraph(liste)
+                } else {
+                    Box(modifier = Modifier.fillMaxHeight(0.5F)) {
+                        ShowTable(liste)
+                    }
                 }
             }
         }
@@ -127,19 +118,20 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
             modifier = modifier.fillMaxWidth()
         ) {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { changeAppliance("Washing") },
                 modifier = Modifier.size(80.dp),
                 shape = RoundedCornerShape(100)
             ) {
-                Image(
-                    painterResource(R.drawable.dishwasher_gen),
+                Icon(
+                    imageVector = Icons.Rounded.LocalLaundryService,
                     contentDescription = stringResource(R.string.washing_machine),
+                    tint = Color.Black,
                     modifier = Modifier.fillMaxSize()
                 )
             }
             Spacer(modifier = Modifier.weight(0.12f))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { changeAppliance("Oven") },
                 modifier = Modifier.size(80.dp),
                 shape = RoundedCornerShape(100)
             ) {
@@ -158,12 +150,12 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.weight(0.12f))
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { changeAppliance("Heater") },
                 modifier = Modifier.size(80.dp),
                 shape = RoundedCornerShape(100)
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.Fireplace,
+                    imageVector = Icons.Rounded.Thermostat,
                     contentDescription = stringResource(R.string.heater),
                     tint = Color.Black,
                     modifier = Modifier.fillMaxSize()
@@ -172,7 +164,7 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.weight(0.12f))
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { changeAppliance("Shower") },
                 modifier = Modifier.size(80.dp),
                 shape = RoundedCornerShape(100)
             ) {
@@ -190,12 +182,12 @@ fun AppliancesScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ShowGraph(list: List<Float>, modifier: Modifier = Modifier) {
-    ApplianceChartCard(list = list, Modifier, 2.7f)
+fun ShowGraph(list: List<Double>, modifier: Modifier = Modifier) {
+    PopulatedChartCard(list = list, Modifier, 2.7f)
 }
 
 @Composable
-fun ShowTable(list: List<Float>) {
+fun ShowTable(list: List<Double>) {
     Row(Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.weight(0.25F))
         LazyColumn() {
@@ -209,7 +201,7 @@ fun ShowTable(list: List<Float>) {
 }
 
 @Composable
-fun RowInTable(verdi: Int, pris: Float) {
+fun RowInTable(verdi: Int, pris: Double) {
     Row(
         modifier = Modifier
             .border(width = 2.dp, color = Color.Blue)

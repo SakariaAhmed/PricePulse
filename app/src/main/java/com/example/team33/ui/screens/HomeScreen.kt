@@ -30,7 +30,6 @@ import java.util.Date
 import java.util.Locale
 
 
-
 // Returns current hour
 private fun getCurrentHour(): Int {
     return SimpleDateFormat("HH", Locale.getDefault()).format(Date()).toInt()
@@ -57,7 +56,11 @@ private fun SpotpriceComposable(currentPrice: Double?, modifier: Modifier = Modi
         modifier = modifier
 
     ) {
-        Text(stringResource(id = R.string.spot_price), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(start = 10.dp))
+        Text(
+            stringResource(id = R.string.spot_price),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(start = 10.dp)
+        )
 
         val spotPrice = when (currentPrice) {
             null -> stringResource(id = R.string.wait)

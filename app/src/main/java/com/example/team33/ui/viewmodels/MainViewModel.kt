@@ -65,6 +65,23 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    // Fetches electricity prices from `Location Forecast API`
+
+    fun graphVisible(statement: Boolean) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                // remove all other unnecessary properties for fetched data
+                showGraph = statement
+            )
+        }
+    }
+
+    fun changeAppliance(chosenAppliance: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                // remove all other unnecessary properties for fetched data
+                appliance = chosenAppliance
+            )
+        }
+    }
 
 }
