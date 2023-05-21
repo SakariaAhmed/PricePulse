@@ -1,6 +1,5 @@
 package com.example.team33.ui.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -15,42 +14,26 @@ import com.example.team33.network.ElectricityRegion
 import com.example.team33.ui.uistates.MainUiState
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 
-@SuppressLint("UnrememberedMutableState")
 @Composable
 fun SettingsScreen(
     mainUiState: MainUiState,
     navController: NavHostController,
-    changeElectricityRegion: (ElectricityRegion) -> Unit
+    changeElectricityRegion: (ElectricityRegion) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val regionOptions: List<String> = listOf(
-        stringResource(id = R.string.east_norway),
-        stringResource(id = R.string.south_norway),
-        stringResource(id = R.string.mid_norway),
-        stringResource(id = R.string.north_norway),
-        stringResource(id = R.string.west_norway)
-    )
-    var east = remember { mutableStateOf(true) }
-    var south = remember { mutableStateOf(false) }
-    var mid = remember { mutableStateOf(false) }
-    var north = remember { mutableStateOf(false) }
-    var west = remember { mutableStateOf(false) }
 
-    val checkRegion = listOf(east, south, mid, north, west)
-
-
-    val current = remember { mutableStateOf(mainUiState.currentRegion)  }
-
+    //
     val openDialog = remember { mutableStateOf(false) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxSize()
     ) {
 
-        // Dialog box for regions
-
-
+        // Radio buttons for regions
+        
+        Spacer(modifier = Modifier.padding(10.dp))
         Button(onClick = { openDialog.value = !openDialog.value }) {
             Text(stringResource(R.string.select_region))
         }
@@ -65,7 +48,28 @@ fun SettingsScreen(
                     Text(stringResource(R.string.select_region))
                 },
                 text = {
-                    Column() {
+                    val regionOptions: List<String> = listOf(
+                        stringResource(id = R.string.east_norway),
+                        stringResource(id = R.string.south_norway),
+                        stringResource(id = R.string.mid_norway),
+                        stringResource(id = R.string.north_norway),
+                        stringResource(id = R.string.west_norway)
+                    )
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        var selectedOption = remember { mutableStateOf("") }
+
+                        when (mainUiState.currentRegion) {
+                            ElectricityRegion.NO1 -> selectedOption.value = regionOptions[0]
+                            ElectricityRegion.NO2 -> selectedOption.value = regionOptions[1]
+                            ElectricityRegion.NO3 -> selectedOption.value = regionOptions[2]
+                            ElectricityRegion.NO4 -> selectedOption.value = regionOptions[3]
+                            ElectricityRegion.NO5 -> selectedOption.value = regionOptions[4]
+                        }
 
 
                         Row(
@@ -73,34 +77,35 @@ fun SettingsScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(text = regionOptions[0])
-                            Checkbox(
-                                checked = east.value,
-                                onCheckedChange = {
-                                    east.value = !east.value; SetFalse(
-                                    checkRegion,
-                                    east
-                                );current.value = ElectricityRegion.NO1
-                                })
+
+                            RadioButton(
+                                selected = selectedOption.value == regionOptions[0],
+                                onClick = {
+                                    selectedOption.value = regionOptions[0];changeElectricityRegion(
+                                    ElectricityRegion.NO1
+                                )
+                                }
+                            )
+
                         }
 
-                        Spacer(modifier = Modifier.height(20.dp))
 
                         Row(
                             Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(text = regionOptions[1])
-                            Checkbox(
-                                checked = south.value,
-                                onCheckedChange = {
-                                    south.value = !south.value;SetFalse(
-                                    checkRegion,
-                                    south
-                                );current.value = ElectricityRegion.NO2
-                                })
-                        }
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                            RadioButton(
+                                selected = selectedOption.value == regionOptions[1],
+                                onClick = {
+                                    selectedOption.value = regionOptions[1];changeElectricityRegion(
+                                    ElectricityRegion.NO2
+                                )
+                                }
+                            )
+
+                        }
 
 
                         Row(
@@ -108,17 +113,17 @@ fun SettingsScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(text = regionOptions[2])
-                            Checkbox(
-                                checked = mid.value,
-                                onCheckedChange = {
-                                    mid.value = !mid.value; SetFalse(
-                                    checkRegion,
-                                    mid
-                                );current.value = ElectricityRegion.NO3
-                                })
-                        }
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                            RadioButton(
+                                selected = selectedOption.value == regionOptions[2],
+                                onClick = {
+                                    selectedOption.value = regionOptions[2];changeElectricityRegion(
+                                    ElectricityRegion.NO3
+                                )
+                                }
+                            )
+
+                        }
 
 
                         Row(
@@ -126,32 +131,36 @@ fun SettingsScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(text = regionOptions[3])
-                            Checkbox(
-                                checked = north.value,
-                                onCheckedChange = {
-                                    north.value = !north.value;SetFalse(
-                                    checkRegion,
-                                    north
-                                );current.value = ElectricityRegion.NO4
-                                })
+
+                            RadioButton(
+                                selected = selectedOption.value == regionOptions[3],
+                                onClick = {
+                                    selectedOption.value = regionOptions[3];changeElectricityRegion(
+                                    ElectricityRegion.NO4
+                                )
+                                }
+                            )
+
                         }
 
-                        Spacer(modifier = Modifier.height(20.dp))
 
                         Row(
                             Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(text = regionOptions[4])
-                            Checkbox(
-                                checked = west.value,
-                                onCheckedChange = {
-                                    west.value = !west.value; SetFalse(
-                                    checkRegion,
-                                    west
-                                );current.value = ElectricityRegion.NO5
-                                })
+
+                            RadioButton(
+                                selected = selectedOption.value == regionOptions[4],
+                                onClick = {
+                                    selectedOption.value = regionOptions[4];changeElectricityRegion(
+                                    ElectricityRegion.NO5
+                                )
+                                }
+                            )
+
                         }
+
 
                     }
                 },
@@ -161,17 +170,8 @@ fun SettingsScreen(
 
                         onClick = {
                             openDialog.value = false;
-                            var answer: MutableState<Boolean> =
-                                mutableStateOf(true)
 
-                            for (r in checkRegion) {
-                                if (r.value) {
-                                    answer =r
-                                }
-                            }
 
-                            SetFalse(checkRegion, answer   )
-                            changeElectricityRegion(current.value)
                         }) {
                         Text("Ok")
                     }
@@ -181,49 +181,48 @@ fun SettingsScreen(
 
         }
 
+            Text(text = stringResource(id = R.string.language))
+            Text(text = stringResource(id = R.string.change_language))
+
+            Button(
+                onClick = { navController.navigate("showDeveloper") },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(stringResource(id = R.string.developers))
+            }
+
+            Button(
+                onClick = { navController.navigate("showPurpose") },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(stringResource(id = R.string.usage))
+            }
+
+            Button(
+                onClick = { navController.navigate("openSource") },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(stringResource(id = R.string.opensource))
+            }
+
+        Spacer(modifier = Modifier.padding(10.dp))
 
 
-        Text(text = stringResource(id = R.string.language))
-        Text(text = stringResource(id = R.string.change_language))
-
-        Button(
-            onClick = { navController.navigate("showDeveloper") }, modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-        ) {
-            Text(stringResource(id = R.string.show_developers))
-        }
-
-
-        Button(
-            onClick = { navController.navigate("showPurpose") }, modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-        ) {
-            Text(stringResource(id = R.string.show_usage))
-        }
-
-        Button(onClick = { navController.navigate("openSource") }) {
-            Text(stringResource(id = R.string.opensource))
-        }
     }
+    //
+
 }
 
 
-fun SetFalse(checkRegion: List<MutableState<Boolean>>, region: MutableState<Boolean>) {
-    for (r in checkRegion) {
-        r.value = false
-    }
-    region.value = true
+@Composable
+fun OpenSource(modifier: Modifier = Modifier) {
+    LibrariesContainer(modifier.fillMaxSize())
 }
 
 @Composable
-fun OpenSource() {
-    LibrariesContainer(Modifier.fillMaxSize())
-}
-
-@Composable
-fun ShowDevelopers() {
+fun ShowDevelopers(modifier: Modifier = Modifier) {
     val array: Array<String> = stringArrayResource(id = R.array.names)
-    Column(modifier = Modifier) {
+    Column(modifier = modifier) {
         Text(text = stringResource(id = R.string.made_by))
         array.forEach { selectedOption ->
             Text(text = selectedOption)
@@ -232,7 +231,10 @@ fun ShowDevelopers() {
 }
 
 @Composable
-fun ShowPurpose() {
-    Text(text = stringResource(id = R.string.purpose))
+fun ShowPurpose(modifier: Modifier = Modifier) {
+    Text(
+        text = stringResource(id = R.string.purpose), modifier = modifier
+    )
 }
+
 
