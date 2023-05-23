@@ -1,16 +1,34 @@
 package com.example.team33.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.*
+import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.team33.R
+import com.example.team33.R.string.purpose
 import com.example.team33.network.ElectricityRegion
+import com.example.team33.ui.theme.md_theme_dark_background
 import com.example.team33.ui.uistates.MainUiState
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 
@@ -31,13 +49,30 @@ fun SettingsScreen(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        // Radio buttons for regions
-        
         Spacer(modifier = Modifier.padding(10.dp))
-        Button(onClick = { openDialog.value = !openDialog.value }) {
-            Text(stringResource(R.string.select_region))
-        }
+        Text(text = stringResource(id = R.string.language))
+        Text(text = stringResource(id = R.string.change_language),
+            fontSize = 14.sp,fontStyle = FontStyle.Italic,
+            fontFamily = FontFamily.Serif,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.width(500.dp))
 
+        Button(onClick = { openDialog.value = !openDialog.value },
+           //Select region button
+            modifier= Modifier
+                .clip(shape = RoundedCornerShape(size = 75.dp))
+                .height(70.dp)
+                .fillMaxSize()
+        ) {
+
+            Text(stringResource(R.string.select_region),
+            fontSize = 25.sp,
+            fontStyle = FontStyle.Italic,
+                fontFamily = FontFamily.Serif,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.width(200.dp))
+        }
+        
         if (openDialog.value) {
 
             AlertDialog(
@@ -181,36 +216,45 @@ fun SettingsScreen(
 
         }
 
-            Text(text = stringResource(id = R.string.language))
-            Text(text = stringResource(id = R.string.change_language))
+         
 
             Button(
-                onClick = { navController.navigate("showDeveloper") },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                onClick = { navController.navigate("showAboutThisApp") },
+                modifier= Modifier
+                    .clip(shape = RoundedCornerShape(size = 75.dp))
+                    .height(70.dp)
+                    .fillMaxSize()
+                //modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                Text(stringResource(id = R.string.developers))
+                Text(stringResource(id = R.string.about_this_app),
+                    fontSize = 25.sp,
+                    fontStyle = FontStyle.Italic,
+                    fontFamily = FontFamily.Serif,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(200.dp))
             }
 
-            Button(
-                onClick = { navController.navigate("showPurpose") },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(stringResource(id = R.string.usage))
-            }
-
+            
             Button(
                 onClick = { navController.navigate("openSource") },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier= Modifier
+                    .clip(shape = RoundedCornerShape(size = 75.dp))
+                    .height(70.dp)
+                    .fillMaxSize()
+                //modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                Text(stringResource(id = R.string.opensource))
+                Text(stringResource(id = R.string.opensource),
+                    fontSize = 25.sp,
+                    fontStyle = FontStyle.Italic,
+                    fontFamily = FontFamily.Serif,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(300.dp))
             }
 
         Spacer(modifier = Modifier.padding(10.dp))
 
 
     }
-    //
-
 }
 
 
@@ -219,7 +263,7 @@ fun OpenSource(modifier: Modifier = Modifier) {
     LibrariesContainer(modifier.fillMaxSize())
 }
 
-@Composable
+/*@Composable
 fun ShowDevelopers(modifier: Modifier = Modifier) {
     val array: Array<String> = stringArrayResource(id = R.array.names)
     Column(modifier = modifier) {
@@ -228,13 +272,47 @@ fun ShowDevelopers(modifier: Modifier = Modifier) {
             Text(text = selectedOption)
         }
     }
+}*/
+
+
+
+@Composable
+fun ShowAboutThisApp(modifier: Modifier = Modifier) {
+    val informationText = stringResource(id = R.string.information)
+    val paragraphs = informationText.split("\n\n")
+
+    LazyColumn(modifier = modifier) {
+        items(paragraphs) { paragraph ->
+            Text(
+                text = paragraph,
+                fontSize = 15.sp,
+                fontFamily = FontFamily.Serif,
+                textAlign = TextAlign.Left,
+                modifier = Modifier.padding(bottom = 10.dp)
+            )
+        }
+    }
 }
+
+
 
 @Composable
 fun ShowPurpose(modifier: Modifier = Modifier) {
-    Text(
-        text = stringResource(id = R.string.purpose), modifier = modifier
-    )
+    val purposeText = stringResource(id = R.string.purpose)
+    val paragraphs = purposeText.split("\n\n")
+
+    Column(modifier = modifier) {
+        paragraphs.forEachIndexed { index, paragraph ->
+            Text(
+                text = paragraph,
+                fontSize = 15.sp,
+                fontFamily = FontFamily.Serif,
+                textAlign = TextAlign.Left,
+                modifier = Modifier.padding(bottom = 20.dp)
+            )
+            if (index != paragraphs.size - 1) {
+              //  Spacer(modifier = Modifier.height(5.dp))
+            }
+        }
+    }
 }
-
-
