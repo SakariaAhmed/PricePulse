@@ -49,6 +49,9 @@ fun SettingsScreen(
         item {
             Spacer(modifier = Modifier.padding(10.dp))
             Text(text = stringResource(id = R.string.language))
+            
+            Spacer(modifier = Modifier.height(10.dp))
+            
             Text(text = stringResource(id = R.string.change_language),
                 fontSize = 14.sp,fontStyle = FontStyle.Italic,
                 fontFamily = FontFamily.Serif,
@@ -216,7 +219,7 @@ fun SettingsScreen(
 
             }
             
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             Button(
                 onClick = { navController.navigate("showAboutThisApp") },
@@ -233,8 +236,27 @@ fun SettingsScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.width(200.dp))
             }
+            
+            Spacer(modifier = Modifier.height(20.dp))
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Button(
+                onClick = { navController.navigate("showPurpose") },
+                modifier= Modifier
+                    .clip(shape = RoundedCornerShape(size = 75.dp))
+                    .height(70.dp)
+                    .fillMaxSize()
+                // modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(stringResource(id = R.string.usage),
+                    fontSize = 25.sp,
+                    fontStyle = FontStyle.Italic,
+                    fontFamily = FontFamily.Serif,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(300.dp))
+            }
+
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             Button(
                 onClick = { navController.navigate("openSource") },
