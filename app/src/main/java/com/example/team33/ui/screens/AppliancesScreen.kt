@@ -77,6 +77,8 @@ fun AppliancesScreen(
 
 
             }
+            Spacer(modifier = Modifier.height(20.dp))
+
             //Resultat
             Box {
                 Box(
@@ -112,6 +114,8 @@ fun AppliancesScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.height(40.dp))
+
             //Fire knapper
             val farge = ButtonDefaults.buttonColors(White)
             Row(
@@ -130,6 +134,7 @@ fun AppliancesScreen(
                         modifier = Modifier.fillMaxSize()
                     )
                 }
+
                 Spacer(modifier = Modifier.weight(0.12f))
                 Button(
                     onClick = { changeAppliance("Oven") },
@@ -178,6 +183,9 @@ fun AppliancesScreen(
                 }
             }
         }
+
+
+
     }
 }
 
@@ -190,7 +198,7 @@ fun ShowGraph(list: List<Double>, modifier: Modifier = Modifier) {
 fun ShowTable(list: List<Double>) {
     Row(Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.weight(0.25F))
-        LazyColumn() {
+        LazyColumn(modifier = Modifier.height(250.dp)) {
             itemsIndexed(list) { index, element ->
                 RowInTable(verdi = index + 1, pris = element)
 

@@ -2,13 +2,7 @@ package com.example.team33.ui.screens
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.icu.text.SimpleDateFormat
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -44,6 +38,9 @@ fun HomeScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
     ) {
         item {
             SpotpriceComposable(currentPrice = mainUiState.electricityPrices?.get(getCurrentHour()))
+
+            Spacer(modifier = Modifier.height(50.dp))
+
             ShowElectricityGraph(
                 priceList = mainUiState.electricityPrices, thresholdValue = mainUiState.maxPrice
             )

@@ -39,8 +39,6 @@ fun SettingsScreen(
     changeElectricityRegion: (ElectricityRegion) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    //
     val openDialog = remember { mutableStateOf(false) }
 
     LazyColumn(
@@ -56,6 +54,8 @@ fun SettingsScreen(
                 fontFamily = FontFamily.Serif,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.width(500.dp))
+
+            Spacer(modifier = Modifier.height(40.dp))
 
             Button(onClick = { openDialog.value = !openDialog.value },
                 //Select region button
@@ -215,6 +215,8 @@ fun SettingsScreen(
 
 
             }
+            
+            Spacer(modifier = Modifier.height(40.dp))
 
             Button(
                 onClick = { navController.navigate("showAboutThisApp") },
@@ -232,6 +234,7 @@ fun SettingsScreen(
                     modifier = Modifier.width(200.dp))
             }
 
+            Spacer(modifier = Modifier.height(40.dp))
 
             Button(
                 onClick = { navController.navigate("openSource") },
