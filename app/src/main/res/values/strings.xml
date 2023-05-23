@@ -20,19 +20,30 @@
     <string name="table">Table</string>
     <string name="graph">Graph</string>
     <string name="language">Language selected: English</string>
-    <string name="change_language">Change language through system settings</string>
-    <string name="developers">Developers</string>
-    <string name="usage">Usage</string>
-    <string name="made_by">This app is developed by: </string>
+    <string name="change_language">You can modify the application language by accessing the language settings within your phone\'s system configuration.</string>
+    <string name="about_this_app">About this app</string>
+    <string name="usage">How it works</string>
+    <string name="information">
+        Welcome to our electricity price calculator app! \n\n
+        Our app provides you with up-to-date electricity price information for your current location,
+        as well as other locations of your choosing. \n\n With our easy-to-use interface, you can quickly access current and forecasted electricity price data,
+        including the forecasted electricity price for different appliances, such as cooking/baking, showering, heating and using the washing machine.
+        Our app is perfect for anyone who wants to check the electricity price and wants to plan their different activities around it.
+        \n\n Our app is optimized for both phone and tablet use. In addition to that, you can easily change the language to either Norwegian or English.
+        \n\n We hope you enjoy using our electricity price calculator app and that it helps you stay informed and prepared.
+        \n\n This app has been developed in collaboration with the Norwegian Meteorological Institute and as part of an exam assignment for IN2000 at the University of Oslo.
+        \n\n \n\n The project was undertaken by a team consisting of:  \n\n Kashmala Hafeez Sheikh, Osman Nasib Ali Ahmed, \n\n Sakaria Abdi Ahmed, Sofia Ibn El Moujdi Troger, \n\n Suleyman Mert Boyar and Syed Adam Hussainy"
+    </string>
     <string name="opensource">Open source licence</string>
-    <string name="purpose">The purpose of this app is to show the electricity
+    <string name="purpose">
+        The purpose of this app is to show the electricity
         price for a timeframe, and show the cost for common appliances during the
-        different timeframes. The home screen shows the current spot price for the
+        different timeframes. \n\n The home screen shows the current spot price for the
         user, while the electricity screen shows the electricity price for the
-        current day and the chosen region. The appliances screen shows the price
-        of using the appliance that
-        was chosen as a graph or a table. And in the settings, you can change the
-        region.</string>
+        current day and the chosen region. \n\n The appliances screen shows the price
+        of using the appliance that was chosen as a graph or a table. The settings screen provides
+        you the oppurtunity to change the region, and gives you important information about this application.
+    </string>
     <string-array name="names">
         <item>Osman Nasib Ali Ahmed</item>
         <item>Kashmala Hafeez Sheikh</item>
