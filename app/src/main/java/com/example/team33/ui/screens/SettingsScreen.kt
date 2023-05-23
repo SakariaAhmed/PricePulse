@@ -43,180 +43,178 @@ fun SettingsScreen(
     //
     val openDialog = remember { mutableStateOf(false) }
 
-    Column(
+    LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxSize()
     ) {
-
-        Spacer(modifier = Modifier.padding(10.dp))
-        Text(text = stringResource(id = R.string.language))
-        Text(text = stringResource(id = R.string.change_language),
-            fontSize = 14.sp,fontStyle = FontStyle.Italic,
-            fontFamily = FontFamily.Serif,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.width(500.dp))
-
-        Button(onClick = { openDialog.value = !openDialog.value },
-           //Select region button
-            modifier= Modifier
-                .clip(shape = RoundedCornerShape(size = 75.dp))
-                .height(70.dp)
-                .fillMaxSize()
-        ) {
-
-            Text(stringResource(R.string.select_region),
-            fontSize = 25.sp,
-            fontStyle = FontStyle.Italic,
+        item {
+            Spacer(modifier = Modifier.padding(10.dp))
+            Text(text = stringResource(id = R.string.language))
+            Text(text = stringResource(id = R.string.change_language),
+                fontSize = 14.sp,fontStyle = FontStyle.Italic,
                 fontFamily = FontFamily.Serif,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.width(200.dp))
-        }
-        
-        if (openDialog.value) {
+                modifier = Modifier.width(500.dp))
 
-            AlertDialog(
-                onDismissRequest = {
-                    openDialog.value = false
-                },
-                title = {
-                    Text(stringResource(R.string.select_region))
-                },
-                text = {
-                    val regionOptions: List<String> = listOf(
-                        stringResource(id = R.string.east_norway),
-                        stringResource(id = R.string.south_norway),
-                        stringResource(id = R.string.mid_norway),
-                        stringResource(id = R.string.north_norway),
-                        stringResource(id = R.string.west_norway)
-                    )
+            Button(onClick = { openDialog.value = !openDialog.value },
+                //Select region button
+                modifier= Modifier
+                    .clip(shape = RoundedCornerShape(size = 75.dp))
+                    .height(70.dp)
+                    .fillMaxSize()
+            ) {
 
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceEvenly,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        var selectedOption = remember { mutableStateOf("") }
+                Text(stringResource(R.string.select_region),
+                    fontSize = 25.sp,
+                    fontStyle = FontStyle.Italic,
+                    fontFamily = FontFamily.Serif,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(200.dp))
+            }
 
-                        when (mainUiState.currentRegion) {
-                            ElectricityRegion.NO1 -> selectedOption.value = regionOptions[0]
-                            ElectricityRegion.NO2 -> selectedOption.value = regionOptions[1]
-                            ElectricityRegion.NO3 -> selectedOption.value = regionOptions[2]
-                            ElectricityRegion.NO4 -> selectedOption.value = regionOptions[3]
-                            ElectricityRegion.NO5 -> selectedOption.value = regionOptions[4]
-                        }
+            if (openDialog.value) {
 
+                AlertDialog(
+                    onDismissRequest = {
+                        openDialog.value = false
+                    },
+                    title = {
+                        Text(stringResource(R.string.select_region))
+                    },
+                    text = {
+                        val regionOptions: List<String> = listOf(
+                            stringResource(id = R.string.east_norway),
+                            stringResource(id = R.string.south_norway),
+                            stringResource(id = R.string.mid_norway),
+                            stringResource(id = R.string.north_norway),
+                            stringResource(id = R.string.west_norway)
+                        )
 
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceEvenly,
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(text = regionOptions[0])
+                            var selectedOption = remember { mutableStateOf("") }
 
-                            RadioButton(
-                                selected = selectedOption.value == regionOptions[0],
-                                onClick = {
-                                    selectedOption.value = regionOptions[0];changeElectricityRegion(
-                                    ElectricityRegion.NO1
+                            when (mainUiState.currentRegion) {
+                                ElectricityRegion.NO1 -> selectedOption.value = regionOptions[0]
+                                ElectricityRegion.NO2 -> selectedOption.value = regionOptions[1]
+                                ElectricityRegion.NO3 -> selectedOption.value = regionOptions[2]
+                                ElectricityRegion.NO4 -> selectedOption.value = regionOptions[3]
+                                ElectricityRegion.NO5 -> selectedOption.value = regionOptions[4]
+                            }
+
+
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(text = regionOptions[0])
+
+                                RadioButton(
+                                    selected = selectedOption.value == regionOptions[0],
+                                    onClick = {
+                                        selectedOption.value = regionOptions[0];changeElectricityRegion(
+                                        ElectricityRegion.NO1
+                                    )
+                                    }
                                 )
-                                }
-                            )
+
+                            }
+
+
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(text = regionOptions[1])
+
+                                RadioButton(
+                                    selected = selectedOption.value == regionOptions[1],
+                                    onClick = {
+                                        selectedOption.value = regionOptions[1];changeElectricityRegion(
+                                        ElectricityRegion.NO2
+                                    )
+                                    }
+                                )
+
+                            }
+
+
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(text = regionOptions[2])
+
+                                RadioButton(
+                                    selected = selectedOption.value == regionOptions[2],
+                                    onClick = {
+                                        selectedOption.value = regionOptions[2];changeElectricityRegion(
+                                        ElectricityRegion.NO3
+                                    )
+                                    }
+                                )
+
+                            }
+
+
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(text = regionOptions[3])
+
+                                RadioButton(
+                                    selected = selectedOption.value == regionOptions[3],
+                                    onClick = {
+                                        selectedOption.value = regionOptions[3];changeElectricityRegion(
+                                        ElectricityRegion.NO4
+                                    )
+                                    }
+                                )
+
+                            }
+
+
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(text = regionOptions[4])
+
+                                RadioButton(
+                                    selected = selectedOption.value == regionOptions[4],
+                                    onClick = {
+                                        selectedOption.value = regionOptions[4];changeElectricityRegion(
+                                        ElectricityRegion.NO5
+                                    )
+                                    }
+                                )
+
+                            }
+
 
                         }
+                    },
+
+                    confirmButton = {
+                        Button(
+
+                            onClick = {
+                                openDialog.value = false;
 
 
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(text = regionOptions[1])
-
-                            RadioButton(
-                                selected = selectedOption.value == regionOptions[1],
-                                onClick = {
-                                    selectedOption.value = regionOptions[1];changeElectricityRegion(
-                                    ElectricityRegion.NO2
-                                )
-                                }
-                            )
-
+                            }) {
+                            Text("Ok")
                         }
-
-
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(text = regionOptions[2])
-
-                            RadioButton(
-                                selected = selectedOption.value == regionOptions[2],
-                                onClick = {
-                                    selectedOption.value = regionOptions[2];changeElectricityRegion(
-                                    ElectricityRegion.NO3
-                                )
-                                }
-                            )
-
-                        }
-
-
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(text = regionOptions[3])
-
-                            RadioButton(
-                                selected = selectedOption.value == regionOptions[3],
-                                onClick = {
-                                    selectedOption.value = regionOptions[3];changeElectricityRegion(
-                                    ElectricityRegion.NO4
-                                )
-                                }
-                            )
-
-                        }
-
-
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(text = regionOptions[4])
-
-                            RadioButton(
-                                selected = selectedOption.value == regionOptions[4],
-                                onClick = {
-                                    selectedOption.value = regionOptions[4];changeElectricityRegion(
-                                    ElectricityRegion.NO5
-                                )
-                                }
-                            )
-
-                        }
-
-
                     }
-                },
-
-                confirmButton = {
-                    Button(
-
-                        onClick = {
-                            openDialog.value = false;
+                )
 
 
-                        }) {
-                        Text("Ok")
-                    }
-                }
-            )
-
-
-        }
-
-         
+            }
 
             Button(
                 onClick = { navController.navigate("showAboutThisApp") },
@@ -234,7 +232,7 @@ fun SettingsScreen(
                     modifier = Modifier.width(200.dp))
             }
 
-            
+
             Button(
                 onClick = { navController.navigate("openSource") },
                 modifier= Modifier
@@ -251,9 +249,8 @@ fun SettingsScreen(
                     modifier = Modifier.width(300.dp))
             }
 
-        Spacer(modifier = Modifier.padding(10.dp))
-
-
+            Spacer(modifier = Modifier.padding(10.dp))
+        }
     }
 }
 
