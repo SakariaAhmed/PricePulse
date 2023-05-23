@@ -117,9 +117,9 @@ private fun AppScreenUI(
                 topBarScreenTitleId = R.string.opensource
                 OpenSource()
             }
-            composable(route = "showDeveloper") {
-                topBarScreenTitleId = R.string.developers
-                ShowDevelopers()
+            composable(route = "showAboutThisApp") {
+                topBarScreenTitleId = R.string.about_this_app
+                ShowAboutThisApp()
             }
             composable(route = "showPurpose") {
                 topBarScreenTitleId = R.string.usage
