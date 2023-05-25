@@ -125,7 +125,9 @@ fun AppliancesScreen(
                 Button(
                     onClick = { changeAppliance("Washing") },
                     modifier = Modifier.size(80.dp),
-                    shape = RoundedCornerShape(100)
+                    shape = RoundedCornerShape(100),
+                    colors = ButtonDefaults.buttonColors(md_theme_light_primaryContainer)
+
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.LocalLaundryService,
@@ -139,7 +141,9 @@ fun AppliancesScreen(
                 Button(
                     onClick = { changeAppliance("Oven") },
                     modifier = Modifier.size(80.dp),
-                    shape = RoundedCornerShape(100)
+                    shape = RoundedCornerShape(100),
+                    colors = ButtonDefaults.buttonColors(md_theme_light_primaryContainer)
+
                 ) {
                     Image(
                         painterResource(R.drawable.oven),
@@ -158,7 +162,9 @@ fun AppliancesScreen(
                 Button(
                     onClick = { changeAppliance("Heater") },
                     modifier = Modifier.size(80.dp),
-                    shape = RoundedCornerShape(100)
+                    shape = RoundedCornerShape(100),
+                    colors = ButtonDefaults.buttonColors(md_theme_light_primaryContainer)
+
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Thermostat,
@@ -172,7 +178,9 @@ fun AppliancesScreen(
                 Button(
                     onClick = { changeAppliance("Shower") },
                     modifier = Modifier.size(80.dp),
-                    shape = RoundedCornerShape(100)
+                    shape = RoundedCornerShape(100),
+                    colors = ButtonDefaults.buttonColors(md_theme_light_primaryContainer)
+
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Shower,
