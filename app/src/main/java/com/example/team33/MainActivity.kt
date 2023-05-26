@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,7 +22,6 @@ import com.example.team33.ui.theme.Team33Theme
 class MainActivity : ComponentActivity() {
     private lateinit var connectivityObserver: InternetConnectivityObserver
 
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         connectivityObserver = InternetConnectivity(applicationContext)
@@ -65,7 +63,10 @@ class MainActivity : ComponentActivity() {
 // Displays the text "Unable to connect to the internet" when user tries to launch the app without internet connection
 @Composable
 fun UnavailableScreen(modifier: Modifier = Modifier) {
-    Box(contentAlignment = Alignment.Center, modifier = modifier.fillMaxSize()) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier.fillMaxSize()
+    ) {
         Text(stringResource(R.string.unable_to_connect))
     }
 }
@@ -73,7 +74,10 @@ fun UnavailableScreen(modifier: Modifier = Modifier) {
 // Displays the text "Losing internet connection..." when user is losing internet connection
 @Composable
 fun LosingScreen(modifier: Modifier = Modifier) {
-    Box(contentAlignment = Alignment.Center, modifier = modifier.fillMaxSize()) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier.fillMaxSize()
+    ) {
         Text(stringResource(R.string.losing_connection))
     }
 }

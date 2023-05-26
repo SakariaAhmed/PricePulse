@@ -1,6 +1,5 @@
 package com.example.team33.ui.chart
 
-import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -17,17 +16,17 @@ import com.patrykandpatrick.vico.core.component.shape.LineComponent
 import com.patrykandpatrick.vico.core.component.shape.Shapes
 import com.patrykandpatrick.vico.core.component.shape.shader.DynamicShaders
 
+// This function sets the color of different charts uniformly depending on the device' color scheme
 @Composable
 internal fun rememberChartStyle(
     columnChartColors: List<Color>,
     lineChartColors: List<Color>,
-    thresholdValue: Float? = null
 ): ChartStyle {
-    val foo = 0
     val isSystemInDarkTheme = isSystemInDarkTheme()
-    Log.d("lineChartColor", "================")
+
     return remember(columnChartColors, lineChartColors, isSystemInDarkTheme) {
         val defaultColors = if (isSystemInDarkTheme) DefaultColors.Dark else DefaultColors.Light
+
         ChartStyle(
             ChartStyle.Axis(
                 axisLabelColor = Color(defaultColors.axisLabelColor),
@@ -61,9 +60,7 @@ internal fun rememberChartStyle(
             ChartStyle.Marker(),
             Color(defaultColors.elevationOverlayColor),
         )
-
     }
-
 }
 
 @Composable

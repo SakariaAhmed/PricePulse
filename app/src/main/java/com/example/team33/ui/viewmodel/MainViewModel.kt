@@ -1,4 +1,4 @@
-package com.example.team33.ui.viewmodels
+package com.example.team33.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -6,10 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.team33.network.ElectricityRegion
 import com.example.team33.network.StroemprisApi
 import com.example.team33.network.StroemprisData
-import com.example.team33.ui.uistates.MainUiState
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.RedirectResponseException
-import io.ktor.client.plugins.ServerResponseException
+import com.example.team33.ui.uistate.MainUiState
+import io.ktor.client.plugins.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -65,7 +63,6 @@ class MainViewModel : ViewModel() {
         }
     }
 
-
     fun graphVisible(statement: Boolean) {
         _uiState.update { currentState ->
             currentState.copy(
@@ -83,5 +80,4 @@ class MainViewModel : ViewModel() {
             )
         }
     }
-
 }

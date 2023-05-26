@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.team33.R
-import com.example.team33.ui.uistates.MainUiState
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
@@ -23,7 +22,6 @@ import com.patrykandpatrick.vico.compose.component.shapeComponent
 import com.patrykandpatrick.vico.compose.component.textComponent
 import com.patrykandpatrick.vico.compose.dimensions.dimensionsOf
 import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
-import com.patrykandpatrick.vico.compose.style.currentChartStyle
 import com.patrykandpatrick.vico.core.axis.vertical.VerticalAxis
 import com.patrykandpatrick.vico.core.chart.decoration.Decoration
 import com.patrykandpatrick.vico.core.chart.decoration.ThresholdLine
@@ -52,24 +50,20 @@ private val thresholdLineLabelPadding =
 private val thresholdLineLabelMargins = dimensionsOf(thresholdLineLabelMarginValue)
 
 @Composable
-private fun ChartCard(state: MainUiState) {
-
-}
-
-// TODO: make list accept float instead of double
-@Composable
 fun PopulatedChartCard(
-    list: List<Double>, modifier: Modifier = Modifier, thresholdValue: Float? = null
+    list: List<Double>,
+    modifier: Modifier = Modifier,
+    thresholdValue: Float? = null
 ) {
     val model: ChartEntryModel =
         entryModelOf(List(list.size) { FloatEntry(it.toFloat(), list[it].toFloat()) })
 
     val axisValuesOverrider: AxisValuesOverrider<ChartEntryModel> =
         AxisValuesOverrider.fixed(minY = 0.0f, maxY = ceil(list.max() + 0.25).toFloat())
+
     val decoration = when (val thresholdLine = rememberThresholdLine(thresholdValue)) {
         else -> remember(thresholdLine!!) { listOf(thresholdLine) }
     }
-
 
     val chartColors: List<Color> = listOf(MaterialTheme.colorScheme.primary)
 
@@ -109,7 +103,6 @@ private fun ChartTemplate(
     ) {
         Box(Modifier.padding(16.dp)) {
             ProvideChartStyle(rememberChartStyle(chartColors)) {
-                val defaultLines = currentChartStyle.lineChart.lines
 
                 Chart(
                     chart = lineChart(
@@ -147,7 +140,7 @@ private fun ChartTemplate(
                             margins = bottomAxisTitleMargins,
                             typeface = Typeface.MONOSPACE,
                         ),
-                        title = xAxisTitlemsg,  // TODO: better name for X axis
+                        title = xAxisTitlemsg,
                     ),
                     marker = rememberMarker(),
                     fadingEdges = rememberFadingEdges(),
@@ -165,8 +158,9 @@ private fun rememberThresholdLine(thresholdValue: Float?): ThresholdLine? {
 
     val line = shapeComponent(
         strokeWidth = thresholdLineThickness,
-        strokeColor = MaterialTheme.colorScheme.secondary.copy(alpha = 1f)//color2.copy(alpha = 0.75f)
+        strokeColor = MaterialTheme.colorScheme.secondary.copy(alpha = 1f)
     )
+
     val label = textComponent(
         color = MaterialTheme.colorScheme.onSecondaryContainer,
         background = shapeComponent(Shapes.pillShape, MaterialTheme.colorScheme.secondaryContainer),
@@ -177,11 +171,10 @@ private fun rememberThresholdLine(thresholdValue: Float?): ThresholdLine? {
     return remember(line, label) {
         ThresholdLine(
             thresholdValue = thresholdValue,
-            thresholdLabel = "limit",  // TODO: a better name for threshold indication
+            thresholdLabel = "limit",
             lineComponent = line,
             labelComponent = label,
             labelHorizontalPosition = ThresholdLine.LabelHorizontalPosition.End
         )
     }
 }
-

@@ -3,25 +3,13 @@ package com.example.team33.ui
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,12 +23,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.team33.R
-import com.example.team33.navigation.TopLevelDestination
+import com.example.team33.navigation.NavigationPath
 import com.example.team33.network.ElectricityRegion
 import com.example.team33.ui.screens.*
 import com.example.team33.ui.theme.Team33Theme
-import com.example.team33.ui.uistates.MainUiState
-import com.example.team33.ui.viewmodels.MainViewModel
+import com.example.team33.ui.uistate.MainUiState
+import com.example.team33.ui.viewmodel.MainViewModel
 import kotlin.math.sin
 
 // To create data points for previewing
@@ -48,9 +36,11 @@ fun genSineWaveList(size: Int): List<Double> {
     return List(size) { 1 + sin(3 * Math.PI * 5 * size / 4 * it / size) }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = viewModel()) {
+fun AppScreen(
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel = viewModel()
+) {
     val navController = rememberNavController()
     val mainUiState by viewModel.uiState.collectAsState()
 
@@ -74,53 +64,65 @@ private fun AppScreenUI(
     graphVisible: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var topBarScreenTitleId by remember { mutableStateOf(TopLevelDestination.HOME.titleTextId) }
-    Scaffold(topBar = {
-        LargeTopAppBar(
-            title = {
-                Text(
-                    text = stringResource(id = topBarScreenTitleId),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.displayLarge
-                )
-            },
-            colors = TopAppBarDefaults.largeTopAppBarColors(containerColor = MaterialTheme.colorScheme.background)
-        )
-    }, bottomBar = { BottomBar(navController) }, modifier = modifier) { innerPadding ->
+    var topBarScreenTitleId by remember { mutableStateOf(NavigationPath.HOME.titleTextId) }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(id = topBarScreenTitleId),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.displaySmall,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+            )
+        },
+        bottomBar = { BottomBar(navController) },
+        modifier = modifier
+    ) { innerPadding ->
         NavHost(
             navController,
-            startDestination = TopLevelDestination.HOME.route,
+            startDestination = NavigationPath.HOME.route,
             Modifier.padding(innerPadding)
         ) {
-            composable(TopLevelDestination.HOME.route) {
-                topBarScreenTitleId = TopLevelDestination.HOME.titleTextId
+            composable(NavigationPath.HOME.route) {
+                topBarScreenTitleId = NavigationPath.HOME.titleTextId
                 HomeScreen(mainUiState = mainUiState, modifier = Modifier.padding(start = 10.dp))
             }
-            composable(TopLevelDestination.APPLIANCES.route) {
-                topBarScreenTitleId = TopLevelDestination.APPLIANCES.titleTextId
+
+            composable(NavigationPath.APPLIANCES.route) {
+                topBarScreenTitleId = NavigationPath.APPLIANCES.titleTextId
                 AppliancesScreen(
                     mainUiState = mainUiState,
                     graphVisible = { graphVisible(it) },
                     changeAppliance = { changeAppliance(it) }
                 )
             }
-            composable(TopLevelDestination.SETTINGS.route) {
-                topBarScreenTitleId = TopLevelDestination.SETTINGS.titleTextId
+
+            composable(NavigationPath.SETTINGS.route) {
+                topBarScreenTitleId = NavigationPath.SETTINGS.titleTextId
                 SettingsScreen(
                     mainUiState = mainUiState,
                     navController = navController,
                     changeElectricityRegion = { changeElectricityRegion(it) },
                 )
             }
+
             composable(route = "openSource") {
                 topBarScreenTitleId = R.string.opensource
                 OpenSource()
             }
+
             composable(route = "showAboutThisApp") {
                 topBarScreenTitleId = R.string.about_this_app
                 ShowAboutThisApp()
             }
+
             composable(route = "showPurpose") {
                 topBarScreenTitleId = R.string.usage
                 ShowPurpose()
@@ -135,7 +137,7 @@ fun BottomBar(navController: NavHostController) {
     val currentDestination = navBackStackEntry?.destination
 
     NavigationBar {
-        TopLevelDestination.values().forEach { screen ->
+        NavigationPath.values().forEach { screen ->
             AddNavItem(
                 screen = screen,
                 currentDestination = currentDestination,
@@ -147,7 +149,7 @@ fun BottomBar(navController: NavHostController) {
 
 @Composable
 fun RowScope.AddNavItem(
-    screen: TopLevelDestination,
+    screen: NavigationPath,
     currentDestination: NavDestination?,
     navController: NavHostController,
     modifier: Modifier = Modifier
@@ -168,7 +170,8 @@ fun RowScope.AddNavItem(
                 launchSingleTop = true
                 restoreState = true
             }
-        }, modifier = modifier
+        },
+        modifier = modifier
     )
 }
 

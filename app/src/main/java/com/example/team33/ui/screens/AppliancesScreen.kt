@@ -1,39 +1,30 @@
 package com.example.team33.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.LocalLaundryService
+import androidx.compose.material.icons.rounded.Shower
+import androidx.compose.material.icons.rounded.Thermostat
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.team33.R
-import com.example.team33.ui.uistates.MainUiState
-import androidx.compose.material3.*
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
-import com.example.team33.network.ElectricityRegion
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.example.team33.R
 import com.example.team33.ui.chart.PopulatedChartCard
 import com.example.team33.ui.theme.md_theme_light_primaryContainer
+import com.example.team33.ui.uistate.MainUiState
 
 
 @Composable
@@ -48,7 +39,10 @@ fun AppliancesScreen(
         modifier = modifier.fillMaxSize(),
     ) {
         item {
-            // Tabell og Graf
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // Table and graph
             Row(modifier.fillMaxWidth()) {
                 Spacer(Modifier.weight(0.5f))
                 Button(
@@ -75,12 +69,11 @@ fun AppliancesScreen(
                     )
                 }
                 Spacer(Modifier.weight(0.5f))
-
-
             }
+
             Spacer(modifier = Modifier.height(20.dp))
 
-            //Resultat
+            // Result
             Box {
                 Box(
                     Modifier
@@ -89,11 +82,11 @@ fun AppliancesScreen(
                         .width(
                             300.dp
                         )
-
                 )
 
                 var liste = mainUiState.electricityPrices
-                // times the list with the kwh cost of the product
+
+                // Times the list with the kwh cost of the product
                 if (liste != null) {
                     when (mainUiState.appliance) {
                         "Washing" -> liste = liste.map { it * 0.57 }
@@ -117,8 +110,7 @@ fun AppliancesScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            //Fire knapper
-            val farge = ButtonDefaults.buttonColors(White)
+            // Four buttons
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = modifier.fillMaxWidth()
@@ -151,12 +143,6 @@ fun AppliancesScreen(
                         contentDescription = stringResource(R.string.oven),
                         modifier = Modifier.fillMaxSize()
                     )
-                    /*
-                        Icon(
-                            imageVector = painterResource(R.drawable.oven_gen_48px) ,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
-                        )*/
                 }
                 Spacer(modifier = Modifier.weight(0.12f))
 
@@ -192,24 +178,21 @@ fun AppliancesScreen(
                 }
             }
         }
-
-
-
     }
 }
 
 @Composable
 fun ShowGraph(list: List<Double>, modifier: Modifier = Modifier) {
-    PopulatedChartCard(list = list, Modifier, 2.7f)
+    PopulatedChartCard(list = list, modifier, 2.7f)
 }
 
 @Composable
-fun ShowTable(list: List<Double>) {
-    Row(Modifier.fillMaxWidth()) {
+fun ShowTable(list: List<Double>, modifier: Modifier = Modifier) {
+    Row(modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.weight(0.25F))
         LazyColumn(modifier = Modifier.height(250.dp)) {
             itemsIndexed(list) { index, element ->
-                RowInTable(verdi = index + 1, pris = element)
+                RowInTable(value = index + 1, price = element)
 
             }
         }
@@ -218,15 +201,21 @@ fun ShowTable(list: List<Double>) {
 }
 
 @Composable
-fun RowInTable(verdi: Int, pris: Double) {
+fun RowInTable(
+    value: Int,
+    price: Double,
+    modifier: Modifier = Modifier
+) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .border(width = 2.dp, color = Color.Blue)
             .padding(1.dp)
             .height(60.dp)
+            .fillMaxWidth(0.8F)
     ) {
-        TableCell(data = "$verdi:")
-        //Makes the black line betweem the 2 cells
+        TableCell(data = "$value:")
+
+        //Makes the black line between the 2 cells
         Divider(
             color = Color.Blue,
             thickness = 16.dp,
@@ -234,15 +223,18 @@ fun RowInTable(verdi: Int, pris: Double) {
                 .fillMaxHeight(2F)
                 .width(1.dp)
         )
-        TableCell(data = "$pris NOK")
+        TableCell(data = "%.2f NOK".format(price))
     }
 }
 
 @Composable
-fun TableCell(data: String) {
+fun TableCell(
+    data: String,
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth(0.28F)
+        modifier = modifier
+            .width(100.dp)
     ) {
         Text(
             text = data,

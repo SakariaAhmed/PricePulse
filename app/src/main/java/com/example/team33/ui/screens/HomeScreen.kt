@@ -4,11 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,10 +16,8 @@ import com.example.team33.ui.chart.EmptyAppChartCard
 import com.example.team33.ui.chart.PopulatedChartCard
 import com.example.team33.ui.genSineWaveList
 import com.example.team33.ui.theme.Team33Theme
-import com.example.team33.ui.uistates.MainUiState
-import java.util.Date
-import java.util.Locale
-
+import com.example.team33.ui.uistate.MainUiState
+import java.util.*
 
 // Returns current hour
 private fun getCurrentHour(): Int {
@@ -33,10 +27,11 @@ private fun getCurrentHour(): Int {
 @Composable
 fun HomeScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
     LazyColumn(
-        // horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly, modifier = modifier.fillMaxSize(1f)
     ) {
         item {
+            Spacer(modifier = Modifier.height(10.dp))
+
             SpotpriceComposable(currentPrice = mainUiState.electricityPrices?.get(getCurrentHour()))
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -48,14 +43,13 @@ fun HomeScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
     }
 }
 
-
 // Displays location, date and current electricity price
 @Composable
-private fun SpotpriceComposable(currentPrice: Double?, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-
-    ) {
+private fun SpotpriceComposable(
+    currentPrice: Double?,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
         Text(
             stringResource(id = R.string.spot_price),
             style = MaterialTheme.typography.titleLarge,
@@ -76,7 +70,6 @@ private fun SpotpriceComposable(currentPrice: Double?, modifier: Modifier = Modi
             Card(
                 elevation = CardDefaults.cardElevation(defaultElevation = 30.dp),
                 modifier = Modifier.size(width = 280.dp, height = 80.dp)
-
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(

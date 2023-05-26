@@ -1,6 +1,5 @@
 package com.example.team33.network
 
-
 import android.icu.text.SimpleDateFormat
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -11,9 +10,7 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import java.util.*
 
-private const val TAG = "StroemprosApi"
-
-enum class ElectricityRegion{
+enum class ElectricityRegion {
     NO1, // Oslo / Øst-Norge
     NO2, // Kristiansand / Sør-Norge
     NO3, // Trondheim / Midt-Norge
@@ -25,11 +22,11 @@ object StroemprisApi {
     private val jsonClient by lazy {
         HttpClient(CIO) {
             install(ContentNegotiation) {
-                json(Json{
+                json(Json {
                     ignoreUnknownKeys = true
                 })
             }
-            expectSuccess=true
+            expectSuccess = true
         }
     }
 

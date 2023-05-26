@@ -9,9 +9,11 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
-class InternetConnectivity(context: Context): InternetConnectivityObserver {
+class InternetConnectivity(context: Context) : InternetConnectivityObserver {
 
-    private val internetConnectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    // Handles internet connectivity
+    private val internetConnectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     override fun observe(): Flow<InternetConnectivityObserver.Status> {
         return callbackFlow {

@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.example.team33.ui.screens.HomeScreen
-import com.example.team33.ui.viewmodels.MainViewModel
+import com.example.team33.ui.viewmodel.MainViewModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

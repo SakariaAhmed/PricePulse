@@ -1,7 +1,7 @@
 package com.example.team33
 
 import com.example.team33.network.LocationForecastApi
-import com.example.team33.ui.viewmodels.MainViewModel
+import com.example.team33.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test

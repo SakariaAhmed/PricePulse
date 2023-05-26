@@ -1,4 +1,4 @@
-package com.example.team33.ui.uistates
+package com.example.team33.ui.uistate
 
 import com.example.team33.network.ElectricityRegion
 
