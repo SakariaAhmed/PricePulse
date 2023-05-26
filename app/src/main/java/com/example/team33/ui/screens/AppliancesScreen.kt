@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import com.example.team33.network.ElectricityRegion
 import com.example.team33.ui.chart.PopulatedChartCard
+import com.example.team33.ui.theme.md_theme_light_primaryContainer
 
 
 @Composable

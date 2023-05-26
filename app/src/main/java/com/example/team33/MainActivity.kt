@@ -15,18 +15,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.team33.network.ConnectivityObserver
-import com.example.team33.network.NetworkConnectivityObserver
+import com.example.team33.network.InternetConnectivity
+import com.example.team33.network.InternetConnectivityObserver
 import com.example.team33.ui.AppScreen
 import com.example.team33.ui.theme.Team33Theme
 
 class MainActivity : ComponentActivity() {
-    private lateinit var connectivityObserver: ConnectivityObserver
+    private lateinit var connectivityObserver: InternetConnectivityObserver
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        connectivityObserver = NetworkConnectivityObserver(applicationContext)
+        connectivityObserver = InternetConnectivity(applicationContext)
         setContent {
             Team33Theme {
                 /*
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                 based on the user's internet connection
                  */
                 val status by connectivityObserver.observe().collectAsState(
-                    initial = ConnectivityObserver.Status.Unavailable
+                    initial = InternetConnectivityObserver.Status.Unavailable
                 )
 
                 Surface(

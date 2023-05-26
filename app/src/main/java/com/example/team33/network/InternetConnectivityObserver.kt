@@ -2,7 +2,7 @@ package com.example.team33.network
 
 import kotlinx.coroutines.flow.Flow
 
-interface ConnectivityObserver {
+interface InternetConnectivityObserver {
     fun observe(): Flow<Status>
 
     enum class Status {
