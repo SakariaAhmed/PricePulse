@@ -42,7 +42,7 @@ fun AppliancesScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Table and graph
+            // Displays Table and graph button, which changes the showGraph statement in the mainUiState.
             Row(modifier.fillMaxWidth()) {
                 Spacer(Modifier.weight(0.5f))
                 Button(
@@ -83,20 +83,20 @@ fun AppliancesScreen(
                             300.dp
                         )
                 )
-
+                //gets the electricty price for the day from the uistate.
                 var liste = mainUiState.electricityPrices
 
                 // Times the list with the kwh cost of the product
                 if (liste != null) {
                     when (mainUiState.appliance) {
                         "Washing" -> liste = liste.map { it * 0.57 }
-                        "Oven" -> liste = liste.map { it * 1.9 }
-                        "Heater" -> liste = liste.map { it * 0.9 }
+                        "Oven" -> liste = liste.map { it * 0.946 }
+                        "Heater" -> liste = liste.map { it * 0.53 }
                         "Shower" -> liste = liste.map { it * 6 }
 
                     }
                 }
-
+                //Displays either a graph or table based on the showGraph value in mainUiState.
                 if (liste != null) {
                     if (mainUiState.showGraph) {
                         ShowGraph(liste)
@@ -110,7 +110,8 @@ fun AppliancesScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Four buttons
+            // Four button which represents the different applications, with a corresponding icon.
+            //When you click the button it changes which appliance is chosen in the mainUiState
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = modifier.fillMaxWidth()
@@ -183,16 +184,18 @@ fun AppliancesScreen(
 
 @Composable
 fun ShowGraph(list: List<Double>, modifier: Modifier = Modifier) {
+    //calls upon PopulatedChrtCard from AppChart
     PopulatedChartCard(list = list, modifier, 2.7f)
 }
 
 @Composable
 fun ShowTable(list: List<Double>, modifier: Modifier = Modifier) {
+    //Creates a row wih lazycolumns, so you are able to scroll vertically trough the table.
     Row(modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.weight(0.25F))
         LazyColumn(modifier = Modifier.height(250.dp)) {
             itemsIndexed(list) { index, element ->
-                RowInTable(value = index + 1, price = element)
+                RowInTable(value = index, price = element)
 
             }
         }
@@ -213,7 +216,20 @@ fun RowInTable(
             .height(60.dp)
             .fillMaxWidth(0.8F)
     ) {
-        TableCell(data = "$value:")
+        //turns the index to hour
+        var time =" "
+        time += if (value<10){
+            "0$value:00-"
+        }else{
+            "$value:00-"
+        }
+        time += if ((value+1)<10){
+            "0${value+1}:00"
+        }else{
+            "${value+1}:00"
+        }
+        //The first cell contains the time, and the second contains the cost
+        TableCell(data = time)
 
         //Makes the black line between the 2 cells
         Divider(
@@ -232,13 +248,10 @@ fun TableCell(
     data: String,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier
-            .width(100.dp)
-    ) {
+    Box() {
         Text(
             text = data,
-            modifier = Modifier.padding(8.dp)
+            modifier = modifier.padding(8.dp)
         )
     }
 }

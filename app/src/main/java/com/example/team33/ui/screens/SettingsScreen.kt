@@ -207,7 +207,7 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-
+            //Button which navigates you to the showAboutThisApp composable
             Button(
                 onClick = { navController.navigate("showAboutThisApp") },
                 modifier = Modifier
@@ -226,7 +226,7 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-
+            //Button which navigates you to the showPurpose composable
             Button(
                 onClick = { navController.navigate("showPurpose") },
                 modifier = Modifier
@@ -245,7 +245,7 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-
+            //Button which navigates you to the openSource composable
             Button(
                 onClick = { navController.navigate("openSource") },
                 modifier = Modifier
@@ -270,6 +270,7 @@ fun SettingsScreen(
 
 @Composable
 fun OpenSource(modifier: Modifier = Modifier) {
+    //Uses the function from AboutLibraries to display the sources
     LibrariesContainer(modifier.fillMaxSize())
 }
 

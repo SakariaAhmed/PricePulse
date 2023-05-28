@@ -64,6 +64,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun graphVisible(statement: Boolean) {
+        //Changes whether or not the graph is visible in ApplianceScreen
         _uiState.update { currentState ->
             currentState.copy(
                 // remove all other unnecessary properties for fetched data
@@ -73,6 +74,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun changeAppliance(chosenAppliance: String) {
+        //Changes which appliance's price that should be displayed
         _uiState.update { currentState ->
             currentState.copy(
                 // remove all other unnecessary properties for fetched data
