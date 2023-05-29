@@ -109,6 +109,12 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:2.5.3"
 
 
+    //Testing
+    androidTestImplementation 'androidx.test:orchestrator:1.4.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+
+
     // Extra Meterial icons
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 

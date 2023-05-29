@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.team33.R
+import com.example.team33.network.ElectricityRegion
 import com.example.team33.ui.chart.EmptyAppChartCard
 import com.example.team33.ui.chart.PopulatedChartCard
 import com.example.team33.ui.genSineWaveList
@@ -31,6 +33,16 @@ fun HomeScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
     ) {
         item {
             Spacer(modifier = Modifier.height(10.dp))
+
+            val region = when (mainUiState.currentRegion) {
+                ElectricityRegion.NO1 -> stringResource(id = R.string.east_norway)
+                ElectricityRegion.NO2 -> stringResource(id = R.string.south_norway)
+                ElectricityRegion.NO3 -> stringResource(id = R.string.mid_norway)
+                ElectricityRegion.NO4 -> stringResource(id = R.string.north_norway)
+                ElectricityRegion.NO5 -> stringResource(id = R.string.west_norway)
+            }
+            Text(text = region, fontSize = 30.sp, modifier = Modifier)
+            Spacer(modifier = Modifier.height(40.dp))
 
             SpotpriceComposable(currentPrice = mainUiState.electricityPrices?.get(getCurrentHour()))
 

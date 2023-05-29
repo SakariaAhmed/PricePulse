@@ -1,5 +1,6 @@
 package com.example.team33.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -112,8 +113,11 @@ fun SettingsScreen(
                                 Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(text = regionOptions[0])
-
+                                Text(text = regionOptions[0], Modifier.clickable(onClick = {
+                                    selectedOption.value = regionOptions[0];changeElectricityRegion(
+                                    ElectricityRegion.NO1
+                                )
+                                }))
                                 RadioButton(
                                     selected = selectedOption.value == regionOptions[0],
                                     onClick = {
@@ -129,8 +133,11 @@ fun SettingsScreen(
                                 Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(text = regionOptions[1])
-
+                                Text(text = regionOptions[1], Modifier.clickable(onClick = {
+                                    selectedOption.value = regionOptions[1];changeElectricityRegion(
+                                    ElectricityRegion.NO2
+                                )
+                                }))
                                 RadioButton(
                                     selected = selectedOption.value == regionOptions[1],
                                     onClick = {
@@ -146,8 +153,11 @@ fun SettingsScreen(
                                 Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(text = regionOptions[2])
-
+                                Text(text = regionOptions[2], Modifier.clickable(onClick = {
+                                    selectedOption.value = regionOptions[2];changeElectricityRegion(
+                                    ElectricityRegion.NO3
+                                )
+                                }))
                                 RadioButton(
                                     selected = selectedOption.value == regionOptions[2],
                                     onClick = {
@@ -163,8 +173,11 @@ fun SettingsScreen(
                                 Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(text = regionOptions[3])
-
+                                Text(text = regionOptions[3], Modifier.clickable(onClick = {
+                                    selectedOption.value = regionOptions[3];changeElectricityRegion(
+                                    ElectricityRegion.NO4
+                                )
+                                }))
                                 RadioButton(
                                     selected = selectedOption.value == regionOptions[3],
                                     onClick = {
@@ -180,8 +193,11 @@ fun SettingsScreen(
                                 Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(text = regionOptions[4])
-
+                                Text(text = regionOptions[4], Modifier.clickable(onClick = {
+                                    selectedOption.value = regionOptions[4];changeElectricityRegion(
+                                    ElectricityRegion.NO5
+                                )
+                                }))
                                 RadioButton(
                                     selected = selectedOption.value == regionOptions[4],
                                     onClick = {

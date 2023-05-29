@@ -1,59 +1,53 @@
 package com.example.team33
 
-import androidx.compose.material3.windowsizeclass.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
+import com.example.team33.ui.AppScreen
 import com.example.team33.ui.viewmodel.MainViewModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 class NavigationTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
-    val viewmodel = MainViewModel()
-    val scrensize = WindowSizeClass.calculateFromSize(DpSize(600.dp,600.dp))
-
-
-
+    val viewModel = MainViewModel()
 
     @Before
     fun setupAppNavHost() {
         composeTestRule.setContent {
-            AppScreen(scrensize, viewmodel)
+            AppScreen(Modifier.fillMaxSize(), viewModel)
         }
     }
 
     @Test
-    fun bottomNavigation_verifyStartDestination() {
-        composeTestRule.onNodeWithContentDescription("Home").assertIsDisplayed()
+    fun bottomNavigation_clickStartDestination() {
+        composeTestRule.onAllNodesWithText("Home").onLast().performClick()
 
     }
 
     @Test
-    fun bottomNavigation_clickElectricity() {
-        composeTestRule.onNode(hasContentDescription("Electricity")).performClick()
-        composeTestRule.onNodeWithContentDescription("Electricity").assertIsDisplayed()
+    fun bottomNavigation_verifyStartDestination() {
+        composeTestRule.onAllNodesWithText("Home").onFirst().assertIsDisplayed()
     }
 
     @Test
     fun bottomNavigation_clickAppliances() {
-        composeTestRule.onNode(hasContentDescription("Appliances")).performClick()
-        composeTestRule.onNodeWithContentDescription("Appliances").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText("Appliances").onLast().performClick()
+        composeTestRule.onAllNodesWithText("Appliances").onFirst().assertIsDisplayed()
+    }
+
+    @Test
+    fun bottomNavigation_clickSetting() {
+        composeTestRule.onAllNodesWithText( "Settings").onLast().performClick()
+        composeTestRule.onAllNodesWithText("Settings").onFirst().assertIsDisplayed()
     }
 
     @Test
     fun bottomNavigation_backToHome() {
-        composeTestRule.onNode(hasContentDescription("Home")).performClick()
-        composeTestRule.onNodeWithContentDescription("Home").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText("Home").onLast().performClick()
+        composeTestRule.onAllNodesWithText("Home").onFirst().assertIsDisplayed()
     }
-
-
 }
-
-
-

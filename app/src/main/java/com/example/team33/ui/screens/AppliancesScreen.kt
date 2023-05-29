@@ -217,16 +217,16 @@ fun RowInTable(
             .fillMaxWidth(0.8F)
     ) {
         //turns the index to hour
-        var time =" "
-        time += if (value<10){
+        var time = " "
+        time += if (value < 10) {
             "0$value:00-"
-        }else{
+        } else {
             "$value:00-"
         }
-        time += if ((value+1)<10){
-            "0${value+1}:00"
-        }else{
-            "${value+1}:00"
+        time += if ((value + 1) < 10) {
+            "0${value + 1}:00"
+        } else {
+            "${value + 1}:00"
         }
         //The first cell contains the time, and the second contains the cost
         TableCell(data = time)
@@ -248,7 +248,7 @@ fun TableCell(
     data: String,
     modifier: Modifier = Modifier
 ) {
-    Box() {
+    Box {
         Text(
             text = data,
             modifier = modifier.padding(8.dp)
