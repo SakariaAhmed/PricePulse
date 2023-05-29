@@ -47,6 +47,7 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
+            //Information about how to change the language 
             Text(
                 text = stringResource(id = R.string.change_language),
                 fontSize = 14.sp, fontStyle = FontStyle.Italic,
@@ -57,6 +58,7 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
+            //Select a region between 5 alternatives
             Button(
                 onClick = { openDialog.value = !openDialog.value },
 
@@ -70,7 +72,6 @@ fun SettingsScreen(
                 Text(
                     stringResource(R.string.select_region),
                     fontSize = 25.sp,
-                    fontStyle = FontStyle.Italic,
                     fontFamily = FontFamily.Serif,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.width(200.dp)
@@ -210,7 +211,7 @@ fun SettingsScreen(
                             }
                         }
                     },
-
+                    //Button to confirm the region you chose
                     confirmButton = {
                         Button(
                             onClick = {
@@ -223,6 +224,7 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
+        
             //Button which navigates you to the showAboutThisApp composable
             Button(
                 onClick = { navController.navigate("showAboutThisApp") },
@@ -234,7 +236,6 @@ fun SettingsScreen(
                 Text(
                     stringResource(id = R.string.about_this_app),
                     fontSize = 25.sp,
-                    fontStyle = FontStyle.Italic,
                     fontFamily = FontFamily.Serif,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.width(200.dp)
@@ -242,6 +243,7 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
+            
             //Button which navigates you to the showPurpose composable
             Button(
                 onClick = { navController.navigate("showPurpose") },
@@ -253,7 +255,6 @@ fun SettingsScreen(
                 Text(
                     stringResource(id = R.string.usage),
                     fontSize = 25.sp,
-                    fontStyle = FontStyle.Italic,
                     fontFamily = FontFamily.Serif,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.width(300.dp)
@@ -261,6 +262,7 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
+            
             //Button which navigates you to the openSource composable
             Button(
                 onClick = { navController.navigate("openSource") },
@@ -272,7 +274,6 @@ fun SettingsScreen(
                 Text(
                     stringResource(id = R.string.opensource),
                     fontSize = 25.sp,
-                    fontStyle = FontStyle.Italic,
                     fontFamily = FontFamily.Serif,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.width(300.dp)
