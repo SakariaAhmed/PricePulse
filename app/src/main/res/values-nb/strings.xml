@@ -23,18 +23,14 @@
     <string name="about_this_app">Om appen </string>
     <string name="usage">Bruksområde</string>
     <string name="information">
-        Velkommen til vår strømpriskalkulator-app!
-        \n\n Vår app gir deg oppdatert informasjon om strømpriser for din nåværende posisjon, samt andre valgte steder.
-        \n\n Med vårt brukervennlige grensesnitt kan du raskt få tilgang til nåværende og prognostiserte strømprisdata,
-        inkludert prognosen for strømprisene knyttet til ulike apparater, som matlaging/baking, dusjing, oppvarming og
-        bruk av vaskemaskin.
-        Vår app er perfekt for alle som ønsker å sjekke strømprisen og planlegge sine ulike aktiviteter i tråd med den.
-         \n\n Appen vår er optimalisert for bruk både på telefoner og nettbrett.
-        I tillegg kan du enkelt velge mellom norsk og engelsk som språk.
-        \n\n Vi håper du vil ha glede av å bruke vår strømpriskalkulator-app, og at den hjelper deg med å være informert og forberedt.
+        Velkommen til vår strømpriskalkulator-app! \n\n
+        Appen vår gir deg oppdatert strømpris informasjon for de ulike regionen i Norge.
+        \n\n Med vårt brukervennlige grensesnitt kan du raskt få tilgang til gjeldende og anslått strømprisdata,
+        PricePulse viser brukeren gjeldende strømpris og dagens pris per time. Den beregner også hva det vil koste å bruke forskjellige hvitevarer for en gitt tid. \n\n
+        Foreløpig beregner appen kun prisen på bruk for vaskemaskin, stekeovn, varmeapparat og dusj.        \n\n Appen vår er optimalisert for både telefon- og nettbrettbruk, og tillegg støtter norsk og engelsk.
+        \n\n Vi håper du liker å bruke vår strømpriskalkulator-app og at den hjelper deg å holde deg informert og forberedt.
         \n\n Denne appen er utviklet i samarbeid med Meteorologisk institutt og som en del av en eksamensoppgave for IN2000 ved Universitetet i Oslo.
-        \n\n Prosjektet ble utført av et team bestående av: \n\n \n\n Kashmala Hafeez Sheikh, Osman Nasib Ali Ahmed, \n\n
-        Sakaria Abdi Ahmed, Sofia Ibn El Moujdi Troger, \n\n Suleyman Mert Boyar og Syed Adam Hussainy.
+        \n\n \n\n Prosjektet ble utført av: \n\n Kashmala Hafeez Sheikh, Osman Nasib Ali Ahmed, \n\n Sakaria Abdi Ahmed, Sofia Ibn El Moujdi Troger, \n\n Suleyman Mert Boyar og Syed Adam Hussainy"
     </string>
     <string name="opensource">Åpen kildekode lisenser</string>
     <string name="purpose">
