@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">team33</string>
     <string name="current_electricity_price">Gjeldende strømpris</string>
     <string name="unable_to_connect">Kan ikke koble til Internettet</string>
     <string name="lost_connection">Mistet internettforbindelse</string>

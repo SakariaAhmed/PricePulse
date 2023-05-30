@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">team33</string>
+    <string name="app_name" translatable="false">PricePulse</string>
     <string name="oslo" translatable="false">Oslo</string>
     <string name="current_electricity_price">Current electricity price</string>
     <string name="unable_to_connect">Unable to connect to the Internet</string>
