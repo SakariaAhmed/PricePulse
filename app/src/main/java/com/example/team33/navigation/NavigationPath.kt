@@ -7,6 +7,16 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.team33.R
 
+/**
+ * Represents the navigation paths in the application.
+ *
+ * The `NavigationPath` enum class defines the different screens or destinations in the application along with
+ * their corresponding route, selected icon, and title text ID.
+ *
+ * @property route The route associated with the navigation path.
+ * @property selectedIcon The icon to be displayed when the navigation path is selected.
+ * @property titleTextId The resource ID of the title text associated with the navigation path.
+ */
 enum class NavigationPath(
     val route: String,
     val selectedIcon: ImageVector,

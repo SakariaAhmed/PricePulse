@@ -49,24 +49,36 @@ private val thresholdLineLabelPadding =
     dimensionsOf(thresholdLineLabelHorizontalPaddingValue, thresholdLineLabelVerticalPaddingValue)
 private val thresholdLineLabelMargins = dimensionsOf(thresholdLineLabelMarginValue)
 
+/**
+ * Composable function that displays a populated chart card.
+ *
+ * @param list The list of double values representing the data points of the chart.
+ * @param modifier The optional modifier for styling the chart card.
+ * @param thresholdValue The optional threshold value for displaying a threshold line on the chart.
+ */
 @Composable
 fun PopulatedChartCard(
     list: List<Double>,
     modifier: Modifier = Modifier,
     thresholdValue: Float? = null
 ) {
+    // Create a ChartEntryModel using the list of double values
     val model: ChartEntryModel =
         entryModelOf(List(list.size) { FloatEntry(it.toFloat(), list[it].toFloat()) })
 
+    // Define an AxisValuesOverrider to set the minimum and maximum Y-axis values
     val axisValuesOverrider: AxisValuesOverrider<ChartEntryModel> =
         AxisValuesOverrider.fixed(minY = 0.0f, maxY = ceil(list.max() + 0.25).toFloat())
 
+    // Determine the decoration based on the threshold value
     val decoration = when (val thresholdLine = rememberThresholdLine(thresholdValue)) {
         else -> remember(thresholdLine!!) { listOf(thresholdLine) }
     }
 
+    // Define the chart colors
     val chartColors: List<Color> = listOf(MaterialTheme.colorScheme.primary)
 
+    // Display the chart using the ChartTemplate composable
     ChartTemplate(
         chartColors = chartColors,
         model = model,
@@ -87,6 +99,16 @@ fun EmptyAppChartCard(size: Int) {
     ChartTemplate(chartColors = listOf(Color.Black), model = model)
 }
 
+/**
+ * Composable function that defines the template for displaying a chart.
+ *
+ * @param chartColors The list of colors to be used for the chart.
+ * @param model The ChartEntryModel containing the data points for the chart.
+ * @param modifier The optional modifier for styling the chart template.
+ * @param axisValuesOverrider The optional AxisValuesOverrider for customizing the axis values.
+ * @param decoration The optional list of decorations to be applied to the chart.
+ * @param xAxisTitlemsg The optional x-axis title for the chart.
+ */
 @Composable
 private fun ChartTemplate(
     chartColors: List<Color>,
@@ -150,17 +172,25 @@ private fun ChartTemplate(
     }
 }
 
+/**
+ * Composable function that remembers a threshold line based on the specified threshold value.
+ *
+ * @param thresholdValue The threshold value for the threshold line.
+ * @return The ThresholdLine if a threshold value is provided, otherwise null.
+ */
 @Composable
 private fun rememberThresholdLine(thresholdValue: Float?): ThresholdLine? {
     if (thresholdValue == null) {
         return null
     }
 
+    // Create the line component for the threshold line
     val line = shapeComponent(
         strokeWidth = thresholdLineThickness,
         strokeColor = MaterialTheme.colorScheme.secondary.copy(alpha = 1f)
     )
 
+    // Create the label component for the threshold line
     val label = textComponent(
         color = MaterialTheme.colorScheme.onSecondaryContainer,
         background = shapeComponent(Shapes.pillShape, MaterialTheme.colorScheme.secondaryContainer),
@@ -168,6 +198,8 @@ private fun rememberThresholdLine(thresholdValue: Float?): ThresholdLine? {
         margins = thresholdLineLabelMargins,
         typeface = Typeface.MONOSPACE,
     )
+
+    // Remember the line and label components
     return remember(line, label) {
         ThresholdLine(
             thresholdValue = thresholdValue,

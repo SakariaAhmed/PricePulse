@@ -16,7 +16,14 @@ import com.patrykandpatrick.vico.core.component.shape.LineComponent
 import com.patrykandpatrick.vico.core.component.shape.Shapes
 import com.patrykandpatrick.vico.core.component.shape.shader.DynamicShaders
 
-// This function sets the color of different charts uniformly depending on the device' color scheme
+/**
+ * Internal composable function that creates and remembers a chart style used in a custom chart component.
+ * Taken from Vico's sample files.
+ *
+ * @param columnChartColors The list of colors for the column chart.
+ * @param lineChartColors The list of colors for the line chart.
+ * @return The created [ChartStyle] object.
+ */
 @Composable
 internal fun rememberChartStyle(
     columnChartColors: List<Color>,
@@ -63,6 +70,13 @@ internal fun rememberChartStyle(
     }
 }
 
+/**
+ * Internal composable function that creates and remembers a ChartStyle object used in a custom chart component.
+ * Taken from Vico's sample files.
+ *
+ * @param chartColors The list of chart colors used for both column and line charts.
+ * @return The created ChartStyle object.
+ */
 @Composable
 internal fun rememberChartStyle(chartColors: List<Color>) =
     rememberChartStyle(columnChartColors = chartColors, lineChartColors = chartColors)

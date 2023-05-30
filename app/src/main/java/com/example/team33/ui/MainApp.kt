@@ -31,11 +31,22 @@ import com.example.team33.ui.uistate.MainUiState
 import com.example.team33.ui.viewmodel.MainViewModel
 import kotlin.math.sin
 
-// To create data points for previewing
+/**
+ * Generates a list of sine wave values.
+ *
+ * @param size The size of the list to generate.
+ * @return A list of sine wave values as [Double].
+ */
 fun genSineWaveList(size: Int): List<Double> {
     return List(size) { 1 + sin(3 * Math.PI * 5 * size / 4 * it / size) }
 }
 
+/**
+ * Composable function that represents the main app screen.
+ *
+ * @param modifier The [Modifier] to be applied to the app screen.
+ * @param viewModel The [MainViewModel] used to manage the app's state and logic.
+ */
 @Composable
 fun AppScreen(
     modifier: Modifier = Modifier,
@@ -54,6 +65,16 @@ fun AppScreen(
     )
 }
 
+/**
+ * Composable function that represents the UI of the app screen.
+ *
+ * @param navController The [NavHostController] used for navigation.
+ * @param mainUiState The [MainUiState] representing the UI state of the app.
+ * @param changeElectricityRegion Callback to change the electricity region.
+ * @param changeAppliance Callback to change the selected appliance.
+ * @param graphVisible Callback to change the visibility of the graph.
+ * @param modifier The [Modifier] to be applied to the app screen UI.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AppScreenUI(
@@ -131,6 +152,11 @@ private fun AppScreenUI(
     }
 }
 
+/**
+ * Composable function that displays a bottom navigation bar.
+ *
+ * @param navController The [NavHostController] used for navigation.
+ */
 @Composable
 fun BottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -147,6 +173,14 @@ fun BottomBar(navController: NavHostController) {
     }
 }
 
+/**
+ * Composable function that adds a navigation item to a row scope within a navigation bar.
+ *
+ * @param screen The [NavigationPath] representing the screen associated with the navigation item.
+ * @param currentDestination The current [NavDestination] in the navigation stack.
+ * @param navController The [NavHostController] used for navigation.
+ * @param modifier The [Modifier] to be applied to the navigation item.
+ */
 @Composable
 fun RowScope.AddNavItem(
     screen: NavigationPath,

@@ -21,11 +21,21 @@ import com.example.team33.ui.theme.Team33Theme
 import com.example.team33.ui.uistate.MainUiState
 import java.util.*
 
-// Returns current hour
+/**
+ * Returns the current hour as an integer value.
+ *
+ * @return The current hour as an [Int].
+ */
 private fun getCurrentHour(): Int {
     return SimpleDateFormat("HH", Locale.getDefault()).format(Date()).toInt()
 }
 
+/**
+ * Composable function that represents the home screen of the app.
+ *
+ * @param mainUiState The [MainUiState] representing the UI state of the app.
+ * @param modifier The optional [Modifier] to be applied to the home screen UI.
+ */
 @Composable
 fun HomeScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
     LazyColumn(
@@ -55,7 +65,12 @@ fun HomeScreen(mainUiState: MainUiState, modifier: Modifier = Modifier) {
     }
 }
 
-// Displays location, date and current electricity price
+/**
+ * Composable function that displays the spot price of electricity.
+ *
+ * @param currentPrice The current spot price of electricity.
+ * @param modifier The optional [Modifier] to be applied to the spot price UI.
+ */
 @Composable
 private fun SpotpriceComposable(
     currentPrice: Double?,
@@ -95,6 +110,13 @@ private fun SpotpriceComposable(
     }
 }
 
+/**
+ * Composable function that displays an electricity graph.
+ *
+ * @param modifier The optional [Modifier] to be applied to the electricity graph UI.
+ * @param priceList The list of electricity prices to be displayed on the graph.
+ * @param thresholdValue The threshold value for the graph.
+ */
 @Composable
 private fun ShowElectricityGraph(
     modifier: Modifier = Modifier,

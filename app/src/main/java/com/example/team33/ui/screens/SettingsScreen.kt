@@ -27,6 +27,14 @@ import com.example.team33.network.ElectricityRegion
 import com.example.team33.ui.uistate.MainUiState
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 
+/**
+ * Composable function that represents the UI of the settings screen.
+ *
+ * @param mainUiState The [MainUiState] representing the UI state of the app.
+ * @param navController The [NavHostController] used for navigation.
+ * @param changeElectricityRegion Callback to change the electricity region.
+ * @param modifier The [Modifier] to be applied to the settings screen UI.
+ */
 @Composable
 fun SettingsScreen(
     mainUiState: MainUiState,
@@ -47,7 +55,7 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            //Information about how to change the language 
+            // Information about how to change the language
             Text(
                 text = stringResource(id = R.string.change_language),
                 fontSize = 14.sp, fontStyle = FontStyle.Italic,
@@ -58,11 +66,11 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            //Select a region between 5 alternatives
+            // Select a region between 5 alternatives
             Button(
                 onClick = { openDialog.value = !openDialog.value },
 
-                //Select region button
+                // Select region button
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(size = 75.dp))
                     .height(70.dp)
@@ -211,7 +219,7 @@ fun SettingsScreen(
                             }
                         }
                     },
-                    //Button to confirm the region you chose
+                    // Button to confirm the region you chose
                     confirmButton = {
                         Button(
                             onClick = {
@@ -224,8 +232,8 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-        
-            //Button which navigates you to the showAboutThisApp composable
+
+            // Button which navigates you to the showAboutThisApp composable
             Button(
                 onClick = { navController.navigate("showAboutThisApp") },
                 modifier = Modifier
@@ -243,8 +251,8 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-            
-            //Button which navigates you to the showPurpose composable
+
+            // Button which navigates you to the showPurpose composable
             Button(
                 onClick = { navController.navigate("showPurpose") },
                 modifier = Modifier
@@ -262,8 +270,8 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-            
-            //Button which navigates you to the openSource composable
+
+            // Button which navigates you to the openSource composable
             Button(
                 onClick = { navController.navigate("openSource") },
                 modifier = Modifier
@@ -285,12 +293,22 @@ fun SettingsScreen(
     }
 }
 
+/**
+ * Composable function representing the "Open Source" screen.
+ *
+ * @param modifier The [Modifier] to be applied to the app screen UI.
+ */
 @Composable
 fun OpenSource(modifier: Modifier = Modifier) {
-    //Uses the function from AboutLibraries to display the sources
+    // Uses the function from AboutLibraries to display the sources
     LibrariesContainer(modifier.fillMaxSize())
 }
 
+/**
+ * Composable function representing the "About This App" screen.
+ *
+ * @param modifier The [Modifier] to be applied to the app screen UI.
+ */
 @Composable
 fun ShowAboutThisApp(modifier: Modifier = Modifier) {
     val informationText = stringResource(id = R.string.information)
@@ -309,6 +327,11 @@ fun ShowAboutThisApp(modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * Composable function that represents the UI of the purpose screen.
+ *
+ * @param modifier The [Modifier] to be applied to the purpose screen UI.
+ */
 @Composable
 fun ShowPurpose(modifier: Modifier = Modifier) {
     val purposeText = stringResource(id = R.string.purpose)

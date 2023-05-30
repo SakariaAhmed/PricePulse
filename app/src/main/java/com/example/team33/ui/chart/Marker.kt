@@ -45,10 +45,18 @@ private val guidelineThickness = 2.dp
 private val guidelineShape =
     DashedShape(Shapes.pillShape, GUIDELINE_DASH_LENGTH_DP, GUIDELINE_GAP_LENGTH_DP)
 
+/**
+ * Internal composable function that creates and remembers a marker used in a custom component.
+ * Taken from Vico's sample files.
+ *
+ * @return The created [Marker] object.
+ */
 @Composable
 internal fun rememberMarker(): Marker {
+    // Retrieve the label background color from the MaterialTheme color scheme
     val labelBackgroundColor = MaterialTheme.colorScheme.surface
 
+    // Create and remember the label background shape with shadow
     val labelBackground = remember(labelBackgroundColor) {
         ShapeComponent(labelBackgroundShape, labelBackgroundColor.toArgb()).setShadow(
             radius = LABEL_BACKGROUND_SHADOW_RADIUS,
@@ -56,19 +64,20 @@ internal fun rememberMarker(): Marker {
             applyElevationOverlay = true,
         )
     }
+
+    // Create the label with the configured background and other properties
     val label = textComponent(
         background = labelBackground,
         lineCount = LABEL_LINE_COUNT,
         padding = labelPadding,
         typeface = Typeface.MONOSPACE,
     )
+
+    // Create the indicator components (inner, center, and outer) with respective shapes and colors
     val indicatorInnerComponent =
         shapeComponent(Shapes.pillShape, MaterialTheme.colorScheme.surface)
-
     val indicatorCenterComponent = shapeComponent(Shapes.pillShape, Color.White)
-
     val indicatorOuterComponent = shapeComponent(Shapes.pillShape, Color.White)
-
     val indicator = overlayingComponent(
         outer = indicatorOuterComponent,
         inner = overlayingComponent(
@@ -79,12 +88,14 @@ internal fun rememberMarker(): Marker {
         innerPaddingAll = indicatorCenterAndOuterComponentPaddingValue,
     )
 
+    // Create the guideline component with the specified colors and properties
     val guideline = lineComponent(
         MaterialTheme.colorScheme.onSurface.copy(GUIDELINE_ALPHA),
         guidelineThickness,
         guidelineShape,
     )
 
+    // Remember the Marker object with the label, indicator, and guideline
     return remember(label, indicator, guideline) {
         object : MarkerComponent(label, indicator, guideline) {
             init {
@@ -95,24 +106,19 @@ internal fun rememberMarker(): Marker {
                     with(indicatorCenterComponent) {
                         color = entryColor
                         setShadow(
-                            radius = INDICATOR_CENTER_COMPONENT_SHADOW_RADIUS,
-                            color = entryColor
+                            radius = INDICATOR_CENTER_COMPONENT_SHADOW_RADIUS, color = entryColor
                         )
                     }
                 }
             }
 
+            // Calculate and return the insets for the Marker component
             override fun getInsets(
-                context: MeasureContext,
-                outInsets: Insets,
-                segmentProperties: SegmentProperties
-            ) =
-                with(context) {
-                    outInsets.top =
-                        label.getHeight(context) + labelBackgroundShape.tickSizeDp.pixels +
-                                LABEL_BACKGROUND_SHADOW_RADIUS.pixels * SHADOW_RADIUS_MULTIPLIER -
-                                LABEL_BACKGROUND_SHADOW_DY.pixels
-                }
+                context: MeasureContext, outInsets: Insets, segmentProperties: SegmentProperties
+            ) = with(context) {
+                outInsets.top =
+                    label.getHeight(context) + labelBackgroundShape.tickSizeDp.pixels + LABEL_BACKGROUND_SHADOW_RADIUS.pixels * SHADOW_RADIUS_MULTIPLIER - LABEL_BACKGROUND_SHADOW_DY.pixels
+            }
         }
     }
 }

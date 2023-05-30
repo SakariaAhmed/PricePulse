@@ -26,7 +26,14 @@ import com.example.team33.ui.chart.PopulatedChartCard
 import com.example.team33.ui.theme.md_theme_light_primaryContainer
 import com.example.team33.ui.uistate.MainUiState
 
-
+/**
+ * Composable function that represents the UI of the appliances screen.
+ *
+ * @param mainUiState The [MainUiState] representing the UI state of the app.
+ * @param modifier The optional [Modifier] to be applied to the appliances screen UI.
+ * @param graphVisible Callback to change the visibility of the graph.
+ * @param changeAppliance Callback to change the selected appliance.
+ */
 @Composable
 fun AppliancesScreen(
     mainUiState: MainUiState, modifier: Modifier = Modifier,
@@ -83,7 +90,7 @@ fun AppliancesScreen(
                             300.dp
                         )
                 )
-                //gets the electricty price for the day from the uistate.
+                // gets the electricty price for the day from the uistate.
                 var liste = mainUiState.electricityPrices
 
                 // Times the list with the kwh cost of the product
@@ -96,7 +103,7 @@ fun AppliancesScreen(
 
                     }
                 }
-                //Displays either a graph or table based on the showGraph value in mainUiState.
+                // Displays either a graph or table based on the showGraph value in mainUiState.
                 if (liste != null) {
                     if (mainUiState.showGraph) {
                         ShowGraph(liste)
@@ -111,7 +118,7 @@ fun AppliancesScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             // Four button which represents the different applications, with a corresponding icon.
-            //When you click the button it changes which appliance is chosen in the mainUiState
+            // When you click the button it changes which appliance is chosen in the mainUiState
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = modifier.fillMaxWidth()
@@ -182,17 +189,30 @@ fun AppliancesScreen(
     }
 }
 
+/**
+ * Composable function that displays a graph based on the provided list of values.
+ *
+ * @param list The list of values to be displayed in the graph.
+ * @param modifier The optional [Modifier] to be applied to the graph UI.
+ */
 @Composable
 fun ShowGraph(list: List<Double>, modifier: Modifier = Modifier) {
-    //calls upon PopulatedChrtCard from AppChart
+    // calls upon PopulatedChrtCard from AppChart
     PopulatedChartCard(list = list, modifier, 2.7f)
 }
 
+/**
+ * Composable function that displays a table based on the provided list of values.
+ *
+ * @param list The list of values to be displayed in the table.
+ * @param modifier The optional [Modifier] to be applied to the table UI.
+ */
 @Composable
 fun ShowTable(list: List<Double>, modifier: Modifier = Modifier) {
-    //Creates a row wih lazycolumns, so you are able to scroll vertically trough the table.
+    // Creates a row wih lazycolumns, so you are able to scroll vertically trough the table.
     Row(modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.weight(0.25F))
+
         LazyColumn(modifier = Modifier.height(250.dp)) {
             itemsIndexed(list) { index, element ->
                 RowInTable(value = index, price = element)
@@ -203,6 +223,13 @@ fun ShowTable(list: List<Double>, modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * Composable function that represents a row in a table.
+ *
+ * @param value The value representing the row index.
+ * @param price The price value to be displayed in the row.
+ * @param modifier The optional [Modifier] to be applied to the row UI.
+ */
 @Composable
 fun RowInTable(
     value: Int,
@@ -216,7 +243,7 @@ fun RowInTable(
             .height(60.dp)
             .fillMaxWidth(0.8F)
     ) {
-        //turns the index to hour
+        // turns the index to hour
         var time = " "
         time += if (value < 10) {
             "0$value:00-"
@@ -228,10 +255,10 @@ fun RowInTable(
         } else {
             "${value + 1}:00"
         }
-        //The first cell contains the time, and the second contains the cost
+        // The first cell contains the time, and the second contains the cost
         TableCell(data = time)
 
-        //Makes the black line between the 2 cells
+        // Makes the black line between the 2 cells
         Divider(
             color = Color.Blue,
             thickness = 16.dp,
@@ -243,6 +270,12 @@ fun RowInTable(
     }
 }
 
+/**
+ * Composable function that represents a cell in a table.
+ *
+ * @param data The text data to be displayed in the cell.
+ * @param modifier The optional [Modifier] to be applied to the cell UI.
+ */
 @Composable
 fun TableCell(
     data: String,
