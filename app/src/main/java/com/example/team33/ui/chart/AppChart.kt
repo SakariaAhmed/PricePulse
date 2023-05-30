@@ -67,12 +67,15 @@ fun PopulatedChartCard(
         entryModelOf(List(list.size) { FloatEntry(it.toFloat(), list[it].toFloat()) })
 
     // Define an AxisValuesOverrider to set the minimum and maximum Y-axis values
+    val maxY = ceil(list.max() + 0.25).toFloat()
     val axisValuesOverrider: AxisValuesOverrider<ChartEntryModel> =
-        AxisValuesOverrider.fixed(minY = 0.0f, maxY = ceil(list.max() + 0.25).toFloat())
+        AxisValuesOverrider.fixed(minY = 0.0f, maxY = maxY)
 
     // Determine the decoration based on the threshold value
-    val decoration = when (val thresholdLine = rememberThresholdLine(thresholdValue)) {
-        else -> remember(thresholdLine!!) { listOf(thresholdLine) }
+    val thresholdLine = rememberThresholdLine(thresholdValue)
+    val decoration = when {
+        thresholdLine == null || thresholdValue!! >= maxY || thresholdValue == 0.0F -> null
+        else -> remember(thresholdLine) { listOf(thresholdLine) }
     }
 
     // Define the chart colors
