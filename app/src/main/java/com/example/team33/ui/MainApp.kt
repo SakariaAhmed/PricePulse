@@ -59,6 +59,7 @@ fun AppScreen(
         navController = navController,
         mainUiState = mainUiState,
         changeElectricityRegion = { viewModel.changeElectricityRegion(it) },
+        changeLimitValue = { viewModel.changeLimitValue(it)},
         graphVisible = { viewModel.graphVisible(it) },
         changeAppliance = { viewModel.changeAppliance(it) },
         modifier = modifier
@@ -81,6 +82,7 @@ private fun AppScreenUI(
     navController: NavHostController,
     mainUiState: MainUiState,
     changeElectricityRegion: (ElectricityRegion) -> Unit,
+    changeLimitValue: (Float) -> Unit,
     changeAppliance: (String) -> Unit,
     graphVisible: (Boolean) -> Unit,
     modifier: Modifier = Modifier
@@ -131,6 +133,7 @@ private fun AppScreenUI(
                     mainUiState = mainUiState,
                     navController = navController,
                     changeElectricityRegion = { changeElectricityRegion(it) },
+                    changeLimitValue = {changeLimitValue(it)}
                 )
             }
 
@@ -220,6 +223,7 @@ private fun AppScreenPreview() {
                 MainUiState(electricityPrices = genSineWaveList(24)),
                 {},
                 graphVisible = {},
+                changeLimitValue = {},
                 changeAppliance = {}
             )
         }

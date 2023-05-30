@@ -1,7 +1,15 @@
 package com.example.team33.ui.screens
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,6 +48,7 @@ fun SettingsScreen(
     mainUiState: MainUiState,
     navController: NavHostController,
     changeElectricityRegion: (ElectricityRegion) -> Unit,
+    changeLimitValue: (Float) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val openDialog = remember { mutableStateOf(false) }
@@ -63,6 +72,11 @@ fun SettingsScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.width(500.dp)
             )
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            LimitSlider(mainUiState, changeLimitValue)
+
 
             Spacer(modifier = Modifier.height(40.dp))
 
@@ -290,6 +304,37 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.padding(10.dp))
         }
+    }
+}
+
+/**
+ * Composable function that displays a slider for selecting a limit value.
+ *
+ * @param mainUiState The current state of the UI.
+ * @param changeLimitValue The callback function to be invoked when the limit value changes.
+ */
+@Composable
+fun LimitSlider(mainUiState: MainUiState, changeLimitValue: (Float) -> Unit) {
+    var sliderValue by remember { mutableStateOf(mainUiState.maxPrice) }
+    Column {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 10.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "Limit: ")
+            Text(text = if (sliderValue > 0.0F) "%.2f NOK".format(sliderValue) else "disabled")
+        }
+        Slider(
+            modifier = Modifier.padding(horizontal = 5.dp),
+            value = sliderValue,
+            onValueChange = { sliderValue = it },
+            valueRange = 0f..5f,
+            onValueChangeFinished = {
+                changeLimitValue(sliderValue)
+            },
+        )
     }
 }
 

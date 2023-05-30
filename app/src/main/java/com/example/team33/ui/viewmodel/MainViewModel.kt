@@ -111,4 +111,12 @@ class MainViewModel : ViewModel() {
             )
         }
     }
+
+    fun changeLimitValue(newLimitValue: Float) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                maxPrice = newLimitValue
+            )
+        }
+    }
 }
