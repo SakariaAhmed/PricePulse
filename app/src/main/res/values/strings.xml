@@ -62,4 +62,5 @@
     <string name="shower">Shower Icon</string>
     <string name="show_developers">Show developers</string>
     <string name="show_usage">Show usage</string>
+    <string name="disabled">Disabled</string>
 </resources>
