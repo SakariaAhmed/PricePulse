@@ -29,6 +29,7 @@ class SettingsScreenTest {
         context?.let { composeTestRule.onAllNodesWithText(it.getString(R.string.settings)).onFirst().performClick() }
     }
 
+    // Testing that text is displayed
     @Test
     fun screenTitle_isDisplayed() {
         context?.let { composeTestRule.onAllNodesWithText(it.getString(R.string.settings)).onFirst().assertIsDisplayed() }
@@ -49,11 +50,13 @@ class SettingsScreenTest {
         context?.let { composeTestRule.onNodeWithText(it.getString(R.string.select_region)).assertIsDisplayed() }
     }
 
+    // Testing select Region button click
     @Test
     fun select_Region_click() {
         context?.let { composeTestRule.onNodeWithText(it.getString(R.string.select_region)).performClick() }
     }
 
+    // Testing that radio button click actually change region below
     @Test
     fun radio_Buttons_East_Test() {
         context?.let { composeTestRule.onNodeWithText(it.getString(R.string.select_region)).performClick() }
@@ -117,6 +120,8 @@ class SettingsScreenTest {
 
     }
 
+
+    // Testing if button is displayed below and clicking on it
     @Test
     fun about_This_App_isDisplayed() {
         context?.let { composeTestRule.onNodeWithText(it.getString(R.string.about_this_app)).assertIsDisplayed() }

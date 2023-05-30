@@ -41,6 +41,40 @@ class AppliancesScreenTest {
     }
 
     @Test
+    fun graph_isDisplayed() {
+        context?.let {
+            composeTestRule.onAllNodesWithText(it.getString(R.string.graph)).onFirst()
+                .assertIsDisplayed()
+        }
+    }
+
+    @Test
+    fun graph_Click() {
+        context?.let {
+            composeTestRule.onAllNodesWithText(it.getString(R.string.graph)).onFirst()
+                .performClick()
+        }
+    }
+
+    @Test
+    fun table_isDisplayed() {
+        context?.let {
+            composeTestRule.onAllNodesWithText(it.getString(R.string.table)).onFirst()
+                .assertIsDisplayed()
+        }
+    }
+
+    @Test
+    fun table_Click() {
+        context?.let {
+            composeTestRule.onAllNodesWithText(it.getString(R.string.table)).onFirst()
+                .performClick()
+        }
+    }
+
+    //Testing that appliance button is displayed and clicking through
+    // them to check if they change the current appliance below
+    @Test
     fun washingButton_isDisplayed() {
         context?.let {
             composeTestRule.onNodeWithContentDescription(it.getString(R.string.washing_machine))
